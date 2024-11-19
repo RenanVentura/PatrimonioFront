@@ -8,19 +8,20 @@ function Forms() {
 
   const navigate = useNavigate();
 
-  const inputNome = useRef()
-  const inputTipoDeCadastro = useRef()
-  const inputStatus = useRef()
-  const inputValor = useRef()
-  const inputPatrimonio = useRef()
-  const inputEmpresa = useRef()
-  const inputCentroDeCusto = useRef()
-  const inputNomeDoResponsavel = useRef()
-  const inputObservacao = useRef()
+  const inputNome = useRef();
+  const inputTipoDeCadastro = useRef();
+  const inputStatus = useRef();
+  const inputValor = useRef();
+  const inputPatrimonio = useRef();
+  const inputEmpresa = useRef();
+  const inputCentroDeCusto = useRef();
+  const inputNomeDoResponsavel = useRef();
+  const inputObservacao = useRef();
+  const inputImagem = useRef(); // Nova referência
 
   async function createSoli() {
 
-    const valor = parseFloat(inputValor.current.value)
+    const valor = parseFloat(inputValor.current.value);
     api.post('/ferramentas', {
       Nome: inputNome.current.value,
       Valor: valor,
@@ -30,19 +31,22 @@ function Forms() {
       CentroDeCusto: inputCentroDeCusto.current.value,
       NomeDeResponsavel: inputNomeDoResponsavel.current.value,
       TipoDeCadastro: inputTipoDeCadastro.current.value,
-      Status: inputStatus.current.value
-    })
-    console.log('Requisição Concluida')
+      Status: 'Ativo',//inputStatus.current.value,
+      Imagem: inputImagem.current.files[0]?.name || '', 
+      StatusDelete: true
+    });
+    console.log('Requisição Concluída');
 
     inputNome.current.value = '';
     inputValor.current.value = '';
     inputPatrimonio.current.value = '';
     inputObservacao.current.value = '';
-    inputEmpresa.current.value = '';
+    inputEmpresa.current.value = 'Empresa';
     inputCentroDeCusto.current.value = '';
     inputNomeDoResponsavel.current.value = '';
-    inputTipoDeCadastro.current.value = '';
-    inputStatus.current.value = '';
+    inputTipoDeCadastro.current.value = 'Tipo de Cadastro';
+    // inputStatus.current.value = 'Status';
+    inputImagem.current.value = ''; 
   }
 
   return (
@@ -51,7 +55,7 @@ function Forms() {
         <img src={logo} alt="Logo" className="logo" />
         <button className="sidebar-button" onClick={() => navigate('/')}>
           Cadastro
-          </button>
+        </button>
         <button className="sidebar-button" onClick={() => navigate('/Frotas')}>
           Frotas
         </button>
@@ -67,14 +71,14 @@ function Forms() {
           <input name="Patrimonio" type="text" placeholder="Patrimonio" ref={inputPatrimonio} />
           <select name="TipoDeCadastro" type="text" placeholder="Tipo de Cadastro" ref={inputTipoDeCadastro}>
             <option>Tipo de Cadastro</option>
-            <option value="Ferramenta">Ativo</option>
-            <option value="Frotas">Baixado</option>
+            <option value="Ferramenta">Ferramentas</option>
+            <option value="Frotas">Frotas</option>
           </select>
-          <select name="Status" type="text" placeholder="Status" ref={inputStatus}>
+          {/* <select name="Status" type="text" placeholder="Status" ref={inputStatus}>
             <option>Status</option>
             <option value="Ativo">Ativo</option>
             <option value="Baixado">Baixado</option>
-          </select>
+          </select> */}
           <input name="Valor" type="number" placeholder="Valor" ref={inputValor} />
           <select name="Empresa" type="text" placeholder="Empresa" ref={inputEmpresa}>
             <option>Empresa</option>
@@ -89,6 +93,7 @@ function Forms() {
           <input name="CentroDeCusto" type="text" placeholder="Centro de Custo" ref={inputCentroDeCusto} />
           <input name="NomeDoResponsavel" type="text" placeholder="Nome do Responsável" ref={inputNomeDoResponsavel} />
           <textarea name="Observacao" type="text" placeholder="Observação" ref={inputObservacao} />
+          <input name="Imagem" type="file" ref={inputImagem} /> {/* Campo de imagem */}
           <button type="button" onClick={() => createSoli()}>Cadastrar</button>
         </form>
       </div>

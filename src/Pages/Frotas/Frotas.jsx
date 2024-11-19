@@ -24,7 +24,6 @@ function Frotas() {
             </div>
         </div>
 
-
     )
 }
 
