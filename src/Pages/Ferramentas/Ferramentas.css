@@ -1,0 +1,120 @@
+.info-panel-container {
+    position: relative;
+    width: 100%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 20px;
+    z-index: 5; 
+    position: relative;
+}
+
+.filter-input {
+    width: 200px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    transition: border-color 0.3s ease;
+}
+
+.filter-button, 
+.export-button {
+    background-color: #ff00009c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-left: 7px;
+    transition: background-color 0.3s ease;
+    z-index: 10; 
+    position: relative; 
+    width: 82x;
+    font-size: 14px;
+}
+
+.filter-button:hover, 
+.export-button:hover {
+    background-color: #b30000;
+}
+
+.filter-button {
+    background-color: #28a745;
+}
+
+.filter-button:hover {
+    background-color: #1e7e34;
+}
+
+.info-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-left: 350px;
+    padding: 20px;
+    width: 90%;
+    max-width: 1370px;
+    height: 700px;
+    overflow-y: auto;
+    z-index: 1; 
+    position: relative; 
+}
+
+.info-card {
+    display: flex;
+    align-items: flex-start;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+    padding: 20px;
+    width: 100%;
+}
+
+.info-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+.info-details {
+    flex: 1;
+    color: #333;
+}
+
+.info-details h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.info-details p {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.info-columns {
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-columns ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-columns li {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
