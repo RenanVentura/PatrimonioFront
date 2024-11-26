@@ -3,22 +3,47 @@ import './Ferramentas.css';
 import logo from '../../assets/Logo.png';
 import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
-import Lapis from '../../assets/lapis.png'
-import Lixo from '../../assets/lixo.png'
-
+import Lapis from '../../assets/lapis.png';
+import Lixo from '../../assets/lixo.png';
 
 function Ferramentas() {
   const navigate = useNavigate();
   const [patrimonio, setPatrimonio] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
 
+  // Função para buscar as ferramentas da API
   async function getFerramentas() {
     const patrimonioFromApi = await api.get('/ferramentas');
     setPatrimonio(patrimonioFromApi.data);
   }
 
+  // Chama a função para carregar as ferramentas quando o componente for montado
   useEffect(() => {
     getFerramentas();
   }, []);
+
+  // Cálculos para determinar a página atual
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = patrimonio.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Número total de páginas
+  const totalPages = Math.ceil(patrimonio.length / itemsPerPage);
+
+  // Função para navegar para a página anterior
+  function handlePreviousPage() {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  }
+
+  // Função para navegar para a próxima página
+  function handleNextPage() {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  }
 
   return (
     <div className="container">
@@ -42,44 +67,63 @@ function Ferramentas() {
           <button className="export-button">Exportar</button>
         </div>
         <div className="info-panel">
-          {patrimonio.map((ferramenta) => (
+          <div className="container-pag">
+          {currentItems.map((ferramenta) => (
             <div className="container-card" key={ferramenta.id}>
               <div className="info-card">
                 <div className="info-details">
                   <div className="info-header">
                     <h2>{ferramenta.Nome}</h2>
                     <div className="action-icons">
-                      <img src={Lapis} alt="Editar" class="icon"></img>
-                        <img src={Lixo} alt="Excluir" class="icon"></img>
-                        </div>
+                      <img src={Lapis} alt="Editar" className="icon" />
+                      <img src={Lixo} alt="Excluir" className="icon" />
                     </div>
-                    <p>{ferramenta.Patrimonio}</p>
-                    <div class="info-columns">
-                      <ul>
-                        
-                        <li><span>Responsável:</span> {ferramenta.NomeDeResponsavel}</li>
-                        <li><span>Status:</span> {ferramenta.Status}</li>
-                        <li><span>Centro de Custo:</span> {ferramenta.CentroDeCusto}</li>
-                      </ul>
-                      <ul>
-                       <li><span>Empresa:</span> {ferramenta.Empresa}</li>
-                       <li><span>Valor: </span>R$ {ferramenta.Valor}</li>
+                  </div>
+                  <p>{ferramenta.Patrimonio}</p>
+                  <div className="info-columns">
+                    <ul>
+                      <li><span>Responsável:</span> {ferramenta.NomeDeResponsavel}</li>
+                      <li><span>Status:</span> {ferramenta.Status}</li>
+                      <li><span>Centro de Custo:</span> {ferramenta.CentroDeCusto}</li>
+                    </ul>
+                    <ul>
+                      <li><span>Empresa:</span> {ferramenta.Empresa}</li>
+                      <li><span>Valor: </span>R$ {ferramenta.Valor}</li>
                       <li><span>Tipo de Cadastro:</span> {ferramenta.TipoDeCadastro}</li>
-                
-                        <li></li>
-                      </ul>
-                    </div>
-                    <div className="container-obs">
+                    </ul>
+                  </div>
+                  <div className="container-obs">
                     <span>Observação:</span> {ferramenta.Observacao}
-                    </div>
                   </div>
                 </div>
               </div>
-          ))}
             </div>
+          ))}
+          </div>
+          <div className="pagination">
+            <button
+              className="pagination-button"
+              onClick={handlePreviousPage}
+              disabled={currentPage === 1}
+            >
+              Anterior
+            </button>
+            <span className="pagination-info">
+              Página {currentPage} de {totalPages}
+            </span>
+            <button
+              className="pagination-button"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Próximo
+            </button>
+          </div>
+          
+        </div>
       </div>
-      </div>
-      );
+    </div>
+  );
 }
 
-      export default Ferramentas;
+export default Ferramentas;

@@ -1,11 +1,13 @@
+/* Container principal */
 .info-panel-container {
     position: relative;
     width: 100%;
 }
 
+/* Container de botões */
 .button-container {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center; /* Centraliza os botões */
     align-items: center;
     margin-bottom: 20px;
     padding: 0 20px;
@@ -13,6 +15,7 @@
     position: relative;
 }
 
+/* Campo de filtro */
 .filter-input {
     width: 200px;
     padding: 10px;
@@ -23,6 +26,7 @@
     transition: border-color 0.3s ease;
 }
 
+/* Botões de filtro e exportação */
 .filter-button,
 .export-button {
     background-color: #ff00009c;
@@ -39,27 +43,32 @@
     font-size: 14px;
 }
 
+/* Efeito de hover nos botões */
 .filter-button:hover,
 .export-button:hover {
     background-color: #b30000;
 }
 
+/* Estilo específico para o botão de filtro */
 .filter-button {
     background-color: #28a745;
 }
 
+/* Efeito de hover no botão de filtro */
 .filter-button:hover {
     background-color: #1e7e34;
 }
 
-.info-panel {
-    display: grid; 
-    grid-template-columns: repeat(3, 1fr); /* Cria 2 colunas iguais */
-    gap: 10px 20px; 
+
+
+.container-pag {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px 20px;
     background-color: #ffffff;
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin-left: 350px;
+    margin-left: 330px;
     padding: 20px;
     width: 90%;
     max-width: 1370px;
@@ -69,8 +78,17 @@
     position: relative;
 }
 
-.container-card{
+/* Estilo dos cards de informações */
+.container-card {
     margin-bottom: 0px;
+}
+
+.container-obs{
+    font-size: 14px;
+    margin-top: 10px;
+    & span{
+        font-weight: bold;
+    }
 }
 
 .info-card {
@@ -88,34 +106,28 @@
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 
+/* Estilo do cabeçalho de cada card */
 .info-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.container-obs{
-    font-size: 14px;
-    margin-top: 5px;
-    & span {
-        font-weight: bold;
-    }
-}
-
+/* Ícones de ação (editar, excluir) */
 .action-icons {
     display: flex;
-    gap: 10px; /* Espaço entre os ícones */
+    gap: 10px;
 }
 
 .action-icons .icon {
-    width: 20px; /* Tamanho do ícone */
+    width: 20px;
     height: 20px;
     cursor: pointer;
     transition: transform 0.2s ease;
 }
 
 .action-icons .icon:hover {
-    transform: scale(1.2); /* Efeito de zoom ao passar o mouse */
+    transform: scale(1.2);
 }
 
 .info-details {
@@ -146,10 +158,56 @@
 .info-columns li {
     font-size: 14px;
     margin-bottom: 8px;
-    margin-top: 10px;
-    /* margin-left: 15px; */
 }
 
 .info-columns li span {
     font-weight: bold;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px; 
+    text-align: center;
+    width: 100%; 
+    z-index: 5;
+
+    &  .pagination-info{
+        color: white;
+        z-index: 5;
+    }
+}
+
+.pagination-button {
+    background-color: #0b693d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    z-index: 5;
+}
+
+.pagination-button:hover {
+    background-color: #035707;
+    transform: scale(1.1);
+    z-index: 5;
+}
+
+.pagination-button.active {
+    background-color: #28a745;
+    font-weight: bold;
+    cursor: default;
+    transform: none;
+}
+
+.pagination-button:disabled {
+    background-color: #d6d6d6;
+    color: #1d1b1b;
+    cursor: not-allowed;
+    transform: none;
 }
