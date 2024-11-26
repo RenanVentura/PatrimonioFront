@@ -1,13 +1,11 @@
-/* Container principal */
 .info-panel-container {
     position: relative;
     width: 100%;
 }
 
-/* Container de botões */
 .button-container {
     display: flex;
-    justify-content: center; /* Centraliza os botões */
+    justify-content: center; 
     align-items: center;
     margin-bottom: 20px;
     padding: 0 20px;
@@ -15,7 +13,6 @@
     position: relative;
 }
 
-/* Campo de filtro */
 .filter-input {
     width: 200px;
     padding: 10px;
@@ -26,7 +23,6 @@
     transition: border-color 0.3s ease;
 }
 
-/* Botões de filtro e exportação */
 .filter-button,
 .export-button {
     background-color: #ff00009c;
@@ -39,22 +35,19 @@
     transition: background-color 0.3s ease;
     z-index: 10;
     position: relative;
-    width: 90px;
+    width: 100px;
     font-size: 14px;
 }
 
-/* Efeito de hover nos botões */
 .filter-button:hover,
 .export-button:hover {
     background-color: #b30000;
 }
 
-/* Estilo específico para o botão de filtro */
 .filter-button {
     background-color: #28a745;
 }
 
-/* Efeito de hover no botão de filtro */
 .filter-button:hover {
     background-color: #1e7e34;
 }
@@ -78,7 +71,6 @@
     position: relative;
 }
 
-/* Estilo dos cards de informações */
 .container-card {
     margin-bottom: 0px;
 }
@@ -106,14 +98,12 @@
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilo do cabeçalho de cada card */
 .info-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-/* Ícones de ação (editar, excluir) */
 .action-icons {
     display: flex;
     gap: 10px;
