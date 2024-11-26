@@ -68,37 +68,37 @@ function Ferramentas() {
         </div>
         <div className="info-panel">
           <div className="container-pag">
-          {currentItems.map((ferramenta) => (
-            <div className="container-card" key={ferramenta.id}>
-              <div className="info-card">
-                <div className="info-details">
-                  <div className="info-header">
-                    <h2>{ferramenta.Nome}</h2>
-                    <div className="action-icons">
-                      <img src={Lapis} alt="Editar" className="icon" />
-                      <img src={Lixo} alt="Excluir" className="icon" />
+            {currentItems.map((ferramenta) => (
+              <div className="container-card" key={ferramenta.id}>
+                <div className="info-card">
+                  <div className="info-details">
+                    <div className="info-header">
+                      <h2>{ferramenta.Nome}</h2>
+                      <div className="action-icons">
+                        <img src={Lapis} alt="Editar" className="icon" />
+                        <img src={Lixo} alt="Excluir" className="icon" />
+                      </div>
                     </div>
-                  </div>
-                  <p>{ferramenta.Patrimonio}</p>
-                  <div className="info-columns">
-                    <ul>
-                      <li><span>Responsável:</span> {ferramenta.NomeDeResponsavel}</li>
-                      <li><span>Status:</span> {ferramenta.Status}</li>
-                      <li><span>Centro de Custo:</span> {ferramenta.CentroDeCusto}</li>
-                    </ul>
-                    <ul>
-                      <li><span>Empresa:</span> {ferramenta.Empresa}</li>
-                      <li><span>Valor: </span>R$ {ferramenta.Valor}</li>
-                      <li><span>Tipo de Cadastro:</span> {ferramenta.TipoDeCadastro}</li>
-                    </ul>
-                  </div>
-                  <div className="container-obs">
-                    <span>Observação:</span> {ferramenta.Observacao}
+                    <p>{ferramenta.Patrimonio}</p>
+                    <div className="info-columns">
+                      <ul>
+                        <li><span>Responsável:</span> {ferramenta.NomeDeResponsavel}</li>
+                        <li><span>Status:</span> {ferramenta.Status}</li>
+                        <li><span>Centro de Custo:</span> {ferramenta.CentroDeCusto}</li>
+                      </ul>
+                      <ul>
+                        <li><span>Empresa:</span> {ferramenta.Empresa}</li>
+                        <li><span>Valor: </span>R$ {ferramenta.Valor}</li>
+                        <li><span>Tipo de Cadastro:</span> {ferramenta.TipoDeCadastro}</li>
+                      </ul>
+                    </div>
+                    <div className="container-obs">
+                      <span>Observação:</span> {ferramenta.Observacao}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
           </div>
           <div className="pagination">
             <button
@@ -119,7 +119,7 @@ function Ferramentas() {
               Próximo
             </button>
           </div>
-          
+
         </div>
       </div>
     </div>

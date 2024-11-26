@@ -5,7 +5,7 @@
 
 .button-container {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
     margin-bottom: 20px;
     padding: 0 20px;
@@ -75,10 +75,11 @@
     margin-bottom: 0px;
 }
 
-.container-obs{
+.container-obs {
     font-size: 14px;
     margin-top: 10px;
-    & span{
+
+    & span {
         font-weight: bold;
     }
 }
@@ -156,15 +157,15 @@
 
 .pagination {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
     margin-top: 20px;
-    gap: 10px; 
+    gap: 10px;
     text-align: center;
-    width: 100%; 
+    width: 100%;
     z-index: 5;
 
-    &  .pagination-info{
+    & .pagination-info {
         color: white;
         z-index: 5;
     }
