@@ -3,6 +3,9 @@ import './Ferramentas.css';
 import logo from '../../assets/Logo.png';
 import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
+import Lapis from '../../assets/lapis.png'
+import Lixo from '../../assets/lixo.png'
+
 
 function Ferramentas() {
   const navigate = useNavigate();
@@ -40,33 +43,43 @@ function Ferramentas() {
         </div>
         <div className="info-panel">
           {patrimonio.map((ferramenta) => (
-            <div key={ferramenta.id}>
+            <div className="container-card" key={ferramenta.id}>
               <div className="info-card">
-
                 <div className="info-details">
-                  <h2>{ferramenta.Nome}</h2>
-                  <p><span></span>{ferramenta.Patrimonio}</p>
-                  <div className="info-columns">
-                    <ul>
-                      <li>Valor: {ferramenta.Valor}</li>
-                      <li>Empresa: {ferramenta.Empresa}</li>
-                      <li>Responsável: {ferramenta.NomeDeResponsavel}</li>
-                      <li>Status: {ferramenta.Status}</li>
-                    </ul>
-                    <ul>
-                      <li>Centro de Custo: {ferramenta.CentroDeCusto}</li>
-                      <li>Tipo de Cadastro: {ferramenta.TipoDeCadastro}</li>
-                      <li>Observação: {ferramenta.Observacao}</li>
-                    </ul>
+                  <div className="info-header">
+                    <h2>{ferramenta.Nome}</h2>
+                    <div className="action-icons">
+                      <img src={Lapis} alt="Editar" class="icon"></img>
+                        <img src={Lixo} alt="Excluir" class="icon"></img>
+                        </div>
+                    </div>
+                    <p>{ferramenta.Patrimonio}</p>
+                    <div class="info-columns">
+                      <ul>
+                        
+                        <li><span>Responsável:</span> {ferramenta.NomeDeResponsavel}</li>
+                        <li><span>Status:</span> {ferramenta.Status}</li>
+                        <li><span>Centro de Custo:</span> {ferramenta.CentroDeCusto}</li>
+                      </ul>
+                      <ul>
+                       <li><span>Empresa:</span> {ferramenta.Empresa}</li>
+                       <li><span>Valor: </span>R$ {ferramenta.Valor}</li>
+                      <li><span>Tipo de Cadastro:</span> {ferramenta.TipoDeCadastro}</li>
+                
+                        <li></li>
+                      </ul>
+                    </div>
+                    <div className="container-obs">
+                    <span>Observação:</span> {ferramenta.Observacao}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
           ))}
-        </div>
+            </div>
       </div>
-    </div>
-  );
+      </div>
+      );
 }
 
-export default Ferramentas;
+      export default Ferramentas;
