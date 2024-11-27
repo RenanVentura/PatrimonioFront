@@ -11,6 +11,8 @@ function Ferramentas() {
   const [patrimonio, setPatrimonio] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);  // Controla a visibilidade do modal
+  const [ferramentaToEdit, setFerramentaToEdit] = useState(null);  // Dados da ferramenta a ser editada
 
   // Função para buscar as ferramentas da API
   async function getFerramentas() {
@@ -45,18 +47,33 @@ function Ferramentas() {
     }
   }
 
+  // Função para abrir o modal de edição
+  function openEditModal(ferramenta) {
+    setFerramentaToEdit(ferramenta);  // Define a ferramenta que será editada
+    setIsEditModalOpen(true);  // Abre o modal
+  }
+
+  // Função para fechar o modal de edição
+  function closeEditModal() {
+    setIsEditModalOpen(false);
+    setFerramentaToEdit(null);  // Limpa os dados
+  }
+
   return (
     <div className="container">
       <div className="sidebar">
         <img src={logo} alt="Logo" className="logo" />
-        <button className="sidebar-button" onClick={() => navigate('/')}>
+        <button className="sidebar-button" onClick={() => navigate('/')} >
           Cadastro
         </button>
-        <button className="sidebar-button" onClick={() => navigate('/Frotas')}>
+        <button className="sidebar-button" onClick={() => navigate('/Frotas')} >
           Frotas
         </button>
-        <button className="sidebar-button" onClick={() => navigate('/Ferramentas')}>
+        <button className="sidebar-button" onClick={() => navigate('/Ferramentas')} >
           Ferramentas
+        </button>
+        <button className="sidebar-button" onClick={() => navigate('/Emprestado')}>
+          Emprestados
         </button>
       </div>
 
@@ -75,7 +92,12 @@ function Ferramentas() {
                     <div className="info-header">
                       <h2>{ferramenta.Nome}</h2>
                       <div className="action-icons">
-                        <img src={Lapis} alt="Editar" className="icon" />
+                        <img
+                          src={Lapis}
+                          alt="Editar"
+                          className="icon"
+                          onClick={() => openEditModal(ferramenta)} // Abre o modal ao clicar no lápis
+                        />
                         <img src={Lixo} alt="Excluir" className="icon" />
                       </div>
                     </div>
@@ -119,9 +141,31 @@ function Ferramentas() {
               Próximo
             </button>
           </div>
-
         </div>
       </div>
+
+      {/* Modal de Edição */}
+      {isEditModalOpen && (
+        <div className="edit-modal">
+          <div className="modal-content">
+            <h3>Editar Ferramenta</h3>
+            <form>
+              <div>
+                <label>Nome:</label>
+                <input type="text" defaultValue={ferramentaToEdit.Nome} />
+              </div>
+              <div>
+                <label>Status:</label>
+                <input type="text" defaultValue={ferramentaToEdit.Status} />
+              </div>
+              {/* Adicione outros campos conforme necessário */}
+              <button type="submit">Salvar</button>
+              <button type="button" onClick={closeEditModal}>Fechar</button>
+            </form>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

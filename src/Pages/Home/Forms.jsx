@@ -65,6 +65,9 @@ function Forms() {
         <button className="sidebar-button" onClick={() => navigate('/Ferramentas')}>
           Ferramentas
         </button>
+        <button className="sidebar-button" onClick={() => navigate('/Emprestado')}>
+          Emprestados
+        </button>
       </div>
 
       <div className="form-container">

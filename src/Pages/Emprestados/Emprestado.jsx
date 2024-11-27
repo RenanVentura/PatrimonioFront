@@ -1,10 +1,10 @@
 import { useState, useRef } from 'react';
-import './Frotas.css';
+import './Emprestado.css';
 import logo from '../../assets/Logo.png';
-import api from '../../services/api'
+import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 
-function Frotas() {
+function Emprestado() {
     const navigate = useNavigate();
 
     return (
@@ -30,4 +30,4 @@ function Frotas() {
     )
 }
 
-export default Frotas
+export default Emprestado
