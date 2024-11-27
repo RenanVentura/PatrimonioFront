@@ -15,7 +15,7 @@ function ModalEdit({ ferramenta, onClose }) {
         try {
             await api.put(`/ferramentas/${id}`, editedFerramenta);
             alert('Ferramenta atualizada com sucesso!');
-            onClose(); // Fecha o modal após atualização
+            window.location.reload(); // Atualiza a página
         } catch (error) {
             alert('Erro ao atualizar ferramenta');
             console.error(error);
@@ -43,6 +43,7 @@ function ModalEdit({ ferramenta, onClose }) {
                     <button className="close" onClick={onClose}>X</button>
                 </div>
                 <div className="containerEdit">
+                    {/* Renderização dos campos do formulário */}
                     <div className="data-container">
                         <div className="tituloInput">Patrimônio</div>
                         <input
@@ -63,7 +64,6 @@ function ModalEdit({ ferramenta, onClose }) {
                             onChange={handleChange}
                         />
                     </div>
-
                     <div className="data-container">
                         <div className="tituloInput">Responsável Emprestado</div>
                         <input
@@ -74,16 +74,17 @@ function ModalEdit({ ferramenta, onClose }) {
                             onChange={handleChange}
                         />
                     </div>
-
                     <div className="data-container">
                         <div className="tituloInput">Status</div>
-                        <input
-                            type="text"
+                        <select
                             name="Status"
-                            placeholder="Status"
                             value={editedFerramenta.Status || ''}
                             onChange={handleChange}
-                        />
+                        >
+                            <option value="Ativo">Ativo</option>
+                            <option value="Emprestado">Emprestado</option>
+                            <option value="Inativo">Inativo</option>
+                        </select>
                     </div>
                     <div className="data-container">
                         <div className="tituloInput">Centro de Custo</div>
@@ -97,13 +98,21 @@ function ModalEdit({ ferramenta, onClose }) {
                     </div>
                     <div className="data-container">
                         <div className="tituloInput">Empresa</div>
-                        <input
+                        <select
                             type="text"
                             name="Empresa"
                             placeholder="Empresa"
                             value={editedFerramenta.Empresa || ''}
                             onChange={handleChange}
-                        />
+                        >
+                            <option value="Qually Matriz">Qually Matriz</option>
+                            <option value="Qually Bahia">Qually Bahia</option>
+                            <option value="Qually Ceara">Qually Ceara</option>
+                            <option value="Qually Paraiba">Qually Paraiba</option>
+                            <option value="Isaac Grama">Isaac Grama</option>
+                            <option value="Isaac Cereais">Isaac Cereais</option>
+                            <option value="Isaac Feno">Isaac Feno</option>
+                        </select>
                     </div>
                     <div className="data-container">
                         <div className="tituloInput">Valor</div>
@@ -134,7 +143,6 @@ function ModalEdit({ ferramenta, onClose }) {
                             onChange={handleChange}
                         />
                     </div>
-
                     <div className="data-container">
                         <div className="tituloInput">Data Devolvida</div>
                         <input
@@ -147,16 +155,16 @@ function ModalEdit({ ferramenta, onClose }) {
                     <div className="data-container">
                         <div className="tituloInput">Observação Emprestado</div>
                         <textarea
-                            name="Observacao"
+                            name="ObsEmprestado"
                             placeholder="Observação Emprestado"
                             value={editedFerramenta.ObsEmprestado || ''}
                             onChange={handleChange}
                         />
                     </div>
                     <div className="data-container">
-                        <div className="tituloInput">Observação Emprestado</div>
+                        <div className="tituloInput">Observação</div>
                         <textarea
-                            name="Observação"
+                            name="Observacao"
                             placeholder="Observação"
                             value={editedFerramenta.Observacao || ''}
                             onChange={handleChange}
