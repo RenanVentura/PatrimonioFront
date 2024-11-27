@@ -138,13 +138,6 @@ form button:hover {
     background-color: #0a5a22;
 }
 
-form input[type="file"] {
-    /* border: none; */
-    /* padding: 5px 0; */
-    /* margin-top: 10px; */
-    cursor: pointer;
-    color: #666;
-}
 
 @media (max-width: 1024px) {
     .sidebar {
@@ -230,7 +223,7 @@ form input[type="file"] {
     }
 
     .logo {
-        max-width: 100px;
+        max-width: 0px;
     }
 
     .form-container {

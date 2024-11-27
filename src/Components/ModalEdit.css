@@ -1,7 +1,7 @@
 /* Estilo principal do modal */
 .formEdit {
     position: fixed;
-    top: 50%;
+    margin-top: 600px;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 800px;
@@ -26,9 +26,24 @@
     margin-bottom: 20px;
 }
 
+.titleEdit .logoQually {
+    width: 175px;
+    height: auto;
+}
+
+.titleEdit .Lixo {
+    width: 25px;
+    height: auto;
+}
+
+.titleEdit .Lixo:hover {
+    transform: scale(1.2);
+}
+
 .titleEdit h2 {
     font-size: 24px;
     margin: 0;
+    text-align: center;
 }
 
 .titleEdit .close {
@@ -38,17 +53,21 @@
     cursor: pointer;
 }
 
+.titleEdit .close:hover {
+    transform: scale(1.2);
+}
+
 /* Container principal para os campos */
 .containerEdit {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* Duas colunas */
-    gap: 20px; /* Espaçamento entre os campos */
+    gap: 10px; /* Espaçamento entre os campos */
     flex-grow: 1;
 }
 
-/* Campos de entrada */
 .containerEdit input,
-.containerEdit textarea {
+.containerEdit textarea,
+.containerEdit select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -56,6 +75,19 @@
     font-size: 16px;
     box-sizing: border-box;
 }
+
+.containerEdit textarea {
+    height: auto; /* Permite que o textarea tenha o mesmo tamanho de altura do input */
+    min-height: 40px; /* Define uma altura mínima */
+    resize: none; /* Remove o redimensionamento manual */
+}
+
+.containerEdit textarea:focus,
+.containerEdit select:focus,
+.containerEdit input:focus{
+    outline: none;
+    border-color: #0d722b;
+ }
 
 /* Campo de texto grande */
 .containerEdit textarea {
@@ -77,4 +109,15 @@
 
 .containerEdit button:hover {
     background-color: #45a049;
+}
+
+.tituloInput {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.containerEdit .data-container {
+    display: flex;
+    flex-direction: column;
 }

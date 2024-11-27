@@ -5,13 +5,18 @@ import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import Lapis from '../../assets/lapis.png';
 import Lixo from '../../assets/lixo.png';
-import Emprestado from '../../assets/Emprestado.png'
+import Emprestado from '../../assets/Emprestado.png';
+import ModalEdit from '../../Components/ModalEdit';
 
 function Ferramentas() {
   const navigate = useNavigate();
   const [patrimonio, setPatrimonio] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
+  
+  // Estado para controlar o modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedFerramenta, setSelectedFerramenta] = useState(null); // Ferramenta selecionada para edição
 
   async function getFerramentas() {
     const patrimonioFromApi = await api.get('/ferramentas');
@@ -39,6 +44,18 @@ function Ferramentas() {
       setCurrentPage(currentPage + 1);
     }
   }
+
+  // Função para abrir o modal de edição
+  const handleEditClick = (ferramenta) => {
+    setSelectedFerramenta(ferramenta);
+    setIsModalOpen(true); // Abre o modal
+  };
+
+  // Função para fechar o modal
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedFerramenta(null);
+  };
 
   return (
     <div className="container">
@@ -74,10 +91,13 @@ function Ferramentas() {
                       <h2>{ferramenta.Nome}</h2>
                       <div className="action-icons">
                         <img src={Emprestado} alt="Emprestar" className="icon" />
-                        <img src={Lapis} alt="Editar"  className="icon" />
+                        <img 
+                          src={Lapis} 
+                          alt="Editar"  
+                          className="icon" 
+                          onClick={() => handleEditClick(ferramenta)} // Chama a função de abrir o modal
+                        />
                         <img src={Lixo} alt="Excluir" className="icon" />
-
-
                       </div>
                     </div>
                     <p>{ferramenta.Patrimonio}</p>
@@ -93,13 +113,13 @@ function Ferramentas() {
                         <li><span>Data Emprestado:</span> {ferramenta.DataEmprestado}</li>
                         <li><span>Data Devolvida:</span> {ferramenta.DataDevolvida}</li>
                       </ul>
-                      </div>
-                      <div className="container-obs">
+                    </div>
+                    <div className="container-obs">
                       <ul>
                         <li><span>Observação:</span> {ferramenta.Observacao}</li>
                         <li><span>Obs Emprestado:</span> {ferramenta.ObsEmprestado}</li>
-                        </ul>
-                      </div>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -126,6 +146,14 @@ function Ferramentas() {
           </div>
         </div>
       </div>
+
+      {/* ModalEdit - Condicionalmente renderizado */}
+      {isModalOpen && 
+        <ModalEdit 
+          ferramenta={selectedFerramenta} 
+          onClose={handleCloseModal} 
+        />
+      }
     </div>
   );
 }

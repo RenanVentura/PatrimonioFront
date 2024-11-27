@@ -1,36 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import './ModalEdit.css';
 import api from '../services/api';
+import logo from '../assets/Logo.png';
+import Lixo from '../assets/lixo.png';
 
-function ModalEdit() {
-    const [patrimonio, setPatrimonio] = useState([]);
-    const [editedFerramenta, setEditedFerramenta] = useState({
-        patrimonio: '',
-        responsavel: '',
-        status: '',
-        centroDeCusto: '',
-        empresa: '',
-        valor: '',
-        tipoDeCadastro: '',
-        observacao: ''
-    });
-    const [isModalOpen, setIsModalOpen] = useState(true); 
+function ModalEdit({ ferramenta, onClose }) {
+    const [editedFerramenta, setEditedFerramenta] = useState(ferramenta);
 
-    async function getFerramentas() {
-        try {
-            const patrimonioFromApi = await api.get('/ferramentas');
-            setPatrimonio(patrimonioFromApi.data);
-        } catch (error) {
-            console.error('Erro ao carregar ferramentas:', error);
-        }
-    }
+    useEffect(() => {
+        setEditedFerramenta(ferramenta); // Atualiza os dados quando a ferramenta for passada para o modal
+    }, [ferramenta]);
 
     const handleUpdate = async (id) => {
         try {
             await api.put(`/ferramentas/${id}`, editedFerramenta);
             alert('Ferramenta atualizada com sucesso!');
-            getFerramentas(); 
-            closeModal();
+            onClose(); // Fecha o modal após atualização
         } catch (error) {
             alert('Erro ao atualizar ferramenta');
             console.error(error);
@@ -45,87 +30,142 @@ function ModalEdit() {
         });
     };
 
-    const closeModal = () => {
-        setIsModalOpen(false); 
-    };
-
-    useEffect(() => {
-        getFerramentas();
-    }, []);
-
-    const ferramenta = patrimonio[0];
+    if (!ferramenta) return null; // Garantir que ferramenta não seja null ou undefined
 
     return (
-        isModalOpen && (
-            <div className="formEdit">
-                {ferramenta && (
-                    <div className="container-card">
-                        <div className="titleEdit">
-                            <h2>Editar Ferramenta</h2>
-                            <button className="close" onClick={closeModal}>X</button>
-                        </div>
-                        <div className="containerEdit">
-                            <input
-                                type="text"
-                                name="patrimonio"
-                                placeholder="Patrimônio"
-                                value={editedFerramenta.patrimonio || ferramenta.patrimonio}
-                                onChange={handleChange}
-                            />
-                            <input
-                                type="text"
-                                name="responsavel"
-                                placeholder="Responsável"
-                                value={editedFerramenta.responsavel || ferramenta.responsavel}
-                                onChange={handleChange}
-                            />
-                            <input
-                                type="text"
-                                name="status"
-                                placeholder="Status"
-                                value={editedFerramenta.status || ferramenta.status}
-                                onChange={handleChange}
-                            />
-                            <input
-                                type="text"
-                                name="centroDeCusto"
-                                placeholder="Centro de Custo"
-                                value={editedFerramenta.centroDeCusto || ferramenta.centroDeCusto}
-                                onChange={handleChange}
-                            />
-                            <input
-                                type="text"
-                                name="empresa"
-                                placeholder="Empresa"
-                                value={editedFerramenta.empresa || ferramenta.empresa}
-                                onChange={handleChange}
-                            />
-                            <input
-                                type="number"
-                                name="valor"
-                                placeholder="Valor"
-                                value={editedFerramenta.valor || ferramenta.valor}
-                                onChange={handleChange}
-                            />
-                            <input
-                                type="text"
-                                name="tipoDeCadastro"
-                                placeholder="Tipo de Cadastro"
-                                value={editedFerramenta.tipoDeCadastro || ferramenta.tipoDeCadastro}
-                                onChange={handleChange}
-                            />
-                            <textarea
-                                name="observacao"
-                                placeholder="Observação"
-                                value={editedFerramenta.observacao || ferramenta.observacao}
-                                onChange={handleChange}
-                            />
-                            <button onClick={() => handleUpdate(ferramenta.id)}>Salvar alterações</button>
-                        </div>
+        <div className="formEdit">
+            <div className="container-card">
+                <div className="titleEdit">
+                    <img className="logoQually" src={logo} alt="Logo" />
+                    <h2>Editar Ferramenta:<br />
+                        {ferramenta.Nome}</h2>
+                    <img className="Lixo" src={Lixo} alt="Lixo" />
+                    <button className="close" onClick={onClose}>X</button>
+                </div>
+                <div className="containerEdit">
+                    <div className="data-container">
+                        <div className="tituloInput">Patrimônio</div>
+                        <input
+                            type="text"
+                            name="Patrimonio"
+                            placeholder="Patrimônio"
+                            value={editedFerramenta.Patrimonio || ''}
+                            onChange={handleChange}
+                        />
                     </div>
-                )}
+                    <div className="data-container">
+                        <div className="tituloInput">Responsável</div>
+                        <input
+                            type="text"
+                            name="NomeDeResponsavel"
+                            placeholder="Responsável"
+                            value={editedFerramenta.NomeDeResponsavel || ''}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="data-container">
+                        <div className="tituloInput">Responsável Emprestado</div>
+                        <input
+                            type="text"
+                            name="ResponsavelEmprestado"
+                            placeholder="Responsável Emprestado"
+                            value={editedFerramenta.ResponsavelEmprestado || ''}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="data-container">
+                        <div className="tituloInput">Status</div>
+                        <input
+                            type="text"
+                            name="Status"
+                            placeholder="Status"
+                            value={editedFerramenta.Status || ''}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="data-container">
+                        <div className="tituloInput">Centro de Custo</div>
+                        <input
+                            type="text"
+                            name="CentroDeCusto"
+                            placeholder="Centro de Custo"
+                            value={editedFerramenta.CentroDeCusto || ''}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="data-container">
+                        <div className="tituloInput">Empresa</div>
+                        <input
+                            type="text"
+                            name="Empresa"
+                            placeholder="Empresa"
+                            value={editedFerramenta.Empresa || ''}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="data-container">
+                        <div className="tituloInput">Valor</div>
+                        <input
+                            type="number"
+                            name="Valor"
+                            placeholder="Valor"
+                            value={editedFerramenta.Valor || ''}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="data-container">
+                        <div className="tituloInput">Tipo de Cadastro</div>
+                        <input
+                            type="text"
+                            name="TipoDeCadastro"
+                            placeholder="Tipo de Cadastro"
+                            value={editedFerramenta.TipoDeCadastro || ''}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="data-container">
+                        <div className="tituloInput">Data Emprestada</div>
+                        <input
+                            type="date"
+                            name="DataEmprestado"
+                            value={editedFerramenta.DataEmprestado || ''}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="data-container">
+                        <div className="tituloInput">Data Devolvida</div>
+                        <input
+                            type="date"
+                            name="DataDevolvida"
+                            value={editedFerramenta.DataDevolvida || ''}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="data-container">
+                        <div className="tituloInput">Observação Emprestado</div>
+                        <textarea
+                            name="Observacao"
+                            placeholder="Observação Emprestado"
+                            value={editedFerramenta.ObsEmprestado || ''}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="data-container">
+                        <div className="tituloInput">Observação Emprestado</div>
+                        <textarea
+                            name="Observação"
+                            placeholder="Observação"
+                            value={editedFerramenta.Observacao || ''}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <button onClick={() => handleUpdate(ferramenta.id)}>Salvar alterações</button>
+                </div>
             </div>
-        )
+        </div>
     );
 }
 
