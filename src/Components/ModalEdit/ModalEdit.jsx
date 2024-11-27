@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './ModalEdit.css';
-import api from '../services/api';
-import logo from '../assets/Logo.png';
-import Lixo from '../assets/lixo.png';
+import api from '../../services/api';
+import logo from '../../assets/Logo.png';
+import Lixo from '../../assets/lixo.png';
 
 function ModalEdit({ ferramenta, onClose }) {
     const [editedFerramenta, setEditedFerramenta] = useState(ferramenta);
@@ -43,7 +43,6 @@ function ModalEdit({ ferramenta, onClose }) {
                     <button className="close" onClick={onClose}>X</button>
                 </div>
                 <div className="containerEdit">
-                    {/* Renderização dos campos do formulário */}
                     <div className="data-container">
                         <div className="tituloInput">Patrimônio</div>
                         <input
@@ -88,13 +87,19 @@ function ModalEdit({ ferramenta, onClose }) {
                     </div>
                     <div className="data-container">
                         <div className="tituloInput">Centro de Custo</div>
-                        <input
+                        <select
                             type="text"
                             name="CentroDeCusto"
                             placeholder="Centro de Custo"
                             value={editedFerramenta.CentroDeCusto || ''}
                             onChange={handleChange}
-                        />
+                        >
+                            <option value="Oficina">Oficina</option>
+                            <option value="Agricola">Agricola</option>
+                            <option value="Logistica">Logistica</option>
+                            <option value="Frotas">Frotas</option>
+                            <option value="Almoxarifado">Almoxarifado</option>
+                        </select>
                     </div>
                     <div className="data-container">
                         <div className="tituloInput">Empresa</div>
@@ -126,13 +131,17 @@ function ModalEdit({ ferramenta, onClose }) {
                     </div>
                     <div className="data-container">
                         <div className="tituloInput">Tipo de Cadastro</div>
-                        <input
+                        <select
                             type="text"
                             name="TipoDeCadastro"
                             placeholder="Tipo de Cadastro"
                             value={editedFerramenta.TipoDeCadastro || ''}
                             onChange={handleChange}
-                        />
+                        >
+                            <option value="Frotas">Frotas</option>
+                            <option value="Ferramentas">Ferramentas</option>
+
+                            </select>
                     </div>
                     <div className="data-container">
                         <div className="tituloInput">Data Emprestada</div>

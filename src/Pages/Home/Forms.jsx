@@ -82,7 +82,7 @@ function Forms() {
           <select name="TipoDeCadastro" ref={inputTipoDeCadastro}>
             <option>Tipo de Cadastro</option>
             <option value="Ferramenta">Ferramentas</option>
-            <option value="Frota">Frotas</option>
+            <option value="Frotas">Frotas</option>
           </select>
           <input name="Valor" type="number" placeholder="Valor" ref={inputValor} />
           <select name="Empresa" ref={inputEmpresa}>
@@ -95,7 +95,14 @@ function Forms() {
             <option value="Isaac Cereais">Isaac Cereais</option>
             <option value="Isaac Feno">Isaac Feno</option>
           </select>
-          <input name="CentroDeCusto" type="text" placeholder="Centro de Custo" ref={inputCentroDeCusto} />
+          <select name="CentroDeCusto" ref={inputCentroDeCusto} >
+          <option>Centro de Custo</option>
+          <option value="Oficina">Oficina</option>
+          <option value="Agricola">Agricola</option>
+          <option value="Logistica">Logistica</option>
+          <option value="Frotas">Frotas</option>
+          <option value="Almoxarifado">Almoxarifado</option>
+          </select>
           <input name="NomeDoResponsavel" type="text" placeholder="Nome do Responsável" ref={inputNomeDoResponsavel} />
           <textarea name="Observacao" placeholder="Observação" ref={inputObservacao} />
           <button type="button" onClick={createSoli}>Cadastrar</button>

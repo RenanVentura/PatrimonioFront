@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Lapis from '../../assets/lapis.png';
 import Lixo from '../../assets/lixo.png';
 import Emprestado from '../../assets/Emprestado.png';
-import ModalEdit from '../../Components/ModalEdit';
+import ModalEdit from '../../Components/ModalEdit/ModalEdit';
 
 function Ferramentas() {
   const navigate = useNavigate();
