@@ -12,10 +12,7 @@ function Ferramentas() {
   const [patrimonio, setPatrimonio] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);  // Controla a visibilidade do modal
-  const [ferramentaToEdit, setFerramentaToEdit] = useState(null);  // Dados da ferramenta a ser editada
 
-  // Função para buscar as ferramentas da API
   async function getFerramentas() {
     const patrimonioFromApi = await api.get('/ferramentas');
     setPatrimonio(patrimonioFromApi.data);
@@ -37,23 +34,10 @@ function Ferramentas() {
     }
   }
 
-  // Função para navegar para a próxima página
   function handleNextPage() {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
-  }
-
-  // Função para abrir o modal de edição
-  function openEditModal(ferramenta) {
-    setFerramentaToEdit(ferramenta);  // Define a ferramenta que será editada
-    setIsEditModalOpen(true);  // Abre o modal
-  }
-
-  // Função para fechar o modal de edição
-  function closeEditModal() {
-    setIsEditModalOpen(false);
-    setFerramentaToEdit(null);  // Limpa os dados
   }
 
   return (
@@ -90,12 +74,7 @@ function Ferramentas() {
                       <h2>{ferramenta.Nome}</h2>
                       <div className="action-icons">
                         <img src={Emprestado} alt="Emprestar" className="icon" />
-                        <img
-                          src={Lapis}
-                          alt="Editar"
-                          className="icon"
-                          onClick={() => openEditModal(ferramenta)} // Abre o modal ao clicar no lápis
-                        />
+                        <img src={Lapis} alt="Editar"  className="icon" />
                         <img src={Lixo} alt="Excluir" className="icon" />
 
 
@@ -147,29 +126,6 @@ function Ferramentas() {
           </div>
         </div>
       </div>
-
-      {/* Modal de Edição */}
-      {isEditModalOpen && (
-        <div className="edit-modal">
-          <div className="modal-content">
-            <h3>Editar Ferramenta</h3>
-            <form>
-              <div>
-                <label>Nome:</label>
-                <input type="text" defaultValue={ferramentaToEdit.Nome} />
-              </div>
-              <div>
-                <label>Status:</label>
-                <input type="text" defaultValue={ferramentaToEdit.Status} />
-              </div>
-              {/* Adicione outros campos conforme necessário */}
-              <button type="submit">Salvar</button>
-              <button type="button" onClick={closeEditModal}>Fechar</button>
-            </form>
-          </div>
-        </div>
-      )}
-
     </div>
   );
 }

@@ -1,100 +1,80 @@
+/* Estilo principal do modal */
 .formEdit {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Escurece o fundo */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-/* Container do card */
-.container-card {
-    background-color: white;
-    border-radius: 8px;
-    padding: 20px;
-    width: 80%;
-    max-width: 600px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 700px;
+    background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative; /* Necessário para posicionar o "X" */
+    border-radius: 8px;
+    z-index: 1000; /* Certifique-se de que está à frente de tudo */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
 }
 
-/* Título do modal */
+/* Estilo do cabeçalho do modal */
 .titleEdit {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
     margin-bottom: 20px;
 }
 
-/* Título */
 .titleEdit h2 {
+    font-size: 24px;
     margin: 0;
-    font-size: 1.5rem;
-    color: #333;
 }
 
-/* Estilo do "X" */
 .titleEdit .close {
-    cursor: pointer;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #333;
-    background: transparent;
+    background: none;
     border: none;
-    position: absolute;
-    top: 10px;
-    right: 10px; /* Coloca o "X" no canto superior direito */
-    padding: 0;
-    line-height: 1;
+    font-size: 20px;
+    cursor: pointer;
 }
 
-/* Estilo ao passar o mouse */
-.titleEdit .close:hover {
-    color: #e74c3c; /* Muda a cor para vermelho ao passar o mouse */
-}
-
-/* Estilo do formulário */
+/* Container principal para os campos */
 .containerEdit {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Duas colunas */
+    gap: 20px; /* Espaçamento entre os campos */
+    flex-grow: 1;
 }
 
-/* Estilo dos inputs */
+/* Campos de entrada */
 .containerEdit input,
 .containerEdit textarea {
+    width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-    width: 100%;
+    border-radius: 4px;
+    font-size: 16px;
     box-sizing: border-box;
 }
 
-/* Estilo específico para o textarea */
+/* Campo de texto grande */
 .containerEdit textarea {
-    height: 100px;
+    height: 80px;
     resize: none;
 }
 
-/* Botão de salvar alterações */
-button {
-    background-color: #4CAF50;
+/* Botão para salvar alterações */
+.containerEdit button {
+    grid-column: span 2; /* Botão ocupa as duas colunas */
+    padding: 10px;
+    background-color: #4caf50;
     color: white;
     border: none;
-    padding: 12px 20px;
-    font-size: 1.2rem;
-    border-radius: 5px;
+    border-radius: 4px;
+    font-size: 16px;
     cursor: pointer;
-    align-self: center; /* Centraliza o botão */
-    margin-top: 20px;
-    transition: background-color 0.3s;
 }
 
-button:hover {
+.containerEdit button:hover {
     background-color: #45a049;
 }
