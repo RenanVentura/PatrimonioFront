@@ -5,12 +5,13 @@ import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import Lapis from '../../assets/lapis.png';
 import Lixo from '../../assets/lixo.png';
+import Emprestado from '../../assets/Emprestado.png'
 
 function Ferramentas() {
   const navigate = useNavigate();
   const [patrimonio, setPatrimonio] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 9;
+  const itemsPerPage = 6;
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);  // Controla a visibilidade do modal
   const [ferramentaToEdit, setFerramentaToEdit] = useState(null);  // Dados da ferramenta a ser editada
 
@@ -20,20 +21,16 @@ function Ferramentas() {
     setPatrimonio(patrimonioFromApi.data);
   }
 
-  // Chama a função para carregar as ferramentas quando o componente for montado
   useEffect(() => {
     getFerramentas();
   }, []);
 
-  // Cálculos para determinar a página atual
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = patrimonio.slice(indexOfFirstItem, indexOfLastItem);
 
-  // Número total de páginas
   const totalPages = Math.ceil(patrimonio.length / itemsPerPage);
 
-  // Função para navegar para a página anterior
   function handlePreviousPage() {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -92,6 +89,7 @@ function Ferramentas() {
                     <div className="info-header">
                       <h2>{ferramenta.Nome}</h2>
                       <div className="action-icons">
+                        <img src={Emprestado} alt="Emprestar" className="icon" />
                         <img
                           src={Lapis}
                           alt="Editar"
@@ -99,24 +97,30 @@ function Ferramentas() {
                           onClick={() => openEditModal(ferramenta)} // Abre o modal ao clicar no lápis
                         />
                         <img src={Lixo} alt="Excluir" className="icon" />
+
+
                       </div>
                     </div>
                     <p>{ferramenta.Patrimonio}</p>
                     <div className="info-columns">
                       <ul>
                         <li><span>Responsável:</span> {ferramenta.NomeDeResponsavel}</li>
-                        <li><span>Status:</span> {ferramenta.Status}</li>
                         <li><span>Centro de Custo:</span> {ferramenta.CentroDeCusto}</li>
+                        <li><span>Responsavel Emprestado:</span> {ferramenta.ResponsavelEmprestado}</li>
                       </ul>
                       <ul>
                         <li><span>Empresa:</span> {ferramenta.Empresa}</li>
                         <li><span>Valor: </span>R$ {ferramenta.Valor}</li>
-                        <li><span>Tipo de Cadastro:</span> {ferramenta.TipoDeCadastro}</li>
+                        <li><span>Data Emprestado:</span> {ferramenta.DataEmprestado}</li>
+                        <li><span>Data Devolvida:</span> {ferramenta.DataDevolvida}</li>
                       </ul>
-                    </div>
-                    <div className="container-obs">
-                      <span>Observação:</span> {ferramenta.Observacao}
-                    </div>
+                      </div>
+                      <div className="container-obs">
+                      <ul>
+                        <li><span>Observação:</span> {ferramenta.Observacao}</li>
+                        <li><span>Obs Emprestado:</span> {ferramenta.ObsEmprestado}</li>
+                        </ul>
+                      </div>
                   </div>
                 </div>
               </div>

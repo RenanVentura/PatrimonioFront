@@ -30,8 +30,12 @@ function Forms() {
         CentroDeCusto: inputCentroDeCusto.current.value,
         NomeDeResponsavel: inputNomeDoResponsavel.current.value,
         TipoDeCadastro: inputTipoDeCadastro.current.value,
-        Status: 'Ativo',  // Ou use inputStatus.current.value se quiser permitir a seleção
-        StatusDelete: true
+        Status: 'Ativo',  
+        StatusDelete: true,
+        ObsEmprestado: null,
+        ResponsavelEmprestado: null,
+        DataEmprestado: null,
+        DataDevolvida: null
       });
 
       console.log('Cadastro realizado com sucesso', response);
