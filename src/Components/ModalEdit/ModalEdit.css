@@ -1,7 +1,17 @@
 /* Estilo principal do modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 999;
+}
+
 .formEdit {
     position: fixed;
-    margin-top: 600px;
+    margin-top: 700px;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 800px;
@@ -9,14 +19,13 @@
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
-    z-index: 1000; /* Certifique-se de que está à frente de tudo */
+    z-index: 1000; 
     overflow: hidden;
     display: flex;
     flex-direction: column;
     padding: 20px;
 }
 
-/* Estilo do cabeçalho do modal */
 .titleEdit {
     display: flex;
     justify-content: space-between;

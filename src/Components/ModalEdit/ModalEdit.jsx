@@ -12,7 +12,6 @@ function ModalEdit({ ferramenta, onClose }) {
     }, [ferramenta]);
 
     const handleUpdate = async (id) => {
-        // Verificar quais campos foram alterados
         const modifiedFields = {};
         Object.keys(editedFerramenta).forEach((key) => {
             if (ferramenta[key] !== editedFerramenta[key]) {
@@ -21,7 +20,6 @@ function ModalEdit({ ferramenta, onClose }) {
         });
 
         try {
-            // Se houver alterações, registrar no histórico
             if (Object.keys(modifiedFields).length > 0) {
                 await api.post('/ferramentaHistorico', {
                     Nome: ferramenta.Nome,
@@ -37,12 +35,11 @@ function ModalEdit({ ferramenta, onClose }) {
                     DataDevolvida: ferramenta.DataDevolvida,
                     ObsEmprestado: ferramenta.ObsEmprestado,
                     Observacao: ferramenta.Observacao,
-                    ...modifiedFields, // Inclui os campos modificados
+                    ...modifiedFields,
                     StatusDelete: true,
                 });
             }
 
-            // Atualizar os dados da ferramenta
             await api.put(`/ferramentas/${id}`, editedFerramenta);
 
             alert('Ferramenta atualizada com sucesso!');
@@ -64,167 +61,161 @@ function ModalEdit({ ferramenta, onClose }) {
     if (!ferramenta) return null;
 
     return (
-        <div className="formEdit">
-            <div className="container-card">
-                <div className="titleEdit">
-                    <img className="logoQually" src={logo} alt="Logo" />
-                    <h2>
-                        Editar Ferramenta:<br />
-                        {ferramenta.Nome}
-                    </h2>
-                    <img className="Lixo" src={Lixo} alt="Lixo" />
-                    <button className="close" onClick={onClose}>
-                        X
-                    </button>
-                </div>
-                <div className="containerEdit">
-                    {/** Patrimônio */}
-                    <div className="data-container">
-                        <div className="tituloInput">Patrimônio</div>
-                        <input
-                            type="text"
-                            name="Patrimonio"
-                            placeholder="Patrimônio"
-                            value={editedFerramenta.Patrimonio || ''}
-                            onChange={handleChange}
-                        />
+        <>
+            {/* Overlay escuro */}
+            <div className="modal-overlay" onClick={onClose}></div>
+
+            {/* Modal principal */}
+            <div className="formEdit">
+                <div className="container-card">
+                    <div className="titleEdit">
+                        <img className="logoQually" src={logo} alt="Logo" />
+                        <h2>
+                            Editar Ferramenta:<br />
+                            {ferramenta.Nome}
+                        </h2>
+                        <img className="Lixo" src={Lixo} alt="Lixo" />
+                        <button className="close" onClick={onClose}>
+                            X
+                        </button>
                     </div>
-                    {/** Nome de Responsável */}
-                    <div className="data-container">
-                        <div className="tituloInput">Responsável</div>
-                        <input
-                            type="text"
-                            name="NomeDeResponsavel"
-                            placeholder="Responsável"
-                            value={editedFerramenta.NomeDeResponsavel || ''}
-                            onChange={handleChange}
-                        />
+                    <div className="containerEdit">
+                        <div className="data-container">
+                            <div className="tituloInput">Patrimônio</div>
+                            <input
+                                type="text"
+                                name="Patrimonio"
+                                placeholder="Patrimônio"
+                                value={editedFerramenta.Patrimonio || ''}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="data-container">
+                            <div className="tituloInput">Responsável</div>
+                            <input
+                                type="text"
+                                name="NomeDeResponsavel"
+                                placeholder="Responsável"
+                                value={editedFerramenta.NomeDeResponsavel || ''}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="data-container">
+                            <div className="tituloInput">Responsável Emprestado</div>
+                            <input
+                                type="text"
+                                name="ResponsavelEmprestado"
+                                placeholder="Responsável Emprestado"
+                                value={editedFerramenta.ResponsavelEmprestado || ''}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="data-container">
+                            <div className="tituloInput">Status</div>
+                            <select
+                                name="Status"
+                                value={editedFerramenta.Status || ''}
+                                onChange={handleChange}
+                            >
+                                <option value="Ativo">Ativo</option>
+                                <option value="Emprestado">Emprestado</option>
+                                <option value="Inativo">Inativo</option>
+                            </select>
+                        </div>
+                        <div className="data-container">
+                            <div className="tituloInput">Centro de Custo</div>
+                            <select
+                                name="CentroDeCusto"
+                                value={editedFerramenta.CentroDeCusto || ''}
+                                onChange={handleChange}
+                            >
+                                <option value="Oficina">Oficina</option>
+                                <option value="Agricola">Agricola</option>
+                                <option value="Logistica">Logistica</option>
+                                <option value="Frotas">Frotas</option>
+                                <option value="Almoxarifado">Almoxarifado</option>
+                            </select>
+                        </div>
+                        <div className="data-container">
+                            <div className="tituloInput">Empresa</div>
+                            <select
+                                name="Empresa"
+                                value={editedFerramenta.Empresa || ''}
+                                onChange={handleChange}
+                            >
+                                <option value="Qually Grama">Qually Grama</option>
+                                <option value="Qually Bahia">Qually Bahia</option>
+                                <option value="Qually Ceará">Qually Ceará</option>
+                                <option value="Qually Paraiba">Qually Paraiba</option>
+                                <option value="Isaac Matriz">Isaac Matriz</option>
+                                <option value="Isaac Cereais">Isaac Cereais</option>
+                                <option value="Isaac Feno">Isaac Feno</option>
+                            </select>
+                        </div>
+                        <div className="data-container">
+                            <div className="tituloInput">Valor</div>
+                            <input
+                                type="number"
+                                name="Valor"
+                                placeholder="Valor"
+                                value={editedFerramenta.Valor || ''}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="data-container">
+                            <div className="tituloInput">Tipo de Cadastro</div>
+                            <select
+                                name="TipoDeCadastro"
+                                value={editedFerramenta.TipoDeCadastro || ''}
+                                onChange={handleChange}
+                            >
+                                <option value="Frotas">Frotas</option>
+                                <option value="Ferramentas">Ferramentas</option>
+                            </select>
+                        </div>
+                        <div className="data-container">
+                            <div className="tituloInput">Data Emprestada</div>
+                            <input
+                                type="date"
+                                name="DataEmprestado"
+                                value={editedFerramenta.DataEmprestado || ''}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="data-container">
+                            <div className="tituloInput">Data Devolvida</div>
+                            <input
+                                type="date"
+                                name="DataDevolvida"
+                                value={editedFerramenta.DataDevolvida || ''}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="data-container">
+                            <div className="tituloInput">Observação Emprestado</div>
+                            <textarea
+                                name="ObsEmprestado"
+                                placeholder="Observação Emprestado"
+                                value={editedFerramenta.ObsEmprestado || ''}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="data-container">
+                            <div className="tituloInput">Observação</div>
+                            <textarea
+                                name="Observacao"
+                                placeholder="Observação"
+                                value={editedFerramenta.Observacao || ''}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <button onClick={() => handleUpdate(ferramenta.id)}>
+                            Salvar alterações
+                        </button>
                     </div>
-                    {/** Responsável Emprestado */}
-                    <div className="data-container">
-                        <div className="tituloInput">Responsável Emprestado</div>
-                        <input
-                            type="text"
-                            name="ResponsavelEmprestado"
-                            placeholder="Responsável Emprestado"
-                            value={editedFerramenta.ResponsavelEmprestado || ''}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    {/** Status */}
-                    <div className="data-container">
-                        <div className="tituloInput">Status</div>
-                        <select
-                            name="Status"
-                            value={editedFerramenta.Status || ''}
-                            onChange={handleChange}
-                        >
-                            <option value="Ativo">Ativo</option>
-                            <option value="Emprestado">Emprestado</option>
-                            <option value="Inativo">Inativo</option>
-                        </select>
-                    </div>
-                    {/** Centro de Custo */}
-                    <div className="data-container">
-                        <div className="tituloInput">Centro de Custo</div>
-                        <select
-                            name="CentroDeCusto"
-                            value={editedFerramenta.CentroDeCusto || ''}
-                            onChange={handleChange}
-                        >
-                            <option value="Oficina">Oficina</option>
-                            <option value="Agricola">Agricola</option>
-                            <option value="Logistica">Logistica</option>
-                            <option value="Frotas">Frotas</option>
-                            <option value="Almoxarifado">Almoxarifado</option>
-                        </select>
-                    </div>
-                    {/** Empresa */}
-                    <div className="data-container">
-                        <div className="tituloInput">Empresa</div>
-                        <select
-                            name="Empresa"
-                            value={editedFerramenta.Empresa || ''}
-                            onChange={handleChange}
-                        >
-                            <option value="Qually Grama">Qually Grama</option>
-                            <option value="Qually Bahia">Qually Bahia</option>
-                            <option value="Qually Ceará">Qually Ceará</option>
-                            <option value="Qually Paraiba">Qually Paraiba</option>
-                            <option value="Isaac Matriz">Isaac Matriz</option>
-                            <option value="Isaac Cereais">Isaac Cereais</option>
-                            <option value="Isaac Feno">Isaac Feno</option>
-                        </select>
-                    </div>
-                    {/** Valor */}
-                    <div className="data-container">
-                        <div className="tituloInput">Valor</div>
-                        <input
-                            type="number"
-                            name="Valor"
-                            placeholder="Valor"
-                            value={editedFerramenta.Valor || ''}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    {/** Tipo de Cadastro */}
-                    <div className="data-container">
-                        <div className="tituloInput">Tipo de Cadastro</div>
-                        <select
-                            name="TipoDeCadastro"
-                            value={editedFerramenta.TipoDeCadastro || ''}
-                            onChange={handleChange}
-                        >
-                            <option value="Frotas">Frotas</option>
-                            <option value="Ferramentas">Ferramentas</option>
-                        </select>
-                    </div>
-                    {/** Data Emprestada */}
-                    <div className="data-container">
-                        <div className="tituloInput">Data Emprestada</div>
-                        <input
-                            type="date"
-                            name="DataEmprestado"
-                            value={editedFerramenta.DataEmprestado || ''}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    {/** Data Devolvida */}
-                    <div className="data-container">
-                        <div className="tituloInput">Data Devolvida</div>
-                        <input
-                            type="date"
-                            name="DataDevolvida"
-                            value={editedFerramenta.DataDevolvida || ''}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    {/** Observação Emprestado */}
-                    <div className="data-container">
-                        <div className="tituloInput">Observação Emprestado</div>
-                        <textarea
-                            name="ObsEmprestado"
-                            placeholder="Observação Emprestado"
-                            value={editedFerramenta.ObsEmprestado || ''}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    {/** Observação */}
-                    <div className="data-container">
-                        <div className="tituloInput">Observação</div>
-                        <textarea
-                            name="Observacao"
-                            placeholder="Observação"
-                            value={editedFerramenta.Observacao || ''}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <button onClick={() => handleUpdate(ferramenta.id)}>
-                        Salvar alterações
-                    </button>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 

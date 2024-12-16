@@ -67,16 +67,34 @@ function Forms() {
         DataDevolvida: null
       });
 
-      console.log('Cadastro realizado com sucesso', response);
+        await api.post('/FerramentaHistorico', {
+        Nome: inputNome.current.value,
+        Valor: preco,
+        Patrimonio: inputPatrimonio.current.value,
+        Observacao: inputObservacao.current.value,
+        Empresa: selectFiliais,
+        CentroDeCusto: selectCentroCusto,
+        NomeDeResponsavel: inputNomeDoResponsavel.current.value,
+        TipoDeCadastro: inputTipoDeCadastro.current.value,
+        Status: 'Ativo',  
+        StatusDelete: true,
+        ObsEmprestado: null,
+        ResponsavelEmprestado: null,
+        DataEmprestado: null,
+        DataDevolvida: null
+      });
+      console.log('Cadastro realizado com sucesso');
       alert('Cadastro realizado com sucesso!');
-
-    
-      // inputNome.current.value = '';
-      // inputPatrimonio.current.value = '';
-      // inputObservacao.current.value = '';
-      // inputCentroDeCusto.current.value = '';
-      // // inputNomeDoResponsavel.current.value = '';
-      
+  
+      // Reseta os valores dos inputs
+      inputNome.current.value = '';
+      inputTipoDeCadastro.current.value = 'Tipo de Cadastro';
+      inputValor.current.value = '';
+      inputPatrimonio.current.value = '';
+      inputObservacao.current.value = '';
+      inputNomeDoResponsavel.current.value = '';
+      setSelectFiliais('');
+      setSelectCentroCusto('');
     } catch (error) {
       console.error('Erro ao enviar o formulário', error);
       alert('Erro ao enviar o formulário. Tente novamente mais tarde.');
