@@ -12,26 +12,37 @@ function ModalEdit({ ferramenta, onClose }) {
     }, [ferramenta]);
 
     const handleUpdate = async (id) => {
-        try {
-            // Criando o backup da ferramenta antes de atualizar
-            await api.post('/ferramentaHistorico', {
-                Nome: ferramenta.Nome,
-                Patrimonio: ferramenta.Patrimonio,
-                NomeDeResponsavel: ferramenta.NomeDeResponsavel,
-                ResponsavelEmprestado: ferramenta.ResponsavelEmprestado,
-                Status: ferramenta.Status,
-                CentroDeCusto: ferramenta.CentroDeCusto,
-                Empresa: ferramenta.Empresa,
-                Valor: ferramenta.Valor,
-                TipoDeCadastro: ferramenta.TipoDeCadastro,
-                DataEmprestado: ferramenta.DataEmprestado,
-                DataDevolvida: ferramenta.DataDevolvida,
-                ObsEmprestado: ferramenta.ObsEmprestado,
-                Observacao: ferramenta.Observacao,
-                // Campos adicionais que você possa ter
-            });
+        // Verificar quais campos foram alterados
+        const modifiedFields = {};
+        Object.keys(editedFerramenta).forEach((key) => {
+            if (ferramenta[key] !== editedFerramenta[key]) {
+                modifiedFields[key] = editedFerramenta[key];
+            }
+        });
 
-            // Atualizando os dados no banco de dados principal
+        try {
+            // Se houver alterações, registrar no histórico
+            if (Object.keys(modifiedFields).length > 0) {
+                await api.post('/ferramentaHistorico', {
+                    Nome: ferramenta.Nome,
+                    Patrimonio: ferramenta.Patrimonio,
+                    NomeDeResponsavel: ferramenta.NomeDeResponsavel,
+                    ResponsavelEmprestado: ferramenta.ResponsavelEmprestado,
+                    Status: ferramenta.Status,
+                    CentroDeCusto: ferramenta.CentroDeCusto,
+                    Empresa: ferramenta.Empresa,
+                    Valor: parseFloat(ferramenta.Valor),
+                    TipoDeCadastro: ferramenta.TipoDeCadastro,
+                    DataEmprestado: ferramenta.DataEmprestado,
+                    DataDevolvida: ferramenta.DataDevolvida,
+                    ObsEmprestado: ferramenta.ObsEmprestado,
+                    Observacao: ferramenta.Observacao,
+                    ...modifiedFields, // Inclui os campos modificados
+                    StatusDelete: true,
+                });
+            }
+
+            // Atualizar os dados da ferramenta
             await api.put(`/ferramentas/${id}`, editedFerramenta);
 
             alert('Ferramenta atualizada com sucesso!');
@@ -46,23 +57,28 @@ function ModalEdit({ ferramenta, onClose }) {
         const { name, value } = e.target;
         setEditedFerramenta({
             ...editedFerramenta,
-            [name]: value
+            [name]: value,
         });
     };
 
-    if (!ferramenta) return null; 
+    if (!ferramenta) return null;
 
     return (
         <div className="formEdit">
             <div className="container-card">
                 <div className="titleEdit">
                     <img className="logoQually" src={logo} alt="Logo" />
-                    <h2>Editar Ferramenta:<br />
-                        {ferramenta.Nome}</h2>
+                    <h2>
+                        Editar Ferramenta:<br />
+                        {ferramenta.Nome}
+                    </h2>
                     <img className="Lixo" src={Lixo} alt="Lixo" />
-                    <button className="close" onClick={onClose}>X</button>
+                    <button className="close" onClick={onClose}>
+                        X
+                    </button>
                 </div>
                 <div className="containerEdit">
+                    {/** Patrimônio */}
                     <div className="data-container">
                         <div className="tituloInput">Patrimônio</div>
                         <input
@@ -73,6 +89,7 @@ function ModalEdit({ ferramenta, onClose }) {
                             onChange={handleChange}
                         />
                     </div>
+                    {/** Nome de Responsável */}
                     <div className="data-container">
                         <div className="tituloInput">Responsável</div>
                         <input
@@ -83,6 +100,7 @@ function ModalEdit({ ferramenta, onClose }) {
                             onChange={handleChange}
                         />
                     </div>
+                    {/** Responsável Emprestado */}
                     <div className="data-container">
                         <div className="tituloInput">Responsável Emprestado</div>
                         <input
@@ -93,6 +111,7 @@ function ModalEdit({ ferramenta, onClose }) {
                             onChange={handleChange}
                         />
                     </div>
+                    {/** Status */}
                     <div className="data-container">
                         <div className="tituloInput">Status</div>
                         <select
@@ -105,12 +124,11 @@ function ModalEdit({ ferramenta, onClose }) {
                             <option value="Inativo">Inativo</option>
                         </select>
                     </div>
+                    {/** Centro de Custo */}
                     <div className="data-container">
                         <div className="tituloInput">Centro de Custo</div>
                         <select
-                            type="text"
                             name="CentroDeCusto"
-                            placeholder="Centro de Custo"
                             value={editedFerramenta.CentroDeCusto || ''}
                             onChange={handleChange}
                         >
@@ -121,24 +139,24 @@ function ModalEdit({ ferramenta, onClose }) {
                             <option value="Almoxarifado">Almoxarifado</option>
                         </select>
                     </div>
+                    {/** Empresa */}
                     <div className="data-container">
                         <div className="tituloInput">Empresa</div>
                         <select
-                            type="text"
                             name="Empresa"
-                            placeholder="Empresa"
                             value={editedFerramenta.Empresa || ''}
                             onChange={handleChange}
                         >
-                            <option value="Qually Matriz">Qually Matriz</option>
+                            <option value="Qually Grama">Qually Grama</option>
                             <option value="Qually Bahia">Qually Bahia</option>
-                            <option value="Qually Ceara">Qually Ceara</option>
+                            <option value="Qually Ceará">Qually Ceará</option>
                             <option value="Qually Paraiba">Qually Paraiba</option>
-                            <option value="Isaac Grama">Isaac Grama</option>
+                            <option value="Isaac Matriz">Isaac Matriz</option>
                             <option value="Isaac Cereais">Isaac Cereais</option>
                             <option value="Isaac Feno">Isaac Feno</option>
                         </select>
                     </div>
+                    {/** Valor */}
                     <div className="data-container">
                         <div className="tituloInput">Valor</div>
                         <input
@@ -149,12 +167,11 @@ function ModalEdit({ ferramenta, onClose }) {
                             onChange={handleChange}
                         />
                     </div>
+                    {/** Tipo de Cadastro */}
                     <div className="data-container">
                         <div className="tituloInput">Tipo de Cadastro</div>
                         <select
-                            type="text"
                             name="TipoDeCadastro"
-                            placeholder="Tipo de Cadastro"
                             value={editedFerramenta.TipoDeCadastro || ''}
                             onChange={handleChange}
                         >
@@ -162,6 +179,7 @@ function ModalEdit({ ferramenta, onClose }) {
                             <option value="Ferramentas">Ferramentas</option>
                         </select>
                     </div>
+                    {/** Data Emprestada */}
                     <div className="data-container">
                         <div className="tituloInput">Data Emprestada</div>
                         <input
@@ -171,6 +189,7 @@ function ModalEdit({ ferramenta, onClose }) {
                             onChange={handleChange}
                         />
                     </div>
+                    {/** Data Devolvida */}
                     <div className="data-container">
                         <div className="tituloInput">Data Devolvida</div>
                         <input
@@ -180,6 +199,7 @@ function ModalEdit({ ferramenta, onClose }) {
                             onChange={handleChange}
                         />
                     </div>
+                    {/** Observação Emprestado */}
                     <div className="data-container">
                         <div className="tituloInput">Observação Emprestado</div>
                         <textarea
@@ -189,6 +209,7 @@ function ModalEdit({ ferramenta, onClose }) {
                             onChange={handleChange}
                         />
                     </div>
+                    {/** Observação */}
                     <div className="data-container">
                         <div className="tituloInput">Observação</div>
                         <textarea
@@ -198,7 +219,9 @@ function ModalEdit({ ferramenta, onClose }) {
                             onChange={handleChange}
                         />
                     </div>
-                    <button onClick={() => handleUpdate(ferramenta.id)}>Salvar alterações</button>
+                    <button onClick={() => handleUpdate(ferramenta.id)}>
+                        Salvar alterações
+                    </button>
                 </div>
             </div>
         </div>

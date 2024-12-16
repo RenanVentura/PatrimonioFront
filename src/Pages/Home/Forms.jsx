@@ -47,12 +47,12 @@ function Forms() {
   }, []);
 
   async function createSoli() {
-    const valor = parseFloat(inputValor.current.value);
+    const preco = parseFloat(inputValor.current.value);
     try {
       
       const response = await api.post('/ferramentas', {
         Nome: inputNome.current.value,
-        Valor: valor,
+        Valor: preco,
         Patrimonio: inputPatrimonio.current.value,
         Observacao: inputObservacao.current.value,
         Empresa: selectFiliais,
@@ -70,15 +70,13 @@ function Forms() {
       console.log('Cadastro realizado com sucesso', response);
       alert('Cadastro realizado com sucesso!');
 
-      // Limpa os campos do formulário após o envio
-      inputNome.current.value = '';
-      inputValor.current.value = '';
-      inputPatrimonio.current.value = '';
-      inputObservacao.current.value = '';
-      inputEmpresa.current.value = 'Empresa';
-      inputCentroDeCusto.current.value = '';
-      inputNomeDoResponsavel.current.value = '';
-      inputTipoDeCadastro.current.value = 'Tipo de Cadastro';
+    
+      // inputNome.current.value = '';
+      // inputPatrimonio.current.value = '';
+      // inputObservacao.current.value = '';
+      // inputCentroDeCusto.current.value = '';
+      // // inputNomeDoResponsavel.current.value = '';
+      
     } catch (error) {
       console.error('Erro ao enviar o formulário', error);
       alert('Erro ao enviar o formulário. Tente novamente mais tarde.');
@@ -122,7 +120,7 @@ function Forms() {
           </div>
           <select name="TipoDeCadastro" ref={inputTipoDeCadastro}>
             <option>Tipo de Cadastro</option>
-            <option value="Ferramenta">Ferramentas</option>
+            <option value="Ferramentas">Ferramentas</option>
             <option value="Frotas">Frotas</option>
           </select>
 
@@ -134,7 +132,7 @@ function Forms() {
           <div className="tutiloInput">
           <span>Empresas</span>
           </div>
-          <select name="Empresas" type="text" value={selectFiliais}
+          <select name="Empresa" type="text" value={selectFiliais}
           onChange={(e) => setSelectFiliais(e.target.value)}>
 
           <option value="">Selecione uma Filial</option>

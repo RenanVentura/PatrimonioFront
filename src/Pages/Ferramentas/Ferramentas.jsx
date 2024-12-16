@@ -14,9 +14,8 @@ function Ferramentas() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   
-  // Estado para controlar o modal
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedFerramenta, setSelectedFerramenta] = useState(null); // Ferramenta selecionada para edição
+  const [selectedFerramenta, setSelectedFerramenta] = useState(null);
 
   async function getFerramentas() {
     const patrimonioFromApi = await api.get('/ferramentas');
@@ -45,13 +44,12 @@ function Ferramentas() {
     }
   }
 
-  // Função para abrir o modal de edição
   const handleEditClick = (ferramenta) => {
     setSelectedFerramenta(ferramenta);
-    setIsModalOpen(true); // Abre o modal
+    setIsModalOpen(true); 
   };
 
-  // Função para fechar o modal
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedFerramenta(null);
@@ -95,7 +93,7 @@ function Ferramentas() {
                           src={Lapis} 
                           alt="Editar"  
                           className="icon" 
-                          onClick={() => handleEditClick(ferramenta)} // Chama a função de abrir o modal
+                          onClick={() => handleEditClick(ferramenta)}
                         />
                         <img src={Lixo} alt="Excluir" className="icon" />
                       </div>
