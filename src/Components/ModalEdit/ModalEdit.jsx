@@ -8,14 +8,34 @@ function ModalEdit({ ferramenta, onClose }) {
     const [editedFerramenta, setEditedFerramenta] = useState(ferramenta);
 
     useEffect(() => {
-        setEditedFerramenta(ferramenta); // Atualiza os dados quando a ferramenta for passada para o modal
+        setEditedFerramenta(ferramenta);
     }, [ferramenta]);
 
     const handleUpdate = async (id) => {
         try {
+            // Criando o backup da ferramenta antes de atualizar
+            await api.post('/ferramentaHistorico', {
+                Nome: ferramenta.Nome,
+                Patrimonio: ferramenta.Patrimonio,
+                NomeDeResponsavel: ferramenta.NomeDeResponsavel,
+                ResponsavelEmprestado: ferramenta.ResponsavelEmprestado,
+                Status: ferramenta.Status,
+                CentroDeCusto: ferramenta.CentroDeCusto,
+                Empresa: ferramenta.Empresa,
+                Valor: ferramenta.Valor,
+                TipoDeCadastro: ferramenta.TipoDeCadastro,
+                DataEmprestado: ferramenta.DataEmprestado,
+                DataDevolvida: ferramenta.DataDevolvida,
+                ObsEmprestado: ferramenta.ObsEmprestado,
+                Observacao: ferramenta.Observacao,
+                // Campos adicionais que você possa ter
+            });
+
+            // Atualizando os dados no banco de dados principal
             await api.put(`/ferramentas/${id}`, editedFerramenta);
+
             alert('Ferramenta atualizada com sucesso!');
-            window.location.reload(); // Atualiza a página
+            window.location.reload();
         } catch (error) {
             alert('Erro ao atualizar ferramenta');
             console.error(error);
@@ -30,7 +50,7 @@ function ModalEdit({ ferramenta, onClose }) {
         });
     };
 
-    if (!ferramenta) return null; // Garantir que ferramenta não seja null ou undefined
+    if (!ferramenta) return null; 
 
     return (
         <div className="formEdit">
@@ -140,8 +160,7 @@ function ModalEdit({ ferramenta, onClose }) {
                         >
                             <option value="Frotas">Frotas</option>
                             <option value="Ferramentas">Ferramentas</option>
-
-                            </select>
+                        </select>
                     </div>
                     <div className="data-container">
                         <div className="tituloInput">Data Emprestada</div>

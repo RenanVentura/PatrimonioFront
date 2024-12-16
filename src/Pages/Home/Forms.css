@@ -77,6 +77,10 @@
     margin-left: 30px;
     height: 400px;
     width: 100%;
+        & .tutiloInput {
+            margin-left: 10px;
+            font-weight: bold;
+        }
 }
 
 form {
@@ -90,8 +94,8 @@ form {
 
 form h1 {
     text-align: center;
-    margin-bottom: 20px;
-    font-size: 25px;
+    margin-bottom: 17px;
+    font-size: 20px;
 }
 
 form input,
@@ -99,8 +103,8 @@ form select,
 form textarea,
 form button {
     width: 100%;
-    padding: 8.5px;
-    margin: 10px 0;
+    padding: 6px;
+    margin: 6px 0;
     border: 1px solid #ddd;
     border-radius: 20px;
 }
