@@ -4,6 +4,7 @@ import api from "../../services/api";
 import logo from "../../assets/Logo.png";
 import LixoEdit from "../../assets/lixo.png";
 import ModalConfirmDelete from "../ModalConfirmDelete/ModalConfirmDelete";
+import Emprestado from "../../assets/Emprestado.png";
 
 function ModalEdit({ ferramenta, onClose, onUpdate }) {
   const [editedFerramenta, setEditedFerramenta] = useState(ferramenta);
@@ -140,6 +141,12 @@ function ModalEdit({ ferramenta, onClose, onUpdate }) {
               src={LixoEdit}
               alt="Lixo"
               onClick={handleDeleteClick}
+              style={{ cursor: "pointer" }}
+            />
+            <img
+              className="icon"
+              src={Emprestado}
+              alt="Emprestado"
               style={{ cursor: "pointer" }}
             />
             <button className="close" onClick={onClose}>
