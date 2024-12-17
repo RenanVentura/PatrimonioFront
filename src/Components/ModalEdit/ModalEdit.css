@@ -105,7 +105,7 @@
 }
 
 /* Botão para salvar alterações */
-.containerEdit button {
+.containerEdit .save-button {
     grid-column: span 2; /* Botão ocupa as duas colunas */
     padding: 10px;
     background-color: #4caf50;

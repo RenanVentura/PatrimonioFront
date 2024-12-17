@@ -2,12 +2,48 @@ import React, { useState, useEffect } from "react";
 import "./ModalEdit.css";
 import api from "../../services/api";
 import logo from "../../assets/Logo.png";
-import Lixo from "../../assets/lixo.png";
+import LixoEdit from "../../assets/lixo.png";
+import ModalConfirmDelete from "../ModalConfirmDelete/ModalConfirmDelete";
 
 function ModalEdit({ ferramenta, onClose, onUpdate }) {
   const [editedFerramenta, setEditedFerramenta] = useState(ferramenta);
   const [filiais, setFiliais] = useState([]);
   const [centrocusto, setCentroCusto] = useState([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  // Abre o modal de confirmação
+  const handleDeleteClick = () => {
+    setShowDeleteModal(true);
+  };
+
+  // Confirma a exclusão
+  const handleConfirmDelete = async () => {
+    try {
+      const currentDate = new Date();
+      const formattedDate = currentDate.toLocaleDateString("pt-BR").split("/");
+      const formattedDateString = `${formattedDate[0]}/${formattedDate[1]}/${formattedDate[2]}`;
+
+      await api.post("/ferramentaHistorico", {
+        ...ferramenta,
+        StatusDelete: false,
+        DateAlterado: formattedDateString,
+      });
+
+      await api.put(`/ferramentas/${ferramenta.id}`, { StatusDelete: false });
+
+      alert("Ferramenta deletada com sucesso!");
+      setShowDeleteModal(false);
+      onClose();
+    } catch (error) {
+      console.error("Erro ao deletar a ferramenta:", error);
+      alert("Erro ao deletar a ferramenta.");
+    }
+  };
+
+  // Cancela a exclusão
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false);
+  };
 
   // Consulta de filiais
   useEffect(() => {
@@ -99,7 +135,13 @@ function ModalEdit({ ferramenta, onClose, onUpdate }) {
             <h2>
               Editar Ferramenta: <br /> {ferramenta.Nome}
             </h2>
-            <img className="Lixo" src={Lixo} alt="Lixo" />
+            <img
+              className="Lixo"
+              src={LixoEdit}
+              alt="Lixo"
+              onClick={handleDeleteClick}
+              style={{ cursor: "pointer" }}
+            />
             <button className="close" onClick={onClose}>
               X
             </button>
@@ -199,6 +241,15 @@ function ModalEdit({ ferramenta, onClose, onUpdate }) {
             <button onClick={handleUpdate} className="save-button">
               Salvar alterações
             </button>
+
+            {/* Modal de Confirmação de Exclusão */}
+            {showDeleteModal && (
+              <ModalConfirmDelete
+                message="Tem certeza que deseja deletar esta ferramenta?"
+                onConfirm={handleConfirmDelete}
+                onCancel={handleCancelDelete}
+              />
+            )}
           </div>
         </div>
       </div>
