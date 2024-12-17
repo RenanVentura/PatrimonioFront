@@ -35,7 +35,7 @@ function Forms() {
   }, []);
 
   useEffect(() => {
-    async function consultaFiliais() {
+    async function consultaCentro() {
       try {
         const classes = await api.get('/CentroCusto');
         setCentroCusto(classes.data);
@@ -43,7 +43,7 @@ function Forms() {
         console.error('Erro ao carregar o centro de custo', error)
       }
     }
-    consultaFiliais();
+    consultaCentro();
   }, []);
 
   async function createSoli() {
