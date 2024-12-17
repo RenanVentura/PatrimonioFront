@@ -144,8 +144,7 @@ function Ferramentas() {
           </div>
         </div>
       </div>
-
-      {/* ModalEdit - Condicionalmente renderizado */}
+      
       {isModalOpen && 
         <ModalEdit 
           ferramenta={selectedFerramenta} 
