@@ -148,7 +148,11 @@ function Ferramentas() {
                   <div className="info-header">
                     <h2>{ferramenta.Nome}</h2>
                     <div className="action-icons">
-                      <img src={Emprestado} alt="Emprestar" className="icon" />
+                      <img
+                        src={Emprestado}
+                        alt="Emprestar"
+                        className="iconEmprestado"
+                      />
                       <img
                         src={Lapis}
                         alt="Editar"

@@ -109,13 +109,21 @@
 }
 
 .action-icons .icon {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: auto;
     cursor: pointer;
     transition: transform 0.2s ease;
 }
 
-.action-icons .icon:hover {
+.action-icons .iconEmprestado {
+    width: 30px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.action-icons .icon:hover,
+.action-icons .iconEmprestado:hover{
     transform: scale(1.2);
 }
 

@@ -50,7 +50,8 @@
     height: auto;
 }
 
-.titleEdit .Lixo:hover {
+.titleEdit .Lixo:hover,
+.titleEdit .icon:hover {
     transform: scale(1.2);
 }
 
@@ -211,7 +212,7 @@
 
     .titleEdit {
             & .logoQually{
-            width: 10px;
+            width: 0px;
             height: auto;
             }
             & h2 {
