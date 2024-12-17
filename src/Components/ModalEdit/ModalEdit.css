@@ -130,3 +130,99 @@
     display: flex;
     flex-direction: column;
 }
+
+
+@media screen and (max-width: 1024px) {
+    .formEdit {
+        width: 70%;
+        max-height: 80vh; 
+        margin-top: 50%; 
+        padding: 15px; 
+        overflow-y: auto; 
+    }
+
+    .containerEdit {
+       display: flex;
+       flex-direction: column;
+        gap: 10px;
+    }
+
+    .containerEdit input,
+    .containerEdit textarea,
+    .containerEdit select {
+        width: 100%;
+    }
+}
+
+/* Responsividade para celulares */
+@media screen and (max-width: 768px) {
+    .formEdit {
+        width: 90%; /* Reduz a largura */
+        max-height: 70vh; /* Limita a altura a 70% da tela */
+        margin-top: 60%;
+        padding: 10px; /* Reduz padding */
+        overflow-y: auto; /* Scroll vertical */
+    }
+
+    
+
+    .containerEdit {
+        grid-template-columns: 1fr; /* Coluna única */
+        gap: 8px;
+    }
+
+    .containerEdit input,
+    .containerEdit textarea,
+    .containerEdit select {
+        width: 100%; /* Ocupa largura total */
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .containerEdit button {
+        font-size: 14px;
+        padding: 10px;
+    }
+    logoQually{
+        width: 10px;
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .formEdit {
+        width: 95%;
+        max-height: 100vh; 
+        margin-top: 550px;
+        padding: 5px;
+        overflow-y: auto; 
+    }
+
+    .containerEdit {
+        grid-template-columns: 1fr; 
+        gap: 5px;
+    }
+
+    .titleEdit {
+            & .logoQually{
+            width: 10px;
+            height: auto;
+            }
+            & h2 {
+                font-size: 18px;
+            }
+}
+
+    .containerEdit input,
+    .containerEdit textarea,
+    .containerEdit select {
+        width: 100%;
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .containerEdit button {
+        font-size: 12px;
+        padding: 8px;
+    }
+}
