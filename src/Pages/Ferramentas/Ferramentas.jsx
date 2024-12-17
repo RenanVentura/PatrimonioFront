@@ -1,24 +1,26 @@
-import { useState, useEffect } from 'react';
-import './Ferramentas.css';
-import logo from '../../assets/Logo.png';
-import api from '../../services/api';
-import { useNavigate } from 'react-router-dom';
-import Lapis from '../../assets/lapis.png';
-import Lixo from '../../assets/lixo.png';
-import Emprestado from '../../assets/Emprestado.png';
-import ModalEdit from '../../Components/ModalEdit/ModalEdit';
+import { useState, useEffect } from "react";
+import "./Ferramentas.css";
+import logo from "../../assets/Logo.png";
+import api from "../../services/api";
+import { useNavigate } from "react-router-dom";
+import Lapis from "../../assets/lapis.png";
+import Lixo from "../../assets/lixo.png";
+import Emprestado from "../../assets/Emprestado.png";
+import ModalEdit from "../../Components/ModalEdit/ModalEdit";
 
 function Ferramentas() {
   const navigate = useNavigate();
   const [patrimonio, setPatrimonio] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
-  
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFerramenta, setSelectedFerramenta] = useState(null);
 
   async function getFerramentas() {
-    const patrimonioFromApi = await api.get('/ferramentas');
+    const patrimonioFromApi = await api.get("/ferramentas", {
+      params: { StatusDelete: true, TipoDeCadastro: "Ferramentas" },
+    });
     setPatrimonio(patrimonioFromApi.data);
   }
 
@@ -46,9 +48,8 @@ function Ferramentas() {
 
   const handleEditClick = (ferramenta) => {
     setSelectedFerramenta(ferramenta);
-    setIsModalOpen(true); 
+    setIsModalOpen(true);
   };
-
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -59,23 +60,33 @@ function Ferramentas() {
     <div className="container">
       <div className="sidebar">
         <img src={logo} alt="Logo" className="logo" />
-        <button className="sidebar-button" onClick={() => navigate('/')} >
+        <button className="sidebar-button" onClick={() => navigate("/")}>
           Cadastro
         </button>
-        <button className="sidebar-button" onClick={() => navigate('/Frotas')} >
+        <button className="sidebar-button" onClick={() => navigate("/Frotas")}>
           Frotas
         </button>
-        <button className="sidebar-button" onClick={() => navigate('/Ferramentas')} >
+        <button
+          className="sidebar-button"
+          onClick={() => navigate("/Ferramentas")}
+        >
           Ferramentas
         </button>
-        <button className="sidebar-button" onClick={() => navigate('/Emprestado')}>
+        <button
+          className="sidebar-button"
+          onClick={() => navigate("/Emprestado")}
+        >
           Emprestados
         </button>
       </div>
 
       <div className="info-panel-container">
         <div className="button-container">
-          <input type="text" className="filter-input" placeholder="Digite para filtrar..." />
+          <input
+            type="text"
+            className="filter-input"
+            placeholder="Digite para filtrar..."
+          />
           <button className="filter-button">Filtrar</button>
           <button className="export-button">Exportar</button>
         </div>
@@ -88,11 +99,15 @@ function Ferramentas() {
                     <div className="info-header">
                       <h2>{ferramenta.Nome}</h2>
                       <div className="action-icons">
-                        <img src={Emprestado} alt="Emprestar" className="icon" />
-                        <img 
-                          src={Lapis} 
-                          alt="Editar"  
-                          className="icon" 
+                        <img
+                          src={Emprestado}
+                          alt="Emprestar"
+                          className="icon"
+                        />
+                        <img
+                          src={Lapis}
+                          alt="Editar"
+                          className="icon"
                           onClick={() => handleEditClick(ferramenta)}
                         />
                         <img src={Lixo} alt="Excluir" className="icon" />
@@ -101,21 +116,45 @@ function Ferramentas() {
                     <p>{ferramenta.Patrimonio}</p>
                     <div className="info-columns">
                       <ul>
-                        <li><span>Responsável:</span> {ferramenta.NomeDeResponsavel}</li>
-                        <li><span>Centro de Custo:</span> {ferramenta.CentroDeCusto}</li>
-                        <li><span>Responsavel Emprestado:</span> {ferramenta.ResponsavelEmprestado}</li>
+                        <li>
+                          <span>Responsável:</span>{" "}
+                          {ferramenta.NomeDeResponsavel}
+                        </li>
+                        <li>
+                          <span>Centro de Custo:</span>{" "}
+                          {ferramenta.CentroDeCusto}
+                        </li>
+                        <li>
+                          <span>Responsavel Emprestado:</span>{" "}
+                          {ferramenta.ResponsavelEmprestado}
+                        </li>
                       </ul>
                       <ul>
-                        <li><span>Empresa:</span> {ferramenta.Empresa}</li>
-                        <li><span>Valor: </span>R$ {ferramenta.Valor}</li>
-                        <li><span>Data Emprestado:</span> {ferramenta.DataEmprestado}</li>
-                        <li><span>Data Devolvida:</span> {ferramenta.DataDevolvida}</li>
+                        <li>
+                          <span>Empresa:</span> {ferramenta.Empresa}
+                        </li>
+                        <li>
+                          <span>Valor: </span>R$ {ferramenta.Valor}
+                        </li>
+                        <li>
+                          <span>Data Emprestado:</span>{" "}
+                          {ferramenta.DataEmprestado}
+                        </li>
+                        <li>
+                          <span>Data Devolvida:</span>{" "}
+                          {ferramenta.DataDevolvida}
+                        </li>
                       </ul>
                     </div>
                     <div className="container-obs">
                       <ul>
-                        <li><span>Observação:</span> {ferramenta.Observacao}</li>
-                        <li><span>Obs Emprestado:</span> {ferramenta.ObsEmprestado}</li>
+                        <li>
+                          <span>Observação:</span> {ferramenta.Observacao}
+                        </li>
+                        <li>
+                          <span>Obs Emprestado:</span>{" "}
+                          {ferramenta.ObsEmprestado}
+                        </li>
                       </ul>
                     </div>
                   </div>
@@ -144,13 +183,10 @@ function Ferramentas() {
           </div>
         </div>
       </div>
-      
-      {isModalOpen && 
-        <ModalEdit 
-          ferramenta={selectedFerramenta} 
-          onClose={handleCloseModal} 
-        />
-      }
+
+      {isModalOpen && (
+        <ModalEdit ferramenta={selectedFerramenta} onClose={handleCloseModal} />
+      )}
     </div>
   );
 }
