@@ -22,6 +22,7 @@ function ModalEdit({ ferramenta, onClose, onUpdate }) {
     ConsultahFiliais();
   }, []);
 
+  // Consulta de Centro de Custo
   useEffect(() => {
     async function consultaCentro() {
       try {
