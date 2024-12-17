@@ -13,7 +13,9 @@ function ModalEdit({ ferramenta, onClose, onUpdate }) {
   useEffect(() => {
     async function ConsultahFiliais() {
       try {
-        const response = await api.get("/Empresa");
+        const response = await api.get("/Empresa", {
+          params: { StatusDelete: true },
+        });
         setFiliais(response.data);
       } catch (error) {
         console.error("Erro ao carregar as filiais:", error);
@@ -26,7 +28,9 @@ function ModalEdit({ ferramenta, onClose, onUpdate }) {
   useEffect(() => {
     async function consultaCentro() {
       try {
-        const classes = await api.get("/CentroCusto");
+        const classes = await api.get("/CentroCusto", {
+          params: { StatusDelete: true },
+        });
         setCentroCusto(classes.data);
       } catch (error) {
         console.error("Erro ao carregar o centro de custo", error);
