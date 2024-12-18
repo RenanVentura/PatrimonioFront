@@ -6,7 +6,6 @@ function ModalEmprestado({ ferramenta, onClose }) {
   const [editedFerramenta, setEditedFerramenta] = useState(ferramenta || {});
   const [isSaving, setIsSaving] = useState(false);
 
-  // Atualiza o estado local sempre que o 'ferramenta' mudar
   useEffect(() => {
     setEditedFerramenta(ferramenta || {});
   }, [ferramenta]);
@@ -29,7 +28,6 @@ function ModalEmprestado({ ferramenta, onClose }) {
     try {
       const brFormattedDate = new Date().toLocaleDateString("pt-BR");
 
-      // Envia os dados atualizados para o histórico
       await api.post("/ferramentaHistorico", {
         ...editedFerramenta,
         StatusEmprestado: true,

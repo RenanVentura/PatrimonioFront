@@ -64,6 +64,7 @@ function Forms() {
         ResponsavelEmprestado: null,
         DataEmprestado: null,
         DataDevolvida: null,
+        StatusEmprestado: false,
       });
 
       await api.post("/FerramentaHistorico", {
