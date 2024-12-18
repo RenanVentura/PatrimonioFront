@@ -129,13 +129,6 @@ function Ferramentas() {
 
       <div className="info-panel-container">
         <div className="button-container">
-          <input
-            type="text"
-            className="filter-input"
-            placeholder="Digite para filtrar..."
-            value={filterText}
-            onChange={(e) => setFilterText(e.target.value)} // Atualiza o filtro
-          />
           <button className="filter-button">Filtrar</button>
           <button className="export-button">Exportar</button>
         </div>

@@ -1,4 +1,4 @@
-import "./ModalEditConfirm.css";
+import "./ModalEmprestadoConfirm.css";
 
 function ModalEmprestadoConfirm({ isOpen, onClose }) {
   if (!isOpen) return null;

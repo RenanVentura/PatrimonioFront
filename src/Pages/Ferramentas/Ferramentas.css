@@ -89,7 +89,8 @@
     padding: 20px;
     margin-bottom: 0px;
     transition: transform 0.3s ease;
-    height: 350px;
+    min-height: 350px;
+    width: 100%;
 }
 
 .info-card:hover {
@@ -236,13 +237,7 @@
         width: 90%;
         height: 690px;
     }
-
-    .info-card {
-        min-height: 400px;
-        width: 100%;
-    }
-
-    
+ 
 }
 
 @media (max-width: 480px) {
@@ -263,6 +258,10 @@
                 font-size: 12px;
             }
     }
+    info-card{
+        width: 100%;
+    }
+
     .pagination-button {
         padding: 8px 12px;
         font-size: 12px;

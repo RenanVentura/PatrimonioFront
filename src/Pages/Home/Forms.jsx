@@ -1,12 +1,12 @@
-import { useState, useRef, useEffect } from 'react';
-import './Forms.css';
-import logo from '../../assets/Logo.png';
-import api from '../../services/api';
-import { useNavigate } from 'react-router-dom';
+import { useState, useRef, useEffect } from "react";
+import "./Forms.css";
+import logo from "../../assets/Logo.png";
+import api from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 function Forms() {
   const navigate = useNavigate();
-  
+
   const [filiais, setFiliais] = useState([]);
   const [selectFiliais, setSelectFiliais] = useState("");
   const [centrocusto, setCentroCusto] = useState([]);
@@ -25,10 +25,10 @@ function Forms() {
   useEffect(() => {
     async function consultaFiliais() {
       try {
-        const holding = await api.get('/Empresa');
+        const holding = await api.get("/Empresa");
         setFiliais(holding.data);
       } catch (error) {
-        console.error('Erro ao carregar filiais', error)
+        console.error("Erro ao carregar filiais", error);
       }
     }
     consultaFiliais();
@@ -37,10 +37,10 @@ function Forms() {
   useEffect(() => {
     async function consultaCentro() {
       try {
-        const classes = await api.get('/CentroCusto');
+        const classes = await api.get("/CentroCusto");
         setCentroCusto(classes.data);
       } catch (error) {
-        console.error('Erro ao carregar o centro de custo', error)
+        console.error("Erro ao carregar o centro de custo", error);
       }
     }
     consultaCentro();
@@ -49,8 +49,7 @@ function Forms() {
   async function createSoli() {
     const preco = parseFloat(inputValor.current.value);
     try {
-      
-      const response = await api.post('/ferramentas', {
+      const response = await api.post("/ferramentas", {
         Nome: inputNome.current.value,
         Valor: preco,
         Patrimonio: inputPatrimonio.current.value,
@@ -59,15 +58,15 @@ function Forms() {
         CentroDeCusto: selectCentroCusto,
         NomeDeResponsavel: inputNomeDoResponsavel.current.value,
         TipoDeCadastro: inputTipoDeCadastro.current.value,
-        Status: 'Ativo',  
+        Status: "Ativo",
         StatusDelete: true,
         ObsEmprestado: null,
         ResponsavelEmprestado: null,
         DataEmprestado: null,
-        DataDevolvida: null
+        DataDevolvida: null,
       });
 
-        await api.post('/FerramentaHistorico', {
+      await api.post("/FerramentaHistorico", {
         Nome: inputNome.current.value,
         Valor: preco,
         Patrimonio: inputPatrimonio.current.value,
@@ -76,28 +75,28 @@ function Forms() {
         CentroDeCusto: selectCentroCusto,
         NomeDeResponsavel: inputNomeDoResponsavel.current.value,
         TipoDeCadastro: inputTipoDeCadastro.current.value,
-        Status: 'Ativo',  
+        Status: "Ativo",
         StatusDelete: true,
         ObsEmprestado: null,
         ResponsavelEmprestado: null,
         DataEmprestado: null,
-        DataDevolvida: null
+        DataDevolvida: null,
       });
-      console.log('Cadastro realizado com sucesso');
-      alert('Cadastro realizado com sucesso!');
-  
+      console.log("Cadastro realizado com sucesso");
+      alert("Cadastro realizado com sucesso!");
+
       // Reseta os valores dos inputs
-      inputNome.current.value = '';
-      inputTipoDeCadastro.current.value = 'Tipo de Cadastro';
-      inputValor.current.value = '';
-      inputPatrimonio.current.value = '';
-      inputObservacao.current.value = '';
-      inputNomeDoResponsavel.current.value = '';
-      setSelectFiliais('');
-      setSelectCentroCusto('');
+      inputNome.current.value = "";
+      inputTipoDeCadastro.current.value = "Tipo de Cadastro";
+      inputValor.current.value = "";
+      inputPatrimonio.current.value = "";
+      inputObservacao.current.value = "";
+      inputNomeDoResponsavel.current.value = "";
+      setSelectFiliais("");
+      setSelectCentroCusto("");
     } catch (error) {
-      console.error('Erro ao enviar o formulário', error);
-      alert('Erro ao enviar o formulário. Tente novamente mais tarde.');
+      console.error("Erro ao enviar o formulário", error);
+      alert("Erro ao enviar o formulário. Tente novamente mais tarde.");
     }
   }
 
@@ -105,36 +104,52 @@ function Forms() {
     <div className="container">
       <div className="sidebar">
         <img src={logo} alt="Logo" className="logo" />
-        <button className="sidebar-button" onClick={() => navigate('/')}>
+        <button className="sidebar-button" onClick={() => navigate("/")}>
           Cadastro
         </button>
-        <button className="sidebar-button" onClick={() => navigate('/Frotas')}>
+        <button className="sidebar-button" onClick={() => navigate("/Frotas")}>
           Frotas
         </button>
-        <button className="sidebar-button" onClick={() => navigate('/Ferramentas')}>
+        <button
+          className="sidebar-button"
+          onClick={() => navigate("/Ferramentas")}
+        >
           Ferramentas
         </button>
-        <button className="sidebar-button" onClick={() => navigate('/Emprestado')}>
+        <button
+          className="sidebar-button"
+          onClick={() => navigate("/Emprestado")}
+        >
           Emprestados
         </button>
       </div>
 
       <div className="form-container">
-        <form>
+        <form className="Formulario">
           <h1>Cadastro de Patrimônio</h1>
 
           <div className="tutiloInput">
-          <span>Nome Patrimonio</span>
+            <span>Nome Patrimonio</span>
           </div>
-          <input name="Nome" type="text" placeholder="Nome do Patrimônio" ref={inputNome} />
+          <input
+            name="Nome"
+            type="text"
+            placeholder="Nome do Patrimônio"
+            ref={inputNome}
+          />
 
           <div className="tutiloInput">
-          <span>Patrimonio</span>
+            <span>Patrimonio</span>
           </div>
-          <input name="Patrimonio" type="text" placeholder="Patrimonio" ref={inputPatrimonio} />
+          <input
+            name="Patrimonio"
+            type="text"
+            placeholder="Patrimonio"
+            ref={inputPatrimonio}
+          />
 
           <div className="tutiloInput">
-          <span>Tipo de Cadastro</span>
+            <span>Tipo de Cadastro</span>
           </div>
           <select name="TipoDeCadastro" ref={inputTipoDeCadastro}>
             <option>Tipo de Cadastro</option>
@@ -143,51 +158,70 @@ function Forms() {
           </select>
 
           <div className="tutiloInput">
-          <span>Valor</span>
+            <span>Valor</span>
           </div>
-          <input name="Valor" type="number" placeholder="Valor" ref={inputValor} />
-          
-          <div className="tutiloInput">
-          <span>Empresas</span>
-          </div>
-          <select name="Empresa" type="text" value={selectFiliais}
-          onChange={(e) => setSelectFiliais(e.target.value)}>
-
-          <option value="">Selecione uma Filial</option>
-          {filiais.map((filial) => (
-            <option key={filial.id} value={filial.Empresa}>
-              {filial.Empresa}
-            </option>
-
-          ))}
-        </select>
-
-          
-        <div className="tutiloInput">
-          <span>Centro de Custo</span>
-          </div>
-        <select name="CentroDeCusto" type="text" value={selectCentroCusto}
-          onChange={(e) => setSelectCentroCusto(e.target.value)}>
-
-          <option value="">Selecione um Centro de Custo</option>
-          {centrocusto.map((custos) => (
-            <option key={custos.id} value={custos.CentroCusto}>
-              {custos.CentroCusto}
-            </option>
-
-          ))}
-        </select>
-
-        <div className="tutiloInput">
-          <span>Responsável</span>
-          </div>
-          <input name="NomeDoResponsavel" type="text" placeholder="Nome do Responsável" ref={inputNomeDoResponsavel} />
+          <input
+            name="Valor"
+            type="number"
+            placeholder="Valor"
+            ref={inputValor}
+          />
 
           <div className="tutiloInput">
-          <span>Observação</span>
+            <span>Empresas</span>
           </div>
-          <textarea name="Observacao" placeholder="Observação" ref={inputObservacao} />
-          <button type="button" onClick={createSoli}>Cadastrar</button>
+          <select
+            name="Empresa"
+            type="text"
+            value={selectFiliais}
+            onChange={(e) => setSelectFiliais(e.target.value)}
+          >
+            <option value="">Selecione uma Filial</option>
+            {filiais.map((filial) => (
+              <option key={filial.id} value={filial.Empresa}>
+                {filial.Empresa}
+              </option>
+            ))}
+          </select>
+
+          <div className="tutiloInput">
+            <span>Centro de Custo</span>
+          </div>
+          <select
+            name="CentroDeCusto"
+            type="text"
+            value={selectCentroCusto}
+            onChange={(e) => setSelectCentroCusto(e.target.value)}
+          >
+            <option value="">Selecione um Centro de Custo</option>
+            {centrocusto.map((custos) => (
+              <option key={custos.id} value={custos.CentroCusto}>
+                {custos.CentroCusto}
+              </option>
+            ))}
+          </select>
+
+          <div className="tutiloInput">
+            <span>Responsável</span>
+          </div>
+          <input
+            name="NomeDoResponsavel"
+            type="text"
+            placeholder="Nome do Responsável"
+            ref={inputNomeDoResponsavel}
+          />
+
+          <div className="tutiloInput">
+            <span>Observação</span>
+          </div>
+          <textarea
+            name="Observacao"
+            placeholder="Observação"
+            ref={inputObservacao}
+          />
+          <button type="button" onClick={createSoli}>
+            Cadastrar
+          </button>
         </form>
       </div>
     </div>
