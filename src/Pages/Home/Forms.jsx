@@ -81,6 +81,7 @@ function Forms() {
         ResponsavelEmprestado: null,
         DataEmprestado: null,
         DataDevolvida: null,
+        StatusEmprestado: false,
       });
       console.log("Cadastro realizado com sucesso");
       alert("Cadastro realizado com sucesso!");

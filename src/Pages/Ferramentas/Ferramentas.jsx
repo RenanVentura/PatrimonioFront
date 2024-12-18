@@ -8,14 +8,16 @@ import Lixo from "../../assets/lixo.png";
 import Emprestado from "../../assets/Emprestado.png";
 import ModalEdit from "../../Components/ModalEdit/ModalEdit";
 import ModalConfirmDelete from "../../Components/ModalConfirmDelete/ModalConfirmDelete";
+import ModalEmprestado from "../../Components/ModalEmprestado/ModalEmprestado";
 
 function Ferramentas() {
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [filterText, setFilterText] = useState(""); // Estado para filtro
   const [patrimonio, setPatrimonio] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFerramenta, setSelectedFerramenta] = useState(null);
+
+  const [isModalEditOpen, setIsModalEditOpen] = useState(false);
+  const [isModalEmprestadoOpen, setIsModalEmprestadoOpen] = useState(false);
+  const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
 
   const itemsPerPage = 6;
   const navigate = useNavigate();
@@ -23,7 +25,7 @@ function Ferramentas() {
   async function getFerramentas() {
     try {
       const patrimonioFromApi = await api.get("/ferramentas", {
-        params: { StatusDelete: true, TipoDeCadastro: "Ferramentas" },
+        params: { StatusDelete: true, StatusEmprestado: false },
       });
       setPatrimonio(patrimonioFromApi.data);
     } catch (error) {
@@ -37,7 +39,17 @@ function Ferramentas() {
 
   const handleDeleteClick = (ferramenta) => {
     setSelectedFerramenta(ferramenta);
-    setShowDeleteModal(true);
+    setIsModalDeleteOpen(true);
+  };
+
+  const handleEmprestaClick = (ferramenta) => {
+    setSelectedFerramenta(ferramenta);
+    setIsModalEmprestadoOpen(true);
+  };
+
+  const handleEditClick = (ferramenta) => {
+    setSelectedFerramenta(ferramenta);
+    setIsModalEditOpen(true);
   };
 
   const handleConfirmDelete = async () => {
@@ -57,7 +69,7 @@ function Ferramentas() {
       });
 
       alert("Ferramenta deletada com sucesso!");
-      setShowDeleteModal(false);
+      setIsModalDeleteOpen(false);
       getFerramentas(); // Atualiza a lista após a exclusão
     } catch (error) {
       console.error("Erro ao deletar a ferramenta:", error);
@@ -65,29 +77,24 @@ function Ferramentas() {
     }
   };
 
-  const handleCancelDelete = () => {
-    setShowDeleteModal(false);
-  };
-
-  const handleEditClick = (ferramenta) => {
-    setSelectedFerramenta(ferramenta);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleCloseEditModal = () => {
+    setIsModalEditOpen(false);
     setSelectedFerramenta(null);
     getFerramentas(); // Atualiza a lista após edição
   };
 
+  const handleCloseEmprestadoModal = () => {
+    setIsModalEmprestadoOpen(false);
+    setSelectedFerramenta(null);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setIsModalDeleteOpen(false);
+  };
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = patrimonio
-    .filter(
-      (ferramenta) =>
-        ferramenta.Nome.toLowerCase().includes(filterText.toLowerCase()) // Filtro
-    )
-    .slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = patrimonio.slice(indexOfFirstItem, indexOfLastItem);
 
   const totalPages = Math.ceil(patrimonio.length / itemsPerPage);
 
@@ -145,6 +152,7 @@ function Ferramentas() {
                         src={Emprestado}
                         alt="Emprestar"
                         className="iconEmprestado"
+                        onClick={() => handleEmprestaClick(ferramenta)}
                       />
                       <img
                         src={Lapis}
@@ -228,16 +236,26 @@ function Ferramentas() {
         </div>
       </div>
 
-      {isModalOpen && (
-        <ModalEdit ferramenta={selectedFerramenta} onClose={handleCloseModal} />
+      {isModalEditOpen && (
+        <ModalEdit
+          ferramenta={selectedFerramenta}
+          onClose={handleCloseEditModal}
+        />
       )}
 
-      {showDeleteModal && (
+      {isModalEmprestadoOpen && (
+        <ModalEmprestado
+          ferramenta={selectedFerramenta}
+          onClose={handleCloseEmprestadoModal}
+        />
+      )}
+
+      {isModalDeleteOpen && (
         <ModalConfirmDelete
           message="Tem certeza que deseja deletar esta ferramenta?"
-          showModal={showDeleteModal}
+          showModal={isModalDeleteOpen}
           onConfirm={handleConfirmDelete}
-          onCancel={handleCancelDelete}
+          onCancel={handleCloseDeleteModal}
         />
       )}
     </div>
