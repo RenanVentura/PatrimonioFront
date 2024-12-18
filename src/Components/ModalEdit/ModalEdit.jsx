@@ -6,7 +6,7 @@ import LixoEdit from "../../assets/lixo.png";
 import ModalConfirmDelete from "../ModalConfirmDelete/ModalConfirmDelete";
 import Emprestado from "../../assets/Emprestado.png";
 
-function ModalEdit({ ferramenta, onClose, onUpdate }) {
+function ModalEdit({ ferramenta, onClose }) {
   const [editedFerramenta, setEditedFerramenta] = useState(ferramenta);
   const [filiais, setFiliais] = useState([]);
   const [centrocusto, setCentroCusto] = useState([]);
@@ -112,7 +112,6 @@ function ModalEdit({ ferramenta, onClose, onUpdate }) {
       // Atualiza os dados principais
       await api.put(`/ferramentas/${ferramenta.id}`, editedFerramenta);
       alert("Ferramenta atualizada com sucesso!");
-      onUpdate(); // Callback para revalidar os dados no componente pai
       onClose(); // Fecha o modal
     } catch (error) {
       alert("Erro ao atualizar ferramenta");

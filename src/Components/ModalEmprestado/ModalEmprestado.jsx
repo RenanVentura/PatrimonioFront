@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./ModalEmprestado.css";
 import api from "../../services/api";
+import ModalEmprestadoConfirm from "../ModalEmprestadoConfirm/ModalEmprestadoConfirm";
 
 function ModalEmprestado({ ferramenta, onClose }) {
   const [editedFerramenta, setEditedFerramenta] = useState(ferramenta || {});
   const [isSaving, setIsSaving] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false); // Controla a abertura do modal de confirmação
 
   useEffect(() => {
     setEditedFerramenta(ferramenta || {});
@@ -24,6 +26,7 @@ function ModalEmprestado({ ferramenta, onClose }) {
 
   const handleUpdate = async () => {
     setIsSaving(true);
+    setIsConfirmOpen(false); // Fecha o modal de confirmação antes de iniciar o processo
 
     try {
       const brFormattedDate = new Date().toLocaleDateString("pt-BR");
@@ -34,7 +37,6 @@ function ModalEmprestado({ ferramenta, onClose }) {
         DateAlterado: brFormattedDate,
       });
 
-      // Atualiza a ferramenta com os novos dados
       await api.put(`/ferramentas/${ferramenta.id}`, {
         ...editedFerramenta,
         StatusEmprestado: true,
@@ -48,6 +50,8 @@ function ModalEmprestado({ ferramenta, onClose }) {
     } finally {
       setIsSaving(false);
     }
+
+    window.reload();
   };
 
   const handleChange = (e) => {
@@ -56,6 +60,18 @@ function ModalEmprestado({ ferramenta, onClose }) {
       ...prev,
       [name]: name === "DataEmprestado" ? formatToBrazilianDate(value) : value,
     }));
+  };
+
+  const handleConfirm = () => {
+    setIsConfirmOpen(true); // Abre o modal de confirmação
+  };
+
+  const handleCloseConfirm = () => {
+    setIsConfirmOpen(false); // Fecha o modal de confirmação sem fazer nada
+  };
+
+  const handleProceedConfirm = () => {
+    handleUpdate(); // Prossegue com a atualização da ferramenta
   };
 
   if (!ferramenta) return null;
@@ -101,7 +117,7 @@ function ModalEmprestado({ ferramenta, onClose }) {
             />
 
             <button
-              onClick={handleUpdate}
+              onClick={handleConfirm} // Abre o modal de confirmação
               className="save-button"
               disabled={isSaving}
             >
@@ -110,6 +126,12 @@ function ModalEmprestado({ ferramenta, onClose }) {
           </div>
         </div>
       </div>
+
+      <ModalEmprestadoConfirm
+        isOpen={isConfirmOpen}
+        onClose={handleCloseConfirm}
+        onProceed={handleProceedConfirm} // Ação de prosseguir
+      />
     </>
   );
 }

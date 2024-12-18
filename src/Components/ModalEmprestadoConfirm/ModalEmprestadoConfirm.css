@@ -13,7 +13,7 @@
 }
 
 .modalContentConfirm {
-    background: #0d6d35; /* Verde elegante */
+    background: #ffffff; /* Verde elegante */
     padding: 25px 20px;
     border-radius: 12px;
     text-align: center;
@@ -48,12 +48,44 @@
 }
 
 .messageConfirm {
-    color: #ffffff;
+    color: #000000;
     font-size: 18px;
     font-weight: bold;
     margin-top: 10px;
     margin-bottom: 0;
     animation: fadeInText 1s ease;
+}
+
+.modalFooterConfirm {
+    margin-top: 20px;
+}
+
+.buttonConfirm, .buttonCancelConfirm {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 5px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 75px;
+}
+
+.buttonConfirm {
+    background-color: #17b85a;
+    color: white;
+}
+
+.buttonConfirm:hover {
+    background-color: #219150;
+}
+
+.buttonCancelConfirm {
+    background-color: #947c7a;
+    color: white;
+}
+
+.buttonCancelConfirm:hover {
+    background-color: #d32f2f;
 }
 
 /* Animações */
