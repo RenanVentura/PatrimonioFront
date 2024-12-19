@@ -25,7 +25,8 @@ function Ferramentas() {
   async function getFerramentas() {
     try {
       const patrimonioFromApi = await api.get("/ferramentas", {
-        params: { StatusDelete: true, StatusEmprestado: false },
+        params: { StatusDelete: true },
+        //  StatusEmprestado: false },
       });
       setPatrimonio(patrimonioFromApi.data);
     } catch (error) {
@@ -33,6 +34,18 @@ function Ferramentas() {
     }
   }
 
+  const formatDate = (date) => {
+    if (!date) return ""; // Retorna uma string vazia se a data for inválida ou nula
+
+    const newDate = new Date(date);
+    if (isNaN(newDate.getTime())) return ""; // Verifica se a data é válida
+
+    const day = String(newDate.getUTCDate()).padStart(2, "0"); // Adiciona o zero à esquerda se for menor que 10
+    const month = String(newDate.getUTCMonth() + 1).padStart(2, "0"); // Meses começam de 0 (janeiro é 0)
+    const year = newDate.getUTCFullYear(); // Obtém o ano completo
+
+    return `${day}/${month}/${year}`;
+  };
   useEffect(() => {
     getFerramentas();
   }, []);
@@ -146,7 +159,7 @@ function Ferramentas() {
               <div className="container-card" key={ferramenta.id}>
                 <div className="info-card">
                   <div className="info-header">
-                    <h2>{ferramenta.Nome}</h2>
+                    <h2>{ferramenta.Nome ?? ""}</h2>
                     <div className="action-icons">
                       <img
                         src={Emprestado}
@@ -169,43 +182,47 @@ function Ferramentas() {
                       />
                     </div>
                   </div>
-                  <p>{ferramenta.Patrimonio}</p>
+                  <p>{ferramenta.Patrimonio ?? ""}</p>
                   <div className="info-columns">
                     <ul>
                       <li>
-                        <span>Responsável:</span> {ferramenta.NomeDeResponsavel}
+                        <span>Responsável:</span>{" "}
+                        {ferramenta.NomeDeResponsavel ?? ""}
                       </li>
                       <li>
-                        <span>Centro de Custo:</span> {ferramenta.CentroDeCusto}
+                        <span>Centro de Custo:</span>{" "}
+                        {ferramenta.CentroDeCusto ?? ""}
                       </li>
                       <li>
                         <span>Responsavel Emprestado:</span>{" "}
-                        {ferramenta.ResponsavelEmprestado}
+                        {ferramenta.ResponsavelEmprestado ?? ""}
                       </li>
                     </ul>
                     <ul>
                       <li>
-                        <span>Empresa:</span> {ferramenta.Empresa}
+                        <span>Empresa:</span> {ferramenta.Empresa ?? ""}
                       </li>
                       <li>
-                        <span>Valor:</span> R$ {ferramenta.Valor}
+                        <span>Valor:</span> R$ {ferramenta.Valor ?? ""}
                       </li>
                       <li>
                         <span>Data Emprestado:</span>{" "}
-                        {ferramenta.DataEmprestado}
+                        {formatDate(ferramenta.DataEmprestado ?? "")}
                       </li>
                       <li>
-                        <span>Data Devolvida:</span> {ferramenta.DataDevolvida}
+                        <span>Data Devolvida:</span>{" "}
+                        {formatDate(ferramenta.DataDevolvida ?? "")}
                       </li>
                     </ul>
                   </div>
                   <div className="container-obs">
                     <ul>
                       <li>
-                        <span>Observação:</span> {ferramenta.Observacao}
+                        <span>Observação:</span> {ferramenta.Observacao ?? ""}
                       </li>
                       <li>
-                        <span>Obs Emprestado:</span> {ferramenta.ObsEmprestado}
+                        <span>Obs Emprestado:</span>{" "}
+                        {ferramenta.ObsEmprestado ?? ""}
                       </li>
                     </ul>
                   </div>

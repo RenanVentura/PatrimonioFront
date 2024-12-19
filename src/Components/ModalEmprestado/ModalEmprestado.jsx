@@ -6,17 +6,11 @@ import ModalEmprestadoConfirm from "../ModalEmprestadoConfirm/ModalEmprestadoCon
 function ModalEmprestado({ ferramenta, onClose }) {
   const [editedFerramenta, setEditedFerramenta] = useState(ferramenta || {});
   const [isSaving, setIsSaving] = useState(false);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false); // Controla a abertura do modal de confirmação
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   useEffect(() => {
     setEditedFerramenta(ferramenta || {});
   }, [ferramenta]);
-
-  const formatToBrazilianDate = (isoDate) => {
-    if (!isoDate) return "";
-    const [year, month, day] = isoDate.split("-");
-    return `${day}/${month}/${year}`;
-  };
 
   const formatToISODate = (brDate) => {
     if (!brDate) return "";
@@ -26,15 +20,15 @@ function ModalEmprestado({ ferramenta, onClose }) {
 
   const handleUpdate = async () => {
     setIsSaving(true);
-    setIsConfirmOpen(false); // Fecha o modal de confirmação antes de iniciar o processo
+    setIsConfirmOpen(false);
 
     try {
-      const brFormattedDate = new Date().toLocaleDateString("pt-BR");
+      const todayISO = new Date().toISOString().split("T")[0];
 
       await api.post("/ferramentaHistorico", {
         ...editedFerramenta,
         StatusEmprestado: true,
-        DateAlterado: brFormattedDate,
+        DateAlterado: todayISO,
       });
 
       await api.put(`/ferramentas/${ferramenta.id}`, {
@@ -51,27 +45,27 @@ function ModalEmprestado({ ferramenta, onClose }) {
       setIsSaving(false);
     }
 
-    window.reload();
+    window.location.reload();
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedFerramenta((prev) => ({
       ...prev,
-      [name]: name === "DataEmprestado" ? formatToBrazilianDate(value) : value,
+      [name]: value,
     }));
   };
 
   const handleConfirm = () => {
-    setIsConfirmOpen(true); // Abre o modal de confirmação
+    setIsConfirmOpen(true);
   };
 
   const handleCloseConfirm = () => {
-    setIsConfirmOpen(false); // Fecha o modal de confirmação sem fazer nada
+    setIsConfirmOpen(false);
   };
 
   const handleProceedConfirm = () => {
-    handleUpdate(); // Prossegue com a atualização da ferramenta
+    handleUpdate();
   };
 
   if (!ferramenta) return null;
@@ -102,9 +96,8 @@ function ModalEmprestado({ ferramenta, onClose }) {
               name="DataEmprestado"
               type="date"
               value={
-                editedFerramenta.DataEmprestado
-                  ? formatToISODate(editedFerramenta.DataEmprestado)
-                  : new Date().toISOString().split("T")[0]
+                editedFerramenta.DataEmprestado ||
+                new Date().toISOString().split("T")[0]
               }
               onChange={handleChange}
             />
@@ -117,7 +110,7 @@ function ModalEmprestado({ ferramenta, onClose }) {
             />
 
             <button
-              onClick={handleConfirm} // Abre o modal de confirmação
+              onClick={handleConfirm}
               className="save-button"
               disabled={isSaving}
             >
@@ -130,7 +123,7 @@ function ModalEmprestado({ ferramenta, onClose }) {
       <ModalEmprestadoConfirm
         isOpen={isConfirmOpen}
         onClose={handleCloseConfirm}
-        onProceed={handleProceedConfirm} // Ação de prosseguir
+        onProceed={handleProceedConfirm}
       />
     </>
   );

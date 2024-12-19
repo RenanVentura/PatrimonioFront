@@ -12,43 +12,8 @@ function ModalEdit({ ferramenta, onClose }) {
   const [centrocusto, setCentroCusto] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  // Abre o modal de confirmação
-  const handleDeleteClick = () => {
-    setShowDeleteModal(true);
-  };
-
-  // Confirma a exclusão
-  const handleConfirmDelete = async () => {
-    try {
-      const currentDate = new Date();
-      const formattedDate = currentDate.toLocaleDateString("pt-BR").split("/");
-      const formattedDateString = `${formattedDate[0]}/${formattedDate[1]}/${formattedDate[2]}`;
-
-      await api.post("/ferramentaHistorico", {
-        ...ferramenta,
-        StatusDelete: false,
-        DateAlterado: formattedDateString,
-      });
-
-      await api.put(`/ferramentas/${ferramenta.id}`, { StatusDelete: false });
-
-      alert("Ferramenta deletada com sucesso!");
-      setShowDeleteModal(false);
-      onClose();
-    } catch (error) {
-      console.error("Erro ao deletar a ferramenta:", error);
-      alert("Erro ao deletar a ferramenta.");
-    }
-  };
-
-  // Cancela a exclusão
-  const handleCancelDelete = () => {
-    setShowDeleteModal(false);
-  };
-
-  // Consulta de filiais
   useEffect(() => {
-    async function ConsultahFiliais() {
+    async function fetchFiliais() {
       try {
         const response = await api.get("/Empresa", {
           params: { StatusDelete: true },
@@ -58,39 +23,56 @@ function ModalEdit({ ferramenta, onClose }) {
         console.error("Erro ao carregar as filiais:", error);
       }
     }
-    ConsultahFiliais();
-  }, []);
 
-  // Consulta de Centro de Custo
-  useEffect(() => {
-    async function consultaCentro() {
+    async function fetchCentroCusto() {
       try {
-        const classes = await api.get("/CentroCusto", {
+        const response = await api.get("/CentroCusto", {
           params: { StatusDelete: true },
         });
-        setCentroCusto(classes.data);
+        setCentroCusto(response.data);
       } catch (error) {
-        console.error("Erro ao carregar o centro de custo", error);
+        console.error("Erro ao carregar o centro de custo:", error);
       }
     }
-    consultaCentro();
+
+    fetchFiliais();
+    fetchCentroCusto();
   }, []);
 
-  // Atualiza o estado quando a ferramenta muda
   useEffect(() => {
     setEditedFerramenta(ferramenta);
   }, [ferramenta]);
 
-  // Lida com atualizações dos inputs
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedFerramenta({
-      ...editedFerramenta,
-      [name]: value,
-    });
+  const handleDeleteClick = () => setShowDeleteModal(true);
+
+  const handleConfirmDelete = async () => {
+    try {
+      const currentDate = new Date();
+      const formattedDate = currentDate.toLocaleDateString("pt-BR");
+
+      await api.post("/ferramentaHistorico", {
+        ...ferramenta,
+        StatusDelete: false,
+        DateAlterado: formattedDate,
+      });
+
+      await api.put(`/ferramentas/${ferramenta.id}`, { StatusDelete: false });
+      alert("Ferramenta deletada com sucesso!");
+      setShowDeleteModal(false);
+      onClose();
+    } catch (error) {
+      console.error("Erro ao deletar a ferramenta:", error);
+      alert("Erro ao deletar a ferramenta.");
+    }
   };
 
-  // Função para enviar atualização
+  const handleCancelDelete = () => setShowDeleteModal(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditedFerramenta({ ...editedFerramenta, [name]: value });
+  };
+
   const handleUpdate = async () => {
     const modifiedFields = {};
     Object.keys(editedFerramenta).forEach((key) => {
@@ -100,7 +82,6 @@ function ModalEdit({ ferramenta, onClose }) {
     });
 
     try {
-      // Adiciona o histórico apenas se houver alterações
       if (Object.keys(modifiedFields).length > 0) {
         await api.post("/ferramentaHistorico", {
           ...ferramenta,
@@ -109,27 +90,29 @@ function ModalEdit({ ferramenta, onClose }) {
         });
       }
 
-      // Atualiza os dados principais
       await api.put(`/ferramentas/${ferramenta.id}`, editedFerramenta);
       alert("Ferramenta atualizada com sucesso!");
-      onClose(); // Fecha o modal
+      onClose();
     } catch (error) {
+      console.error("Erro ao atualizar ferramenta:", error);
       alert("Erro ao atualizar ferramenta");
-      console.error(error);
     }
+  };
+
+  const formatDate = (date) => {
+    if (!date) return "";
+    const [year, month, day] = date.split("-");
+    return `${day}/${month}/${year}`;
   };
 
   if (!ferramenta) return null;
 
   return (
     <>
-      {/* Overlay escuro */}
       <div className="modal-overlay" onClick={onClose}></div>
 
-      {/* Modal principal */}
       <div className="formEdit">
         <div className="container-card">
-          {/* Cabeçalho do Modal */}
           <div className="titleEdit">
             <img className="logoQually" src={logo} alt="Logo" />
             <h2>
@@ -153,7 +136,6 @@ function ModalEdit({ ferramenta, onClose }) {
             </button>
           </div>
 
-          {/* Conteúdo do formulário */}
           <div className="containerEdit">
             <InputField
               label="Patrimônio"
@@ -218,18 +200,28 @@ function ModalEdit({ ferramenta, onClose }) {
             <InputField
               label="Data Emprestada"
               name="DataEmprestado"
-              type="date"
+              type="date" // Alterado para type="date"
               value={editedFerramenta.DataEmprestado || ""}
-              onChange={handleChange}
+              onChange={(e) =>
+                setEditedFerramenta({
+                  ...editedFerramenta,
+                  DataEmprestado: e.target.value,
+                })
+              }
             />
+
             <InputField
               label="Data Devolvida"
               name="DataDevolvida"
-              type="date"
+              type="date" // Alterado para type="date"
               value={editedFerramenta.DataDevolvida || ""}
-              onChange={handleChange}
+              onChange={(e) =>
+                setEditedFerramenta({
+                  ...editedFerramenta,
+                  DataDevolvida: e.target.value,
+                })
+              }
             />
-
             <TextAreaField
               label="Observação Emprestado"
               name="ObsEmprestado"
@@ -248,7 +240,6 @@ function ModalEdit({ ferramenta, onClose }) {
               Salvar alterações
             </button>
 
-            {/* Modal de Confirmação de Exclusão */}
             {showDeleteModal && (
               <ModalConfirmDelete
                 message="Tem certeza que deseja deletar esta ferramenta?"
@@ -266,8 +257,6 @@ function ModalEdit({ ferramenta, onClose }) {
 export default ModalEdit;
 
 /* COMPONENTES REUTILIZÁVEIS */
-
-// InputField Component
 function InputField({ label, name, value, onChange, type = "text", min }) {
   return (
     <div className="data-container">
