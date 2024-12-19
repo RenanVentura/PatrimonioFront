@@ -47,13 +47,12 @@ function ModalEdit({ ferramenta, onClose }) {
 
   const handleConfirmDelete = async () => {
     try {
-      const currentDate = new Date();
-      const formattedDate = currentDate.toLocaleDateString("pt-BR");
+      const todayISO = new Date().toISOString().split("T")[0];
 
       await api.post("/ferramentaHistorico", {
         ...ferramenta,
         StatusDelete: false,
-        DateAlterado: formattedDate,
+        DateAlterado: todayISO,
       });
 
       await api.put(`/ferramentas/${ferramenta.id}`, { StatusDelete: false });
@@ -83,10 +82,12 @@ function ModalEdit({ ferramenta, onClose }) {
 
     try {
       if (Object.keys(modifiedFields).length > 0) {
+        const todayISO = new Date().toISOString().split("T")[0];
         await api.post("/ferramentaHistorico", {
           ...ferramenta,
           ...modifiedFields,
           StatusDelete: true,
+          DateAlterado: todayISO,
         });
       }
 
