@@ -1,11 +1,16 @@
 import { useState, useRef, useEffect } from "react";
 import "./Forms.css";
+import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../../assets/Logo.png";
 import api from "../../services/api";
-import { useNavigate } from "react-router-dom";
 
 function Forms() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  function isActive(path) {
+    return location.pathname === path;
+  }
 
   const [filiais, setFiliais] = useState([]);
   const [selectFiliais, setSelectFiliais] = useState("");
@@ -14,10 +19,8 @@ function Forms() {
 
   const inputNome = useRef();
   const inputTipoDeCadastro = useRef();
-  const inputStatus = useRef();
   const inputValor = useRef();
   const inputPatrimonio = useRef();
-  const inputEmpresa = useRef();
   const inputCentroDeCusto = useRef();
   const inputNomeDoResponsavel = useRef();
   const inputObservacao = useRef();
@@ -106,26 +109,36 @@ function Forms() {
     <div className="container">
       <div className="sidebar">
         <img src={logo} alt="Logo" className="logo" />
-        <button className="sidebar-button" onClick={() => navigate("/")}>
+
+        <button
+          className={`sidebar-button ${isActive("/") ? "active" : ""}`}
+          onClick={() => navigate("/")}
+        >
           Cadastro
         </button>
-        <button className="sidebar-button" onClick={() => navigate("/Frotas")}>
+        <button
+          className={`sidebar-button ${isActive("/Frotas") ? "active" : ""}`}
+          onClick={() => navigate("/Frotas")}
+        >
           Frotas
         </button>
         <button
-          className="sidebar-button"
+          className={`sidebar-button ${
+            isActive("/Ferramentas") ? "active" : ""
+          }`}
           onClick={() => navigate("/Ferramentas")}
         >
           Ferramentas
         </button>
         <button
-          className="sidebar-button"
+          className={`sidebar-button ${
+            isActive("/Emprestado") ? "active" : ""
+          }`}
           onClick={() => navigate("/Emprestado")}
         >
           Emprestados
         </button>
       </div>
-
       <div className="form-container">
         <form className="Formulario">
           <h1>Cadastro de Patrimônio</h1>

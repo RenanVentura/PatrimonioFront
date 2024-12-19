@@ -1,3 +1,49 @@
+.sidebar {
+    width: 200px;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .logo {
+    width: 150px;
+    /* margin-bottom: 20px; */
+  }
+  
+  .sidebar-button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #e0e0e0;
+    color: #333;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .sidebar-button:hover {
+    background-color: #d0d0d0;
+  }
+  
+  /* Estilo do botão ativo */
+  .sidebar-button.active {
+    background-color: #4caf50; /* Cor verde */
+    color: white; /* Cor do texto */
+    font-weight: bold; /* Destaca o texto */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilo de foco para acessibilidade */
+  .sidebar-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #4caf50;
+  }
+  
 .info-panel-container {
     position: relative;
     width: 100%;

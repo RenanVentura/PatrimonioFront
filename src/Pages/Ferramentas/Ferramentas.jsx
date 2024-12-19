@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./Ferramentas.css";
 import logo from "../../assets/Logo.png";
 import api from "../../services/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Lapis from "../../assets/lapis.png";
 import Lixo from "../../assets/lixo.png";
 import Emprestado from "../../assets/Emprestado.png";
@@ -21,12 +21,16 @@ function Ferramentas() {
 
   const itemsPerPage = 6;
   const navigate = useNavigate();
+  const location = useLocation(); // Hook para obter a rota atual
 
   async function getFerramentas() {
     try {
       const patrimonioFromApi = await api.get("/ferramentas", {
-        params: { StatusDelete: true },
-        //  StatusEmprestado: false },
+        params: {
+          StatusDelete: true,
+          StatusEmprestado: false,
+          TipoDeCadastro: "Ferramentas",
+        },
       });
       setPatrimonio(patrimonioFromApi.data);
     } catch (error) {
@@ -35,17 +39,18 @@ function Ferramentas() {
   }
 
   const formatDate = (date) => {
-    if (!date) return ""; // Retorna uma string vazia se a data for inválida ou nula
+    if (!date) return "";
 
     const newDate = new Date(date);
-    if (isNaN(newDate.getTime())) return ""; // Verifica se a data é válida
+    if (isNaN(newDate.getTime())) return "";
 
-    const day = String(newDate.getUTCDate()).padStart(2, "0"); // Adiciona o zero à esquerda se for menor que 10
-    const month = String(newDate.getUTCMonth() + 1).padStart(2, "0"); // Meses começam de 0 (janeiro é 0)
-    const year = newDate.getUTCFullYear(); // Obtém o ano completo
+    const day = String(newDate.getUTCDate()).padStart(2, "0");
+    const month = String(newDate.getUTCMonth() + 1).padStart(2, "0");
+    const year = newDate.getUTCFullYear();
 
     return `${day}/${month}/${year}`;
   };
+
   useEffect(() => {
     getFerramentas();
   }, []);
@@ -83,7 +88,7 @@ function Ferramentas() {
 
       alert("Ferramenta deletada com sucesso!");
       setIsModalDeleteOpen(false);
-      getFerramentas(); // Atualiza a lista após a exclusão
+      getFerramentas();
     } catch (error) {
       console.error("Erro ao deletar a ferramenta:", error);
       alert("Erro ao deletar a ferramenta.");
@@ -93,7 +98,7 @@ function Ferramentas() {
   const handleCloseEditModal = () => {
     setIsModalEditOpen(false);
     setSelectedFerramenta(null);
-    getFerramentas(); // Atualiza a lista após edição
+    getFerramentas();
   };
 
   const handleCloseEmprestadoModal = () => {
@@ -123,24 +128,36 @@ function Ferramentas() {
     }
   };
 
+  const isActive = (path) => location.pathname === path;
+
   return (
     <div className="container">
       <div className="sidebar">
         <img src={logo} alt="Logo" className="logo" />
-        <button className="sidebar-button" onClick={() => navigate("/")}>
+        <button
+          className={`sidebar-button ${isActive("/") ? "active" : ""}`}
+          onClick={() => navigate("/")}
+        >
           Cadastro
         </button>
-        <button className="sidebar-button" onClick={() => navigate("/Frotas")}>
+        <button
+          className={`sidebar-button ${isActive("/Frotas") ? "active" : ""}`}
+          onClick={() => navigate("/Frotas")}
+        >
           Frotas
         </button>
         <button
-          className="sidebar-button"
+          className={`sidebar-button ${
+            isActive("/Ferramentas") ? "active" : ""
+          }`}
           onClick={() => navigate("/Ferramentas")}
         >
           Ferramentas
         </button>
         <button
-          className="sidebar-button"
+          className={`sidebar-button ${
+            isActive("/Emprestado") ? "active" : ""
+          }`}
           onClick={() => navigate("/Emprestado")}
         >
           Emprestados
