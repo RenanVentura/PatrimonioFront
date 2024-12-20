@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./Frotas.css";
+import * as XLSX from "xlsx";
 import logo from "../../assets/Logo.png";
 import api from "../../services/api";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -21,15 +22,15 @@ function Ferramentas() {
 
   const itemsPerPage = 6;
   const navigate = useNavigate();
-  const location = useLocation();
+  const location = useLocation(); // Hook para obter a rota atual
 
   async function getFerramentas() {
     try {
       const patrimonioFromApi = await api.get("/ferramentas", {
         params: {
-          StatusDelete: true,
+          StatusDelete: false,
           StatusEmprestado: false,
-          TipoDeCadastro: "Frotas",
+          TipoDeCadastro: "Ferramentas",
         },
       });
       setPatrimonio(patrimonioFromApi.data);
@@ -51,8 +52,53 @@ function Ferramentas() {
     return `${day}/${month}/${year}`;
   };
 
+  function exportToExcel() {
+    if (patrimonio.length === 0) {
+      alert("Nenhum dado disponível para exportação!");
+      return;
+    }
+
+    // Mapeia os dados para o formato desejado na planilha
+    const formattedData = patrimonio.map((item) => ({
+      Nome: item.Nome ?? "",
+      Patrimonio: item.Patrimonio ?? "",
+      Responsável: item.NomeDeResponsavel ?? "",
+      "Centro de Custo": item.CentroDeCusto ?? "",
+      Empresa: item.Empresa ?? "",
+      Valor: item.Valor ?? "",
+      "Data Emprestado": formatDate(item.DataEmprestado ?? ""),
+      "Data Devolvida": formatDate(item.DataDevolvida ?? ""),
+      Observação: item.Observacao ?? "",
+      "Obs Emprestado": item.ObsEmprestado ?? "",
+      "Tipo de Cadastro": item.TipoDeCadastro ?? "",
+    }));
+
+    // Cria um novo workbook e adiciona os dados
+    const worksheet = XLSX.utils.json_to_sheet(formattedData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Ferramentas");
+
+    // Exporta o arquivo Excel
+    XLSX.writeFile(workbook, "Ferramentas.xlsx");
+  }
+
   useEffect(() => {
-    getFerramentas();
+    async function fetchData() {
+      try {
+        const response = await api.get("/ferramentas", {
+          params: {
+            StatusDelete: false,
+            StatusEmprestado: false,
+            TipoDeCadastro: "Frotas",
+          },
+        });
+        console.log("Dados recebidos:", response.data);
+        setPatrimonio(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar ferramentas:", error);
+      }
+    }
+    fetchData();
   }, []);
 
   const handleDeleteClick = (ferramenta) => {
@@ -83,7 +129,7 @@ function Ferramentas() {
       });
 
       await api.put(`/ferramentas/${selectedFerramenta.id}`, {
-        StatusDelete: false,
+        StatusDelete: true,
       });
 
       alert("Ferramenta deletada com sucesso!");
@@ -167,7 +213,9 @@ function Ferramentas() {
       <div className="info-panel-container">
         <div className="button-container">
           <button className="filter-button">Filtrar</button>
-          <button className="export-button">Exportar</button>
+          <button className="export-button" onClick={exportToExcel}>
+            Exportar
+          </button>
         </div>
 
         <div className="info-panel">
