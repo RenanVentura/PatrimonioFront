@@ -144,7 +144,7 @@ function Forms() {
           <h1>Cadastro de Patrimônio</h1>
 
           <div className="tutiloInput">
-            <span>Nome Patrimonio</span>
+            <span>Nome Patrimônio</span>
           </div>
           <input
             name="Nome"
@@ -154,12 +154,12 @@ function Forms() {
           />
 
           <div className="tutiloInput">
-            <span>Patrimonio</span>
+            <span>Patrimônio</span>
           </div>
           <input
             name="Patrimonio"
             type="text"
-            placeholder="Patrimonio"
+            placeholder="Patrimônio"
             ref={inputPatrimonio}
           />
 
