@@ -85,14 +85,14 @@ function ModalEmprestado({ ferramenta, onClose }) {
 
           <div className="containerEditEmp">
             <InputField
-              label="Responsável"
+              label="Responsável pelo Empréstimo"
               name="ResponsavelEmprestado"
               value={editedFerramenta.ResponsavelEmprestado || ""}
               onChange={handleChange}
             />
 
             <InputField
-              label="Data Emprestada"
+              label="Data do Empréstimo"
               name="DataEmprestado"
               type="date"
               value={
@@ -103,7 +103,7 @@ function ModalEmprestado({ ferramenta, onClose }) {
             />
 
             <TextAreaField
-              label="Observação Emprestado"
+              label="Observação do Empréstimo"
               name="ObsEmprestado"
               value={editedFerramenta.ObsEmprestado || ""}
               onChange={handleChange}
