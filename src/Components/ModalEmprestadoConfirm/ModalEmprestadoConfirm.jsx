@@ -8,6 +8,7 @@ function ModalEmprestadoConfirm({ isOpen, onClose, onProceed }) {
     <div className="modalOverlayConfirm">
       <div className="modalContentConfirm">
         <div className="modalHeaderConfirm">
+          <h3>Confirmação</h3>
           <p className="messageConfirm">
             Tem certeza que deseja salvar as alterações?
           </p>
