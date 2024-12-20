@@ -27,7 +27,7 @@ function Ferramentas() {
     try {
       const patrimonioFromApi = await api.get("/ferramentas", {
         params: {
-          StatusDelete: true,
+          StatusDelete: false,
           StatusEmprestado: false,
           TipoDeCadastro: "Ferramentas",
         },
@@ -83,7 +83,7 @@ function Ferramentas() {
       });
 
       await api.put(`/ferramentas/${selectedFerramenta.id}`, {
-        StatusDelete: false,
+        StatusDelete: true,
       });
 
       alert("Ferramenta deletada com sucesso!");

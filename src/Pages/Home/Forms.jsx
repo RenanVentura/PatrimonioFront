@@ -62,7 +62,7 @@ function Forms() {
         NomeDeResponsavel: inputNomeDoResponsavel.current.value,
         TipoDeCadastro: inputTipoDeCadastro.current.value,
         Status: "Ativo",
-        StatusDelete: true,
+        StatusDelete: false,
         ObsEmprestado: null,
         ResponsavelEmprestado: null,
         DataEmprestado: null,

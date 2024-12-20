@@ -5,12 +5,14 @@ import logo from "../../assets/Logo.png";
 import LixoEdit from "../../assets/lixo.png";
 import ModalConfirmDelete from "../ModalConfirmDelete/ModalConfirmDelete";
 import Emprestado from "../../assets/Emprestado.png";
+import ModalEmprestado from "../ModalEmprestado/ModalEmprestado";
 
 function ModalEdit({ ferramenta, onClose }) {
   const [editedFerramenta, setEditedFerramenta] = useState(ferramenta);
   const [filiais, setFiliais] = useState([]);
   const [centrocusto, setCentroCusto] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEmprestadoModal, setShowEmprestadoModal] = useState(false); // Novo estado para o modal de empréstimo
 
   useEffect(() => {
     async function fetchFiliais() {
@@ -51,11 +53,11 @@ function ModalEdit({ ferramenta, onClose }) {
 
       await api.post("/ferramentaHistorico", {
         ...ferramenta,
-        StatusDelete: false,
+        StatusDelete: true,
         DateAlterado: todayISO,
       });
 
-      await api.put(`/ferramentas/${ferramenta.id}`, { StatusDelete: false });
+      await api.put(`/ferramentas/${ferramenta.id}`, { StatusDelete: true });
       alert("Ferramenta deletada com sucesso!");
       setShowDeleteModal(false);
       onClose();
@@ -106,6 +108,8 @@ function ModalEdit({ ferramenta, onClose }) {
     return `${day}/${month}/${year}`;
   };
 
+  const handleEmprestadoClick = () => setShowEmprestadoModal(true); // Função para abrir o modal de empréstado
+
   if (!ferramenta) return null;
 
   return (
@@ -131,6 +135,7 @@ function ModalEdit({ ferramenta, onClose }) {
               src={Emprestado}
               alt="Emprestado"
               style={{ cursor: "pointer" }}
+              onClick={handleEmprestadoClick} // Evento de clique
             />
             <button className="close" onClick={onClose}>
               X
@@ -201,7 +206,7 @@ function ModalEdit({ ferramenta, onClose }) {
             <InputField
               label="Data Emprestada"
               name="DataEmprestado"
-              type="date" // Alterado para type="date"
+              type="date"
               value={editedFerramenta.DataEmprestado || ""}
               onChange={(e) =>
                 setEditedFerramenta({
@@ -214,7 +219,7 @@ function ModalEdit({ ferramenta, onClose }) {
             <InputField
               label="Data Devolvida"
               name="DataDevolvida"
-              type="date" // Alterado para type="date"
+              type="date"
               value={editedFerramenta.DataDevolvida || ""}
               onChange={(e) =>
                 setEditedFerramenta({
@@ -246,6 +251,13 @@ function ModalEdit({ ferramenta, onClose }) {
                 message="Tem certeza que deseja deletar esta ferramenta?"
                 onConfirm={handleConfirmDelete}
                 onCancel={handleCancelDelete}
+              />
+            )}
+
+            {showEmprestadoModal && (
+              <ModalEmprestado
+                onClose={() => setShowEmprestadoModal(false)} // Fechar o modal
+                ferramenta={ferramenta}
               />
             )}
           </div>
