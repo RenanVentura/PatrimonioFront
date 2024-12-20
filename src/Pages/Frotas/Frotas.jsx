@@ -10,7 +10,7 @@ import Emprestado from "../../assets/Emprestado.png";
 import ModalEdit from "../../Components/ModalEdit/ModalEdit";
 import ModalConfirmDelete from "../../Components/ModalConfirmDelete/ModalConfirmDelete";
 import ModalEmprestado from "../../Components/ModalEmprestado/ModalEmprestado";
-
+d;
 function Ferramentas() {
   const [patrimonio, setPatrimonio] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
