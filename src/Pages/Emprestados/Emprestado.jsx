@@ -5,10 +5,8 @@ import api from "../../services/api";
 import { useNavigate, useLocation } from "react-router-dom";
 import Lapis from "../../assets/lapis.png";
 import Lixo from "../../assets/lixo.png";
-import Emprestado from "../../assets/Emprestado.png";
-import ModalEdit from "../../Components/ModalEdit/ModalEdit";
 import ModalConfirmDelete from "../../Components/ModalConfirmDelete/ModalConfirmDelete";
-import ModalEmprestado from "../../Components/ModalEmprestado/ModalEmprestado";
+import ModalDevolucao from "../../Components/ModalDevolucao/ModalDevolucao";
 import Devolver from "../../assets/devolução.png";
 import * as XLSX from "xlsx";
 
@@ -17,7 +15,6 @@ function Ferramentas() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedFerramenta, setSelectedFerramenta] = useState(null);
 
-  const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const [isModalEmprestadoOpen, setIsModalEmprestadoOpen] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
 
@@ -110,11 +107,6 @@ function Ferramentas() {
     setIsModalEmprestadoOpen(true);
   };
 
-  const handleEditClick = (ferramenta) => {
-    setSelectedFerramenta(ferramenta);
-    setIsModalEditOpen(true);
-  };
-
   const handleConfirmDelete = async () => {
     try {
       const currentDate = new Date();
@@ -138,12 +130,6 @@ function Ferramentas() {
       console.error("Erro ao deletar a ferramenta:", error);
       alert("Erro ao deletar a ferramenta.");
     }
-  };
-
-  const handleCloseEditModal = () => {
-    setIsModalEditOpen(false);
-    setSelectedFerramenta(null);
-    getFerramentas();
   };
 
   const handleCloseEmprestadoModal = () => {
@@ -232,12 +218,6 @@ function Ferramentas() {
                         onClick={() => handleEmprestaClick(ferramenta)}
                       />
                       <img
-                        src={Lapis}
-                        alt="Editar"
-                        className="icon"
-                        onClick={() => handleEditClick(ferramenta)}
-                      />
-                      <img
                         src={Lixo}
                         alt="Excluir"
                         className="icon"
@@ -323,15 +303,8 @@ function Ferramentas() {
         </div>
       </div>
 
-      {isModalEditOpen && (
-        <ModalEdit
-          ferramenta={selectedFerramenta}
-          onClose={handleCloseEditModal}
-        />
-      )}
-
       {isModalEmprestadoOpen && (
-        <ModalEmprestado
+        <ModalDevolucao
           ferramenta={selectedFerramenta}
           onClose={handleCloseEmprestadoModal}
         />

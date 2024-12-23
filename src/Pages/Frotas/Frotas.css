@@ -121,10 +121,10 @@
 
 .container-obs {
     font-size: 14px;
-    margin-top: 40px !important;
+    margin-top: 20px !important;
 
     & .labelobs{
-        margin-top: 30px;
+        margin-top: 20px;
     }
 
     & span {
