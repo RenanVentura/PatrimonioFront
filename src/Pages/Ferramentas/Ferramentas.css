@@ -133,11 +133,13 @@
 }
 
 .info-card {
-    background-color: #f9f9f9;
+    background-color: #d7f1de88 !important;
     border-radius: 10px;
+    border: 1px solid;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin-bottom: 0px;
+    border-color: #035707 !important;
     transition: transform 0.3s ease;
     min-height: 350px;
     width: 100%;
