@@ -4,19 +4,17 @@ import api from "../../services/api";
 import ModalEmprestadoConfirm from "../ModalEmprestadoConfirm/ModalEmprestadoConfirm";
 
 function ModalEmprestado({ ferramenta, onClose }) {
-  const [editedFerramenta, setEditedFerramenta] = useState(ferramenta || {});
+  const [editedFerramenta, setEditedFerramenta] = useState({});
   const [isSaving, setIsSaving] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   useEffect(() => {
-    setEditedFerramenta(ferramenta || {});
+    setEditedFerramenta({
+      ...ferramenta,
+      DataEmprestado:
+        ferramenta?.DataEmprestado || new Date().toISOString().split("T")[0],
+    });
   }, [ferramenta]);
-
-  const formatToISODate = (brDate) => {
-    if (!brDate) return "";
-    const [day, month, year] = brDate.split("/");
-    return `${year}-${month}-${day}`;
-  };
 
   const handleUpdate = async () => {
     setIsSaving(true);
@@ -27,12 +25,14 @@ function ModalEmprestado({ ferramenta, onClose }) {
 
       await api.post("/ferramentaHistorico", {
         ...editedFerramenta,
+        DataEmprestado: editedFerramenta.DataEmprestado || todayISO,
         StatusEmprestado: true,
         DateAlterado: todayISO,
       });
 
       await api.put(`/ferramentas/${ferramenta.id}`, {
         ...editedFerramenta,
+        DataEmprestado: editedFerramenta.DataEmprestado || todayISO,
         StatusEmprestado: true,
       });
 
@@ -95,10 +95,7 @@ function ModalEmprestado({ ferramenta, onClose }) {
               label="Data do Empréstimo"
               name="DataEmprestado"
               type="date"
-              value={
-                editedFerramenta.DataEmprestado ||
-                new Date().toISOString().split("T")[0]
-              }
+              value={editedFerramenta.DataEmprestado || ""}
               onChange={handleChange}
             />
 
