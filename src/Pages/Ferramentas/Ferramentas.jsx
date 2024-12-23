@@ -247,7 +247,9 @@ function Ferramentas() {
                       />
                     </div>
                   </div>
-                  <p>{ferramenta.Patrimonio ?? ""}</p>
+                  <p className="LabelPatrimonio">
+                    {ferramenta.Patrimonio ?? ""}
+                  </p>
                   <div className="info-columns">
                     <ul>
                       <li>
@@ -261,6 +263,10 @@ function Ferramentas() {
                       <li>
                         <span>Responsavel Emprestado:</span>{" "}
                         {ferramenta.ResponsavelEmprestado ?? ""}
+                      </li>
+                      <li>
+                        <span>Tipo de Cadastro:</span>{" "}
+                        {ferramenta.TipoDeCadastro ?? ""}
                       </li>
                     </ul>
                     <ul>
@@ -285,10 +291,12 @@ function Ferramentas() {
                       <li>
                         <span>Observação:</span> {ferramenta.Observacao ?? ""}
                       </li>
-                      <li>
-                        <span>Obs Emprestado:</span>{" "}
-                        {ferramenta.ObsEmprestado ?? ""}
-                      </li>
+                      <div className="labelobs">
+                        <li>
+                          <span>Obs Emprestado:</span>{" "}
+                          {ferramenta.ObsEmprestado ?? ""}
+                        </li>
+                      </div>
                     </ul>
                   </div>
                 </div>

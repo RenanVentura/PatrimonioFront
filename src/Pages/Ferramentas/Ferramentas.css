@@ -121,7 +121,11 @@
 
 .container-obs {
     font-size: 14px;
-    margin-top: 10px;
+    margin-top: 40px !important;
+
+    & .labelobs{
+        margin-top: 30px;
+    }
 
     & span {
         font-weight: bold;
@@ -183,6 +187,11 @@
     margin-bottom: 10px;
 }
 
+.LabelPatrimonio{
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
 .info-details p {
     font-size: 16px;
     margin-bottom: 15px;
@@ -201,7 +210,7 @@
 
 .info-columns li {
     font-size: 14px;
-    margin-bottom: 8px;
+    margin-bottom: 15px !important;
 }
 
 .info-columns li span {

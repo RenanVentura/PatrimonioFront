@@ -9,6 +9,7 @@ import Emprestado from "../../assets/Emprestado.png";
 import ModalEdit from "../../Components/ModalEdit/ModalEdit";
 import ModalConfirmDelete from "../../Components/ModalConfirmDelete/ModalConfirmDelete";
 import ModalEmprestado from "../../Components/ModalEmprestado/ModalEmprestado";
+import Devolver from "../../assets/devolução.png";
 import * as XLSX from "xlsx";
 
 function Ferramentas() {
@@ -225,7 +226,7 @@ function Ferramentas() {
                     <h2>{ferramenta.Nome ?? ""}</h2>
                     <div className="action-icons">
                       <img
-                        src={Emprestado}
+                        src={Devolver}
                         alt="Emprestar"
                         className="iconEmprestado"
                         onClick={() => handleEmprestaClick(ferramenta)}
@@ -260,6 +261,10 @@ function Ferramentas() {
                         <span>Responsavel Emprestado:</span>{" "}
                         {ferramenta.ResponsavelEmprestado ?? ""}
                       </li>
+                      <li>
+                        <span>Tipo de Cadastro:</span>{" "}
+                        {ferramenta.TipoDeCadastro ?? ""}
+                      </li>
                     </ul>
                     <ul>
                       <li>
@@ -283,10 +288,12 @@ function Ferramentas() {
                       <li>
                         <span>Observação:</span> {ferramenta.Observacao ?? ""}
                       </li>
-                      <li>
-                        <span>Obs Emprestado:</span>{" "}
-                        {ferramenta.ObsEmprestado ?? ""}
-                      </li>
+                      <div className="labelobs">
+                        <li>
+                          <span>Obs Emprestado:</span>{" "}
+                          {ferramenta.ObsEmprestado ?? ""}
+                        </li>
+                      </div>
                     </ul>
                   </div>
                 </div>
