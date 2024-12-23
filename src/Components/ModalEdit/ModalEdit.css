@@ -11,11 +11,11 @@
 
 .formEdit {
     position: fixed;
-    margin-top: 700px;
+    margin-top: 750px;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 800px;
-    height: 700px;
+    height: 750px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
@@ -89,6 +89,7 @@
     border-radius: 4px;
     font-size: 16px;
     box-sizing: border-box;
+    margin-bottom: 7px;
 }
 
 .containerEdit textarea {
@@ -232,4 +233,9 @@
         font-size: 12px;
         padding: 8px;
     }
+}
+
+.formEdit {
+    position: fixed;
+    margin-top: 750px !important;
 }
