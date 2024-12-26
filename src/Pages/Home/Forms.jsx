@@ -191,14 +191,16 @@ function Forms() {
             value={selectFiliais}
             onChange={(e) => setSelectFiliais(e.target.value)}
           >
-            <option value="">Selecione uma Filial</option>
+            <option value="">Selecione uma Empresa</option>
             {filiais.map((filial) => (
               <option key={filial.id} value={filial.Empresa}>
                 {filial.Empresa}
               </option>
             ))}
           </select>
-
+          <div className="linkCadastro">
+            <span> Cadastro de Empresa</span>
+          </div>
           <div className="tutiloInput">
             <span>Centro de Custo</span>
           </div>
@@ -215,6 +217,9 @@ function Forms() {
               </option>
             ))}
           </select>
+          <div className="linkCadastro">
+            <span> Cadastro de Centro de Custo</span>
+          </div>
 
           <div className="tutiloInput">
             <span>Responsável</span>

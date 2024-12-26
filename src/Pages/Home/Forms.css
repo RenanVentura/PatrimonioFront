@@ -142,7 +142,7 @@ form {
 
 form h1 {
     text-align: center;
-    margin-bottom: 17px;
+    margin-bottom: 10px;
     font-size: 20px;
 }
 
@@ -151,8 +151,8 @@ form select,
 form textarea,
 form button {
     width: 100%;
-    padding: 6px;
-    margin-top: 6px ;
+    padding: 5px;
+    margin-top: 5px ;
     margin-bottom: 8px;
     border: 1px solid #ddd;
     border-radius: 20px;
@@ -191,6 +191,14 @@ form button:hover {
     background-color: #0a5a22;
 }
 
+.linkCadastro{
+    font-size: 11px;
+    margin-left: 10px;
+    color: #0a5a22;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
 
 @media (max-width: 1024px) {
     .sidebar {
