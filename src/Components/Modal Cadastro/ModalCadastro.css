@@ -28,6 +28,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* Garante que o botão fique colado embaixo */
+    overflow-y: auto; /* Adiciona rolagem vertical quando necessário */
 }
 
 /* Cabeçalho do modal */
@@ -64,6 +65,8 @@
     gap: 15px; /* Reduz o espaçamento entre os cards */
     justify-content: center;
     padding: 10px;
+    max-height: calc(100% - 100px); /* Ajuste para que o corpo do modal ocupe o espaço restante */
+    overflow-y: auto; /* Permite o scroll caso o conteúdo ultrapasse a altura do modal */
 }
 
 /* Card de Centro de Custo */
@@ -79,7 +82,6 @@
     transition: transform 0.2s ease;
     height: 40px; 
 }
-
 
 .cardCentroCusto:hover {
     transform: scale(1.05); /* Efeito de hover para os cards */
