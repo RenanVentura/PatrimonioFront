@@ -1,5 +1,5 @@
 /* Overlay do modal */
-.modalOverlayEmpresa {
+.modalOverlayCadastroEmp {
     position: fixed;
     top: 0;
     left: 0;
@@ -14,7 +14,7 @@
 }
 
 /* Conteúdo do modal */
-.modalContentEmpresa {
+.modalContentCadastroEmp {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 12px;
@@ -30,11 +30,10 @@
     justify-content: space-between; /* Garante que o botão fique colado embaixo */
     overflow-y: auto; /* Adiciona rolagem vertical quando necessário */
     z-index: 500 !important;
-
 }
 
 /* Cabeçalho do modal */
-.modalHeaderEmpresa {
+.modalHeaderCadastroEmp {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -43,7 +42,7 @@
 }
 
 /* Título do modal */
-.modalHeaderEmpresa h3 {
+.modalHeaderCadastroEmp h3 {
     margin: 0;
     flex: 1;
     text-align: center;
@@ -61,7 +60,8 @@
     transform: scale(1.2);
 }
 
-.modalBodyEmpresa {
+/* Corpo do modal */
+.modalBodyCadastro {
     display: flex;
     flex-wrap: wrap;
     gap: 15px; /* Reduz o espaçamento entre os cards */
@@ -72,21 +72,22 @@
 }
 
 /* Card de Centro de Custo */
-.cardEmpresa {
+.cardEmp {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     background-color: #f0f0f0;
-    padding: 5px 10px; /* Ajuste de padding para reduzir o espaço interno */
+    padding: 5px 10px;
     border-radius: 8px;
     width: calc(50% - 10px); /* Dois cards por linha */
     box-sizing: border-box;
     transition: transform 0.2s ease;
-    height: 40px; 
+    height: 40px;
 }
 
-.cardEmpresa:hover {
-    transform: scale(1.05); /* Efeito de hover para os cards */
+/* Efeito de hover nos cards */
+.cardCentroCusto:hover {
+    transform: scale(1.05);
 }
 
 /* Nome do Centro de Custo */
@@ -94,17 +95,19 @@
     color: #000;
     font-size: 16px;
     font-weight: bold;
+    flex-grow: 1; /* Ocupa o espaço restante */
 }
 
-/* Ícone de lixo */
+/* Ícones de excluir e editar */
 .iconLixo {
     width: 23px;
     height: auto;
     cursor: pointer;
+    margin-left: 10px; /* Espaçamento entre os ícones */
 }
 
 .iconLixo:hover {
-    transform: scale(1.2); /* Corrigido o uso de scale */
+    transform: scale(1.2); /* Efeito de hover */
 }
 
 /* Rodapé do modal */
@@ -112,7 +115,7 @@
     margin-top: 20px;
 }
 
-/* Botões do modal */
+/* Botão de cadastro */
 .buttonConfirmCadastro {
     padding: 10px 20px;
     font-size: 16px;
@@ -127,6 +130,7 @@
     color: white;
 }
 
+/* Efeito de hover no botão */
 .buttonConfirmCadastro:hover {
     background-color: #267e4b;
 }
@@ -156,16 +160,16 @@
 
 /* Responsividade para telas pequenas */
 @media (max-width: 600px) {
-    .modalContentEmpresa {
+    .modalContentCadastro {
         width: 85%;
         padding: 20px;
     }
 
-    .modalHeaderEmpresa h3 {
+    .modalHeaderCadastro h3 {
         font-size: 16px;
     }
 
-    .cardEmpresa {
+    .cardCentroCusto {
         width: 100%; /* Apenas 1 card por linha em telas menores */
     }
 }
