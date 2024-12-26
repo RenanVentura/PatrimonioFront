@@ -3,15 +3,15 @@ import "./Forms.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../../assets/Logo.png";
 import api from "../../services/api";
+import ModalCadastroCC from "../../Components/Modal Cadastro/ModalCadastro";
 
 function Forms() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  function isActive(path) {
-    return location.pathname === path;
-  }
+  const isActive = (path) => location.pathname === path;
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [filiais, setFiliais] = useState([]);
   const [selectFiliais, setSelectFiliais] = useState("");
   const [centrocusto, setCentroCusto] = useState([]);
@@ -26,33 +26,33 @@ function Forms() {
   const inputObservacao = useRef();
 
   useEffect(() => {
-    async function consultaFiliais() {
+    const consultaFiliais = async () => {
       try {
         const holding = await api.get("/Empresa");
         setFiliais(holding.data);
       } catch (error) {
         console.error("Erro ao carregar filiais", error);
       }
-    }
+    };
     consultaFiliais();
   }, []);
 
   useEffect(() => {
-    async function consultaCentro() {
+    const consultaCentro = async () => {
       try {
         const classes = await api.get("/CentroCusto");
         setCentroCusto(classes.data);
       } catch (error) {
         console.error("Erro ao carregar o centro de custo", error);
       }
-    }
+    };
     consultaCentro();
   }, []);
 
-  async function createSoli() {
+  const createSoli = async () => {
     const preco = parseFloat(inputValor.current.value);
     try {
-      const response = await api.post("/ferramentas", {
+      await api.post("/ferramentas", {
         Nome: inputNome.current.value,
         Valor: preco,
         Patrimonio: inputPatrimonio.current.value,
@@ -87,10 +87,10 @@ function Forms() {
         DataDevolvida: null,
         StatusEmprestado: false,
       });
-      console.log("Cadastro realizado com sucesso");
+
       alert("Cadastro realizado com sucesso!");
 
-      // Reseta os valores dos inputs
+      // Reset dos inputs
       inputNome.current.value = "";
       inputTipoDeCadastro.current.value = "Tipo de Cadastro";
       inputValor.current.value = "";
@@ -103,13 +103,12 @@ function Forms() {
       console.error("Erro ao enviar o formulário", error);
       alert("Erro ao enviar o formulário. Tente novamente mais tarde.");
     }
-  }
+  };
 
   return (
     <div className="container">
       <div className="sidebar">
         <img src={logo} alt="Logo" className="logo" />
-
         <button
           className={`sidebar-button ${isActive("/") ? "active" : ""}`}
           onClick={() => navigate("/")}
@@ -187,7 +186,6 @@ function Forms() {
           </div>
           <select
             name="Empresa"
-            type="text"
             value={selectFiliais}
             onChange={(e) => setSelectFiliais(e.target.value)}
           >
@@ -199,14 +197,14 @@ function Forms() {
             ))}
           </select>
           <div className="linkCadastro">
-            <span> Cadastro de Empresa</span>
+            <span>Cadastro de Empresa</span>
           </div>
+
           <div className="tutiloInput">
             <span>Centro de Custo</span>
           </div>
           <select
             name="CentroDeCusto"
-            type="text"
             value={selectCentroCusto}
             onChange={(e) => setSelectCentroCusto(e.target.value)}
           >
@@ -218,7 +216,12 @@ function Forms() {
             ))}
           </select>
           <div className="linkCadastro">
-            <span> Cadastro de Centro de Custo</span>
+            <span
+              onClick={() => setIsModalOpen(true)}
+              className="linkClickable"
+            >
+              Cadastro de Centro de Custo
+            </span>
           </div>
 
           <div className="tutiloInput">
@@ -244,6 +247,16 @@ function Forms() {
           </button>
         </form>
       </div>
+
+      {isModalOpen && (
+        <ModalCadastroCC
+          onClose={() => setIsModalOpen(false)}
+          onProceed={() => {
+            setIsModalOpen(false);
+            createSoli();
+          }}
+        />
+      )}
     </div>
   );
 }
