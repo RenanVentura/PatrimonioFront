@@ -1,0 +1,171 @@
+/* Overlay do modal */
+.modalOverlayCadastro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.4s ease;
+    z-index: 500 !important;
+}
+
+/* Conteúdo do modal */
+.modalContentCadastro {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    position: relative;
+    width: 600px;
+    height: 350px;
+    max-width: 90%;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.5s ease forwards;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Garante que o botão fique colado embaixo */
+    overflow-y: auto; /* Adiciona rolagem vertical quando necessário */
+    z-index: 500 !important;
+
+}
+
+/* Cabeçalho do modal */
+.modalHeaderCadastro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Título do modal */
+.modalHeaderCadastro h3 {
+    margin: 0;
+    flex: 1;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+}
+
+/* Fechar modal */
+.ModalHeaderClose {
+    cursor: pointer;
+}
+
+.ModalHeaderClose:hover {
+    transform: scale(1.2);
+}
+
+.modalBodyCadastro {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Reduz o espaçamento entre os cards */
+    justify-content: center;
+    padding: 10px;
+    max-height: calc(100% - 100px); /* Ajuste para que o corpo do modal ocupe o espaço restante */
+    overflow-y: auto; /* Permite o scroll caso o conteúdo ultrapasse a altura do modal */
+}
+
+/* Card de Centro de Custo */
+.cardCentroCusto {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f0f0f0;
+    padding: 5px 10px; /* Ajuste de padding para reduzir o espaço interno */
+    border-radius: 8px;
+    width: calc(50% - 10px); /* Dois cards por linha */
+    box-sizing: border-box;
+    transition: transform 0.2s ease;
+    height: 40px; 
+}
+
+.cardCentroCusto:hover {
+    transform: scale(1.05); /* Efeito de hover para os cards */
+}
+
+/* Nome do Centro de Custo */
+.nomeCentroCusto {
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Ícone de lixo */
+.iconLixo {
+    width: 23px;
+    height: auto;
+    cursor: pointer;
+}
+
+.iconLixo:hover {
+    transform: scale(1.2); /* Corrigido o uso de scale */
+}
+
+/* Rodapé do modal */
+.modalFooterConfirm {
+    margin-top: 20px;
+}
+
+/* Botões do modal */
+.buttonConfirmCadastro {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 5px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 80% !important;
+    display: inline-block;
+    margin-top: auto; 
+    background-color: #17b85a;
+    color: white;
+}
+
+.buttonConfirmCadastro:hover {
+    background-color: #267e4b;
+}
+
+/* Animações do modal */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 600px) {
+    .modalContentCadastro {
+        width: 85%;
+        padding: 20px;
+    }
+
+    .modalHeaderCadastro h3 {
+        font-size: 16px;
+    }
+
+    .cardCentroCusto {
+        width: 100%; /* Apenas 1 card por linha em telas menores */
+    }
+}

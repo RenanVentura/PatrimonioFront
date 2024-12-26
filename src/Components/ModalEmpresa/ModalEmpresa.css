@@ -1,5 +1,5 @@
 /* Overlay do modal */
-.modalOverlayCadastro {
+.modalOverlayEmpresa {
     position: fixed;
     top: 0;
     left: 0;
@@ -10,11 +10,11 @@
     align-items: center;
     justify-content: center;
     animation: fadeIn 0.4s ease;
-    z-index: 9999;
+    z-index: 500 !important;
 }
 
 /* Conteúdo do modal */
-.modalContentCadastro {
+.modalContentEmpresa {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 12px;
@@ -29,10 +29,12 @@
     flex-direction: column;
     justify-content: space-between; /* Garante que o botão fique colado embaixo */
     overflow-y: auto; /* Adiciona rolagem vertical quando necessário */
+    z-index: 500 !important;
+
 }
 
 /* Cabeçalho do modal */
-.modalHeaderCadastro {
+.modalHeaderEmpresa {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -41,7 +43,7 @@
 }
 
 /* Título do modal */
-.modalHeaderCadastro h3 {
+.modalHeaderEmpresa h3 {
     margin: 0;
     flex: 1;
     text-align: center;
@@ -59,7 +61,7 @@
     transform: scale(1.2);
 }
 
-.modalBodyCadastro {
+.modalBodyEmpresa {
     display: flex;
     flex-wrap: wrap;
     gap: 15px; /* Reduz o espaçamento entre os cards */
@@ -70,7 +72,7 @@
 }
 
 /* Card de Centro de Custo */
-.cardCentroCusto {
+.cardEmpresa {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -83,12 +85,12 @@
     height: 40px; 
 }
 
-.cardCentroCusto:hover {
+.cardEmpresa:hover {
     transform: scale(1.05); /* Efeito de hover para os cards */
 }
 
 /* Nome do Centro de Custo */
-.nomeCentroCusto {
+.nomeEmpresa {
     color: #000;
     font-size: 16px;
     font-weight: bold;
@@ -154,16 +156,16 @@
 
 /* Responsividade para telas pequenas */
 @media (max-width: 600px) {
-    .modalContentCadastro {
+    .modalContentEmpresa {
         width: 85%;
         padding: 20px;
     }
 
-    .modalHeaderCadastro h3 {
+    .modalHeaderEmpresa h3 {
         font-size: 16px;
     }
 
-    .cardCentroCusto {
+    .cardEmpresa {
         width: 100%; /* Apenas 1 card por linha em telas menores */
     }
 }

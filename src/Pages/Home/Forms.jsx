@@ -3,7 +3,8 @@ import "./Forms.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../../assets/Logo.png";
 import api from "../../services/api";
-import ModalCadastroCC from "../../Components/Modal Cadastro/ModalCadastro";
+import ModalCC from "../../Components/ModalCentroCusto/ModalCentroCusto";
+import ModalEmpresa from "../../Components/ModalEmpresa/ModalEmpresa";
 
 function Forms() {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ function Forms() {
   const isActive = (path) => location.pathname === path;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpenEmp, setIsModalOpenEmp] = useState(false);
   const [filiais, setFiliais] = useState([]);
   const [selectFiliais, setSelectFiliais] = useState("");
   const [centrocusto, setCentroCusto] = useState([]);
@@ -197,7 +199,12 @@ function Forms() {
             ))}
           </select>
           <div className="linkCadastro">
-            <span>Cadastro de Empresa</span>
+            <span
+              onClick={() => setIsModalOpenEmp(true)}
+              className="linkClickable"
+            >
+              Cadastro de Empresa
+            </span>
           </div>
 
           <div className="tutiloInput">
@@ -248,14 +255,9 @@ function Forms() {
         </form>
       </div>
 
-      {isModalOpen && (
-        <ModalCadastroCC
-          onClose={() => setIsModalOpen(false)}
-          onProceed={() => {
-            setIsModalOpen(false);
-            createSoli();
-          }}
-        />
+      {isModalOpen && <ModalCC onClose={() => setIsModalOpen(false)} />}
+      {isModalOpenEmp && (
+        <ModalEmpresa onClose={() => setIsModalOpenEmp(false)} />
       )}
     </div>
   );

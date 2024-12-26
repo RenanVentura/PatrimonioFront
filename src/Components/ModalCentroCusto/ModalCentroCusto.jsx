@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
-import "./ModalCadastro.css";
+import "./ModalCentroCusto.css"; // Verifique se o CSS está configurado corretamente
 import api from "../../services/api";
 import Lixo from "../../assets/lixo.png";
 
-function ModalCadastroCC({ onClose, onProceed }) {
+function ModalCC({ onClose }) {
   const [centrocusto, setCentroCusto] = useState([]);
 
   async function getCC() {
     try {
       const CCFromApi = await api.get("/CentroCusto", {
-        params: {
-          StatusDelete: "true",
-        },
+        params: { StatusDelete: "true" },
       });
       setCentroCusto(CCFromApi.data);
     } catch (error) {
@@ -22,14 +20,13 @@ function ModalCadastroCC({ onClose, onProceed }) {
   useEffect(() => {
     getCC();
   }, []);
-
   const handleUpdate = async (id) => {
     try {
       await api.put(`/CentroCusto/${id}`, { StatusDelete: false });
-      alert("Atualizado com sucesso");
+      alert("Centro de custo atualizado com sucesso!");
     } catch (error) {
       console.error("Erro ao atualizar:", error);
-      alert("Erro ao atualizar");
+      alert("Erro ao atualizar centro de custo.");
     }
   };
 
@@ -62,13 +59,11 @@ function ModalCadastroCC({ onClose, onProceed }) {
         </div>
 
         <div className="modalFooterConfirm">
-          <button className="buttonConfirmCadastro" onClick={onProceed}>
-            Cadastrar
-          </button>
+          <button className="buttonConfirmCadastro">Cadastrar</button>
         </div>
       </div>
     </div>
   );
 }
 
-export default ModalCadastroCC;
+export default ModalCC;
