@@ -23,7 +23,6 @@ function Forms() {
   const inputTipoDeCadastro = useRef();
   const inputValor = useRef();
   const inputPatrimonio = useRef();
-  const inputCentroDeCusto = useRef();
   const inputNomeDoResponsavel = useRef();
   const inputObservacao = useRef();
 

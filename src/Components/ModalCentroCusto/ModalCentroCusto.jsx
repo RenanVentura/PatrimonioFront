@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from "react";
-import "./ModalCentroCusto.css"; // Verifique se o CSS está configurado corretamente
+import "./ModalCentroCusto.css";
 import api from "../../services/api";
 import Lixo from "../../assets/lixo.png";
 import Lapis from "../../assets/lapis.png";
-import Check from "../../assets/visto.png"; // Adicione o ícone de check (certo)
+import Check from "../../assets/visto.png";
 import CloseIcon from "../../assets/remove.png";
+import ModalCadastroCC from "../ModalCadastroCC/ModalCadastroCC";
 
 function ModalCC({ onClose }) {
   const [centrocusto, setCentroCusto] = useState([]);
-  const [editId, setEditId] = useState(null); // Para controlar o ID do centro de custo sendo editado
-  const [newCentroCusto, setNewCentroCusto] = useState(""); // Para controlar o valor editado
+  const [editId, setEditId] = useState(null);
+  const [newCentroCusto, setNewCentroCusto] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const [modalCadastro, setModalCadastro] = useState(false);
 
-  // Função para buscar os centros de custo
   async function getCC() {
     try {
       const CCFromApi = await api.get("/CentroCusto", {
-        params: { StatusDelete: "true" },
+        params: { StatusDelete: "false" },
       });
       setCentroCusto(CCFromApi.data);
     } catch (error) {
@@ -46,28 +47,27 @@ function ModalCC({ onClose }) {
   const handleUpdateDelete = async (id) => {
     try {
       await api.put(`/CentroCusto/${id}`, {
-        StatusDelete: false,
+        StatusDelete: true,
       });
       alert("Centro de custo atualizado com sucesso!");
-      setEditId(null); // Após a edição, volta ao modo de visualização
-      getCC(); // Recarrega os dados atualizados
+      setEditId(null);
+      getCC();
     } catch (error) {
       console.error("Erro ao atualizar:", error);
       alert("Erro ao atualizar centro de custo.");
     }
   };
 
-  // Função para iniciar o processo de edição
   const handleEdit = (cc) => {
-    setEditId(cc.id); // Define o ID do centro de custo sendo editado
+    setEditId(cc.id);
     setNewCentroCusto(cc.CentroCusto);
     setIsEditing(true);
   };
 
   const handleCloseEdit = () => {
-    setIsEditing(false); // Desativa o modo de edição
-    setNewCentroCusto(""); // Limpa o campo de edição
-    setEditId(null); // Limpa o ID de edição
+    setIsEditing(false);
+    setNewCentroCusto("");
+    setEditId(null);
   };
 
   return (
@@ -89,19 +89,19 @@ function ModalCC({ onClose }) {
                     <input
                       type="text"
                       value={newCentroCusto}
-                      onChange={(e) => setNewCentroCusto(e.target.value)} // Atualiza o valor enquanto edita
+                      onChange={(e) => setNewCentroCusto(e.target.value)}
                     />
                     <img
                       src={Check}
                       alt="Confirmar"
                       className="iconLixo"
-                      onClick={() => handleUpdate(cc.id)} // Confirma a edição
+                      onClick={() => handleUpdate(cc.id)}
                     />
                     <img
                       src={CloseIcon}
                       alt="Fechar edição"
                       className="iconLixo"
-                      onClick={handleCloseEdit} // Fecha a edição
+                      onClick={handleCloseEdit}
                     />
                   </>
                 ) : (
@@ -111,13 +111,13 @@ function ModalCC({ onClose }) {
                       src={Lixo}
                       alt="Excluir"
                       className="iconLixo"
-                      onClick={() => handleUpdateDelete(cc.id)} // Exclui
+                      onClick={() => handleUpdateDelete(cc.id)}
                     />
                     <img
                       src={Lapis}
                       alt="Editar"
                       className="iconLixo"
-                      onClick={() => handleEdit(cc)} // Inicia o processo de edição
+                      onClick={() => handleEdit(cc)}
                     />
                   </>
                 )}
@@ -129,9 +129,20 @@ function ModalCC({ onClose }) {
         </div>
 
         <div className="modalFooterConfirm">
-          <button className="buttonConfirmCadastro">Cadastrar</button>
+          <button
+            className="buttonConfirmCadastro"
+            onClick={() => {
+              setModalCadastro(true);
+              console.log("Abrir modal de cadastro");
+            }}
+          >
+            Cadastrar
+          </button>
         </div>
       </div>
+      {modalCadastro && (
+        <ModalCadastroCC onClose={() => setModalCadastro(false)} />
+      )}
     </div>
   );
 }

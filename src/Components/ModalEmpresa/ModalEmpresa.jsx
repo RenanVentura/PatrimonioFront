@@ -16,7 +16,7 @@ function ModalEmpresa({ onClose }) {
   async function getEmpresa() {
     try {
       const EmpresaFromApi = await api.get("/Empresa", {
-        params: { StatusDelete: "true" },
+        params: { StatusDelete: "false" },
       });
       setEmpresas(EmpresaFromApi.data);
     } catch (error) {
@@ -46,7 +46,7 @@ function ModalEmpresa({ onClose }) {
   const handleUpdateDelete = async (id) => {
     try {
       await api.put(`/Empresa/${id}`, {
-        StatusDelete: false,
+        StatusDelete: true,
       });
       alert("Centro de custo atualizado com sucesso!");
       setEditId(null); // Após a edição, volta ao modo de visualização
