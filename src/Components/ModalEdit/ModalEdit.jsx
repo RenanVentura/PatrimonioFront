@@ -7,6 +7,7 @@ import ModalConfirmDelete from "../ModalConfirmDelete/ModalConfirmDelete";
 import Emprestado from "../../assets/Emprestado.png";
 import ModalEmprestado from "../ModalEmprestado/ModalEmprestado";
 import ModalConfirmEdit from "../ModalConfirmEdit/ModalConfirmEdit";
+import ModalConfirmEdicao from "../ModalConfirmEdicao/ModalConfirmEdicao";
 
 function ModalEdit({ ferramenta, onClose }) {
   const [editedFerramenta, setEditedFerramenta] = useState(ferramenta);
@@ -14,7 +15,8 @@ function ModalEdit({ ferramenta, onClose }) {
   const [centrocusto, setCentroCusto] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isModalConfirm, setModalConfirm] = useState(false);
-  const [showEmprestadoModal, setShowEmprestadoModal] = useState(false); // Novo estado para o modal de empréstimo
+  const [showEmprestadoModal, setShowEmprestadoModal] = useState(false);
+  const [modalEdicao, SetModalEdicao] = useState(false);
 
   useEffect(() => {
     async function fetchFiliais() {
@@ -242,7 +244,10 @@ function ModalEdit({ ferramenta, onClose }) {
               onChange={handleChange}
             />
 
-            <button onClick={handleUpdate} className="save-button">
+            <button
+              onClick={() => SetModalEdicao(true)}
+              className="save-button"
+            >
               Salvar alterações
             </button>
 
@@ -257,6 +262,7 @@ function ModalEdit({ ferramenta, onClose }) {
             {isModalConfirm && (
               <ModalConfirmEdit
                 message="Patrimônio Alterado com sucesso!"
+                messagetittle="Alterado!"
                 onClose={() => {
                   setModalConfirm(false);
                   onClose();
@@ -270,6 +276,14 @@ function ModalEdit({ ferramenta, onClose }) {
                 ferramenta={ferramenta}
               />
             )}
+
+            {modalEdicao && (
+              <ModalConfirmEdicao
+                onConfirm={handleUpdate}
+                onCancel={() => SetModalEdicao(false)} // Passar como função anônima
+                message="Deseja realmente editar?"
+              />
+            )}
           </div>
         </div>
       </div>
@@ -279,7 +293,6 @@ function ModalEdit({ ferramenta, onClose }) {
 
 export default ModalEdit;
 
-/* COMPONENTES REUTILIZÁVEIS */
 function InputField({ label, name, value, onChange, type = "text", min }) {
   return (
     <div className="data-container">
@@ -295,7 +308,6 @@ function InputField({ label, name, value, onChange, type = "text", min }) {
   );
 }
 
-// SelectField Component
 function SelectField({ label, name, value, options, onChange }) {
   return (
     <div className="data-container">
@@ -312,7 +324,6 @@ function SelectField({ label, name, value, options, onChange }) {
   );
 }
 
-// TextAreaField Component
 function TextAreaField({ label, name, value, onChange }) {
   return (
     <div className="data-container">
