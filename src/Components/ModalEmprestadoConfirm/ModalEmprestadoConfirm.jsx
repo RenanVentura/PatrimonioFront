@@ -5,19 +5,19 @@ function ModalEmprestadoConfirm({ isOpen, onClose, onProceed }) {
   if (!isOpen) return null;
 
   return (
-    <div className="modalOverlayConfirm">
-      <div className="modalContentConfirm">
-        <div className="modalHeaderConfirm">
+    <div className="modalOverlayConfirmEmp">
+      <div className="modalContentConfirmEmp">
+        <div className="modalHeaderConfirmEmp">
           <h3>Confirmação</h3>
-          <p className="messageConfirm">
+          <p className="messageConfirmEmpresta">
             Tem certeza que deseja salvar as alterações?
           </p>
         </div>
-        <div className="modalFooterConfirm">
-          <button className="buttonCancelConfirm" onClick={onClose}>
+        <div className="modalFooterConfirmEmp">
+          <button className="buttonCancelConfirmEmp" onClick={onClose}>
             NÃO
           </button>
-          <button className="buttonConfirm" onClick={onProceed}>
+          <button className="buttonConfirmEmp" onClick={onProceed}>
             SIM
           </button>
         </div>

@@ -261,6 +261,7 @@ function Forms() {
         <ModalConfirm
           message="Cadastro Concluido com sucesso!"
           onClose={() => setModalConfirm(false)}
+          messagetittle="Cadastrado!"
         />
       )}
       {isModalOpenEmp && (

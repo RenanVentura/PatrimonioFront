@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./ModalEmprestado.css";
 import api from "../../services/api";
 import ModalEmprestadoConfirm from "../ModalEmprestadoConfirm/ModalEmprestadoConfirm";
+import ModalConfirm from "../ModalConfirm/ModalConfirm";
 
 function ModalEmprestado({ ferramenta, onClose }) {
+  const [isModalConfirm, setModalConfirm] = useState(false);
   const [editedFerramenta, setEditedFerramenta] = useState({});
   const [isSaving, setIsSaving] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -36,16 +38,13 @@ function ModalEmprestado({ ferramenta, onClose }) {
         StatusEmprestado: true,
       });
 
-      alert("Ferramenta alterada com sucesso!");
-      onClose();
+      setModalConfirm(true);
     } catch (error) {
       console.error("Erro ao atualizar a ferramenta:", error);
       alert("Erro ao atualizar a ferramenta. Tente novamente.");
     } finally {
       setIsSaving(false);
     }
-
-    window.location.reload();
   };
 
   const handleChange = (e) => {
@@ -122,10 +121,21 @@ function ModalEmprestado({ ferramenta, onClose }) {
         onClose={handleCloseConfirm}
         onProceed={handleProceedConfirm}
       />
+
+      {isModalConfirm && (
+        <ModalConfirm
+          onClose={() => {
+            setModalConfirm(false);
+            window.location.reload();
+            onClose();
+          }}
+          message="Ferramenta Emprestada com sucesso!"
+          messagetittle="Emprestado!"
+        />
+      )}
     </>
   );
 }
-
 export default ModalEmprestado;
 
 function InputField({ label, name, value, onChange, type = "text", min }) {

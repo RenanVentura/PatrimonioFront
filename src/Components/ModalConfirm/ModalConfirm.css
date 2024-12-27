@@ -1,9 +1,9 @@
-.modalOverlayConfirm {
+.modalOverlayConfirma {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 142% !important;
+    height: 100% ;
     background: rgba(0, 0, 0, 0.6);
     display: flex;
     align-items: center;
@@ -12,20 +12,23 @@
     z-index: 9999;
 }
 
-.modalContentConfirm {
-    background: #0d6d35; /* Verde elegante */
+.modalContentConfirma {
+    background: white; /* Verde elegante */
     padding: 25px 20px;
     border-radius: 12px;
     text-align: center;
     position: relative;
-    width: 300px !important;
+    width: 300px;
     max-width: 90%;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     animation: slideUp 0.5s ease forwards;
-    position: fixed !important;
+    & h3 {
+        border-bottom: 1px solid #ccc ;
+    }
+
 }
 
-.buttonConfirmX {
+.buttonConfirma {
     grid-column: span 2; /* Botão ocupa as duas colunas */
     padding: 10px;
     background-color: #4caf50;
@@ -39,12 +42,12 @@
     
 }
 
-.closeButtonConfirm:hover {
+.closeButtonConfirma:hover {
     background: #219150;
 }
 
-.messageConfirm {
-    color: #ffffff;
+.messageConfirma {
+    color: black;
     font-size: 18px;
     font-weight: bold !important;
     margin-top: 10px;

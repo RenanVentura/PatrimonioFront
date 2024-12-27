@@ -6,7 +6,7 @@ import LixoEdit from "../../assets/lixo.png";
 import ModalConfirmDelete from "../ModalConfirmDelete/ModalConfirmDelete";
 import Emprestado from "../../assets/Emprestado.png";
 import ModalEmprestado from "../ModalEmprestado/ModalEmprestado";
-import ModalConfirm from "../ModalConfirm/ModalConfirm";
+import ModalConfirmEdit from "../ModalConfirmEdit/ModalConfirmEdit";
 
 function ModalEdit({ ferramenta, onClose }) {
   const [editedFerramenta, setEditedFerramenta] = useState(ferramenta);
@@ -255,7 +255,7 @@ function ModalEdit({ ferramenta, onClose }) {
             )}
 
             {isModalConfirm && (
-              <ModalConfirm
+              <ModalConfirmEdit
                 message="Patrimônio Alterado com sucesso!"
                 onClose={() => {
                   setModalConfirm(false);

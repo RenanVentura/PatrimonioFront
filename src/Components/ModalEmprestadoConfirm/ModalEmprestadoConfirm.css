@@ -1,4 +1,4 @@
-.modalOverlayConfirm {
+.modalOverlayConfirmEmp {
     position: fixed;
     top: 0;
     left: 0;
@@ -12,7 +12,7 @@
     z-index: 9999;
 }
 
-.modalContentConfirm {
+.modalContentConfirmEmp {
     background: #ffffff; /* Verde elegante */
     padding: 10px 10px;
     border-radius: 12px;
@@ -22,9 +22,10 @@
     max-width: 90%;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     animation: slideUp 0.5s ease forwards;
+    background-color: white !important;
 }
 
-.closeButtonConfirm {
+.closeButtonConfirmEmp {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -43,24 +44,30 @@
     margin-left: 10px;
 }
 
-.closeButtonConfirm:hover {
+.closeButtonConfirmEmp:hover {
     background: #219150;
 }
 
-.messageConfirm {
-    color: #000000;
+.messageConfirmEmpresta {
+    color: black;
     font-size: 18px;
-    font-weight: normal;
+    font-weight: bold;
     margin-top: 10px;
     margin-bottom: 0;
     animation: fadeInText 1s ease;
 }
 
-.modalFooterConfirm {
-    margin-top: 20px;
+
+.modalHeaderConfirmEmp {
+    color: black;
+    font-size: 18px;
+    font-weight: bold; & h3{
+        border-bottom: 1px solid #ccc !important;
+    }
+    
 }
 
-.buttonConfirm, .buttonCancelConfirm {
+.buttonConfirmEmp, .buttonCancelConfirmEmp {
     padding: 10px 20px;
     font-size: 16px;
     margin: 5px;
@@ -70,21 +77,21 @@
     width: 75px;
 }
 
-.buttonConfirm {
+.buttonConfirmEmp {
     background-color: #17b85a;
     color: white;
 }
 
-.buttonConfirm:hover {
+.buttonConfirmEmp:hover {
     background-color: #219150;
 }
 
-.buttonCancelConfirm {
-    background-color: #947c7a;
+.buttonCancelConfirmEmp {
+    background-color: #887877b6;
     color: white;
 }
 
-.buttonCancelConfirm:hover {
+.buttonCancelConfirmEmp:hover {
     background-color: #d32f2f !important;
 }
 

@@ -1,13 +1,14 @@
 import "./ModalConfirm.css";
 
-function ModalConfirm({ onClose, message }) {
+function ModalConfirm({ onClose, message, messagetittle }) {
   return (
-    <div className="modalOverlayConfirm">
-      <div className="modalContentConfirm">
-        <div className="modalHeaderConfirm">
-          <p className="messageConfirm">{message}</p>
+    <div className="modalOverlayConfirma">
+      <div className="modalContentConfirma">
+        <h3>{messagetittle}</h3>
+        <div className="modalHeaderConfirma">
+          <p className="messageConfirma">{message}</p>
         </div>
-        <button className="buttonConfirmX" onClick={onClose}>
+        <button className="buttonConfirma" onClick={onClose}>
           Finalizar!
         </button>
       </div>
