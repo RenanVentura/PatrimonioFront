@@ -6,12 +6,14 @@ import LixoEdit from "../../assets/lixo.png";
 import ModalConfirmDelete from "../ModalConfirmDelete/ModalConfirmDelete";
 import Emprestado from "../../assets/Emprestado.png";
 import ModalEmprestado from "../ModalEmprestado/ModalEmprestado";
+import ModalConfirm from "../ModalConfirm/ModalConfirm";
 
 function ModalEdit({ ferramenta, onClose }) {
   const [editedFerramenta, setEditedFerramenta] = useState(ferramenta);
   const [filiais, setFiliais] = useState([]);
   const [centrocusto, setCentroCusto] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isModalConfirm, setModalConfirm] = useState(false);
   const [showEmprestadoModal, setShowEmprestadoModal] = useState(false); // Novo estado para o modal de empréstimo
 
   useEffect(() => {
@@ -58,9 +60,8 @@ function ModalEdit({ ferramenta, onClose }) {
       });
 
       await api.put(`/ferramentas/${ferramenta.id}`, { StatusDelete: true });
-      alert("Ferramenta deletada com sucesso!");
+      setModalConfirm(true);
       setShowDeleteModal(false);
-      onClose();
     } catch (error) {
       console.error("Erro ao deletar a ferramenta:", error);
       alert("Erro ao deletar a ferramenta.");
@@ -94,8 +95,7 @@ function ModalEdit({ ferramenta, onClose }) {
       }
 
       await api.put(`/ferramentas/${ferramenta.id}`, editedFerramenta);
-      alert("Ferramenta atualizada com sucesso!");
-      onClose();
+      setModalConfirm(true);
     } catch (error) {
       console.error("Erro ao atualizar ferramenta:", error);
       alert("Erro ao atualizar ferramenta");
@@ -251,6 +251,16 @@ function ModalEdit({ ferramenta, onClose }) {
                 message="Tem certeza que deseja deletar esta ferramenta?"
                 onConfirm={handleConfirmDelete}
                 onCancel={handleCancelDelete}
+              />
+            )}
+
+            {isModalConfirm && (
+              <ModalConfirm
+                message="Patrimônio Alterado com sucesso!"
+                onClose={() => {
+                  setModalConfirm(false);
+                  onClose();
+                }}
               />
             )}
 
