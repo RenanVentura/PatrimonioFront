@@ -9,11 +9,13 @@ import ModalConfirmDelete from "../../Components/ModalConfirmDelete/ModalConfirm
 import ModalDevolucao from "../../Components/ModalDevolucao/ModalDevolucao";
 import Devolver from "../../assets/devolução.png";
 import * as XLSX from "xlsx";
+import ModalConfirm from "../../Components/ModalConfirm/ModalConfirm";
 
 function Ferramentas() {
   const [patrimonio, setPatrimonio] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedFerramenta, setSelectedFerramenta] = useState(null);
+  const [isModalConfirm, setModalConfirm] = useState(false);
 
   const [isModalEmprestadoOpen, setIsModalEmprestadoOpen] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
@@ -123,8 +125,7 @@ function Ferramentas() {
         StatusDelete: false,
       });
 
-      alert("Ferramenta deletada com sucesso!");
-      setIsModalDeleteOpen(false);
+      setModalConfirm(true);
       getFerramentas();
     } catch (error) {
       console.error("Erro ao deletar a ferramenta:", error);
@@ -316,6 +317,18 @@ function Ferramentas() {
           showModal={isModalDeleteOpen}
           onConfirm={handleConfirmDelete}
           onCancel={handleCloseDeleteModal}
+        />
+      )}
+
+      {isModalConfirm && (
+        <ModalConfirm
+          message="Patrimônio Deletado com sucesso!"
+          onClose={() => {
+            setModalConfirm(false);
+            setIsModalDeleteOpen(false);
+            window.location.reload();
+          }}
+          messagetittle="Deletado!"
         />
       )}
     </div>

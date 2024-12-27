@@ -10,6 +10,7 @@ import Emprestado from "../../assets/Emprestado.png";
 import ModalEdit from "../../Components/ModalEdit/ModalEdit";
 import ModalConfirmDelete from "../../Components/ModalConfirmDelete/ModalConfirmDelete";
 import ModalEmprestado from "../../Components/ModalEmprestado/ModalEmprestado";
+import ModalConfirm from "../../Components/ModalConfirm/ModalConfirm";
 
 function Ferramentas() {
   const [patrimonio, setPatrimonio] = useState([]);
@@ -17,6 +18,7 @@ function Ferramentas() {
   const [selectedFerramenta, setSelectedFerramenta] = useState(null);
 
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
+  const [isModalConfirm, setModalConfirm] = useState(false);
   const [isModalEmprestadoOpen, setIsModalEmprestadoOpen] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
 
@@ -132,8 +134,7 @@ function Ferramentas() {
         StatusDelete: true,
       });
 
-      alert("Ferramenta deletada com sucesso!");
-      setIsModalDeleteOpen(false);
+      setModalConfirm(true);
       getFerramentas();
     } catch (error) {
       console.error("Erro ao deletar a ferramenta:", error);
@@ -344,6 +345,18 @@ function Ferramentas() {
           showModal={isModalDeleteOpen}
           onConfirm={handleConfirmDelete}
           onCancel={handleCloseDeleteModal}
+        />
+      )}
+
+      {isModalConfirm && (
+        <ModalConfirm
+          message="Patrimônio Deletado com sucesso!"
+          onClose={() => {
+            setModalConfirm(false);
+            setIsModalDeleteOpen(false);
+            window.location.reload();
+          }}
+          messagetittle="Deletado!"
         />
       )}
     </div>
