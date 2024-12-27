@@ -3,16 +3,17 @@ import "./ModalEmpresa.css";
 import api from "../../services/api";
 import Lixo from "../../assets/lixo.png";
 import Lapis from "../../assets/lapis.png";
-import Check from "../../assets/visto.png"; // Adicione o ícone de check (certo)
-import CloseIcon from "../../assets/remove.png"; // Ícone de fechar a edição
+import Check from "../../assets/visto.png";
+import CloseIcon from "../../assets/remove.png";
+import ModalCadastroEmp from "../ModalCadastroEmpresa/ModalCadastroEmp";
 
 function ModalEmpresa({ onClose }) {
   const [holding, setEmpresas] = useState([]);
-  const [editId, setEditId] = useState(null); // Para controlar o ID da empresa sendo editada
-  const [newCentroCusto, setNewCentroCusto] = useState(""); // Para controlar o valor editado
-  const [isEditing, setIsEditing] = useState(false); // Para controlar o estado de edição
+  const [editId, setEditId] = useState(null);
+  const [newCentroCusto, setNewCentroCusto] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [modalCadastro, setModalCadastro] = useState(false);
 
-  // Função para buscar as empresas
   async function getEmpresa() {
     try {
       const EmpresaFromApi = await api.get("/Empresa", {
@@ -28,6 +29,10 @@ function ModalEmpresa({ onClose }) {
     getEmpresa();
   }, []);
 
+  const atualizaGet = () => {
+    getEmpresa();
+  };
+
   const handleUpdate = async (id) => {
     try {
       await api.put(`/Empresa/${id}`, {
@@ -35,7 +40,7 @@ function ModalEmpresa({ onClose }) {
       });
       alert("Centro de custo atualizado com sucesso!");
       setEditId(null);
-      setIsEditing(false); // Desativa o modo de edição
+      setIsEditing(false);
       getEmpresa();
     } catch (error) {
       console.error("Erro ao atualizar:", error);
@@ -49,26 +54,24 @@ function ModalEmpresa({ onClose }) {
         StatusDelete: true,
       });
       alert("Centro de custo atualizado com sucesso!");
-      setEditId(null); // Após a edição, volta ao modo de visualização
-      getEmpresa(); // Recarrega os dados atualizados
+      setEditId(null);
+      getEmpresa();
     } catch (error) {
       console.error("Erro ao atualizar:", error);
       alert("Erro ao atualizar centro de custo.");
     }
   };
 
-  // Função para iniciar o processo de edição
   const handleEdit = (empresas) => {
-    setEditId(empresas.id); // Define o ID da empresa sendo editada
-    setNewCentroCusto(empresas.Empresa); // Preenche o valor atual no campo de edição
-    setIsEditing(true); // Ativa o modo de edição
+    setEditId(empresas.id);
+    setNewCentroCusto(empresas.Empresa);
+    setIsEditing(true);
   };
 
-  // Função para fechar a edição
   const handleCloseEdit = () => {
-    setIsEditing(false); // Desativa o modo de edição
-    setNewCentroCusto(""); // Limpa o campo de edição
-    setEditId(null); // Limpa o ID de edição
+    setIsEditing(false);
+    setNewCentroCusto("");
+    setEditId(null);
   };
 
   return (
@@ -130,9 +133,25 @@ function ModalEmpresa({ onClose }) {
         </div>
 
         <div className="modalFooterConfirm">
-          <button className="buttonConfirmCadastro">Cadastrar</button>
+          <button
+            className="buttonConfirmCadastro"
+            onClick={() => {
+              setModalCadastro(true);
+              console.log("Abrir Modal de Cadastro");
+            }}
+          >
+            Cadastrar
+          </button>
         </div>
       </div>
+      {modalCadastro && (
+        <ModalCadastroEmp
+          onClose={() => {
+            setModalCadastro(false);
+            getEmpresa();
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -10,7 +10,7 @@
     align-items: center;
     justify-content: center;
     animation: fadeIn 0.4s ease;
-    z-index: 500 !important;
+    z-index: 100 !important;
 }
 
 /* Conteúdo do modal */
@@ -27,9 +27,9 @@
     animation: slideUp 0.5s ease forwards;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Garante que o botão fique colado embaixo */
-    overflow-y: auto; /* Adiciona rolagem vertical quando necessário */
-    z-index: 500 !important;
+    justify-content: space-between;
+    overflow-y: auto; 
+    z-index: 100 !important;
 }
 
 /* Cabeçalho do modal */
