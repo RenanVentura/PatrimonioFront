@@ -287,7 +287,7 @@ function Ferramentas() {
               onClick={handlePreviousPage}
               disabled={currentPage === 1}
             >
-              Anterior
+              &lt;
             </button>
             <span className="pagination-info">
               Página {currentPage} de {totalPages}
@@ -297,7 +297,7 @@ function Ferramentas() {
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
             >
-              Próximo
+              &gt;
             </button>
           </div>
         </div>
