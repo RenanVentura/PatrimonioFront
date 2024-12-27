@@ -1,17 +1,17 @@
-import './ModalConfirm.css';  
+import "./ModalConfirm.css";
 
-function ModalConfirm({ isOpen, onClose }) {
-  if (!isOpen) return null;
-
+function ModalConfirm({ onClose, message }) {
   return (
     <div className="modalOverlayConfirm">
-    <div className="modalContentConfirm">
-      <div className="modalHeaderConfirm">
-        <button className="closeButtonConfirm" onClick={onClose}>X</button>
-        <p className='messageConfirm'>Cadastro realizado com sucesso!</p>
+      <div className="modalContentConfirm">
+        <div className="modalHeaderConfirm">
+          <p className="messageConfirm">{message}</p>
+        </div>
+        <button className="buttonConfirmX" onClick={onClose}>
+          Finalizar!
+        </button>
       </div>
     </div>
-  </div>
-)
+  );
 }
 export default ModalConfirm;

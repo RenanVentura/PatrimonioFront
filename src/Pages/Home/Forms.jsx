@@ -5,6 +5,7 @@ import logo from "../../assets/Logo.png";
 import api from "../../services/api";
 import ModalCC from "../../Components/ModalCentroCusto/ModalCentroCusto";
 import ModalEmpresa from "../../Components/ModalEmpresa/ModalEmpresa";
+import ModalConfirm from "../../Components/ModalConfirm/ModalConfirm";
 
 function Forms() {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ function Forms() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpenEmp, setIsModalOpenEmp] = useState(false);
+  const [isModalConfirm, setModalConfirm] = useState(false);
   const [filiais, setFiliais] = useState([]);
   const [selectFiliais, setSelectFiliais] = useState("");
   const [centrocusto, setCentroCusto] = useState([]);
@@ -89,7 +91,7 @@ function Forms() {
         StatusEmprestado: false,
       });
 
-      alert("Cadastro realizado com sucesso!");
+      setModalConfirm(true);
 
       // Reset dos inputs
       inputNome.current.value = "";
@@ -255,6 +257,12 @@ function Forms() {
       </div>
 
       {isModalOpen && <ModalCC onClose={() => setIsModalOpen(false)} />}
+      {isModalConfirm && (
+        <ModalConfirm
+          message="Cadastro Concluido com sucesso!"
+          onClose={() => setModalConfirm(false)}
+        />
+      )}
       {isModalOpenEmp && (
         <ModalEmpresa onClose={() => setIsModalOpenEmp(false)} />
       )}

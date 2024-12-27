@@ -144,7 +144,7 @@ function Ferramentas() {
   const handleCloseEditModal = () => {
     setIsModalEditOpen(false);
     setSelectedFerramenta(null);
-    getFerramentas();
+    window.location.reload();
   };
 
   const handleCloseEmprestadoModal = () => {
