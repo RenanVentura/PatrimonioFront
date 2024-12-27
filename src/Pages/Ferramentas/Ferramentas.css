@@ -30,11 +30,10 @@
     background-color: #d0d0d0;
   }
   
-  /* Estilo do botão ativo */
   .sidebar-button.active {
-    background-color: #4caf50; /* Cor verde */
-    color: white; /* Cor do texto */
-    font-weight: bold; /* Destaca o texto */
+    background-color: #4caf50;
+    color: white; 
+    font-weight: bold; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
@@ -51,8 +50,9 @@
 
 .button-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start !important;
+    margin-left: 16%;
+    /* align-items: center; */
     margin-bottom: 20px;
     padding: 0 20px;
     z-index: 5;
@@ -225,6 +225,10 @@
     margin: 0;
 }
 
+.listaOrdenada2{
+    margin-right: 60px !important ;
+}
+
 .container-obs li {
     font-size: 14px;
     margin-bottom: 8px;
@@ -282,9 +286,16 @@
     transform: none;
 }
 
+@media (max-width: 1800px) {
+    .button-container {
+    margin-left: 17.5%;
+}
+}
+
 @media (max-width: 768px) {
     .button-container {
-        margin-top: 75px;
+        margin-top: 150px !important; 
+        margin-left: 26%;
     }
 
     .container-pag {
@@ -299,7 +310,8 @@
 
 @media (max-width: 480px) {
     .button-container {
-        margin-top: 75px;
+        margin-top: 90px !important;
+        margin-left: 24%;
 
             & .export-button{
                 width: 80px;
@@ -322,5 +334,8 @@
     .pagination-button {
         padding: 8px 12px;
         font-size: 12px;
+    }
+    .listaOrdenada2{
+        margin-right: 0px !important;
     }
 }

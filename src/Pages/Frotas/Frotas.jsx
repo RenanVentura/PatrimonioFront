@@ -267,7 +267,7 @@ function Ferramentas() {
                         {ferramenta.TipoDeCadastro ?? ""}
                       </li>
                     </ul>
-                    <ul>
+                    <ul className="listaOrdenada2">
                       <li>
                         <span>Empresa:</span> {ferramenta.Empresa ?? ""}
                       </li>
