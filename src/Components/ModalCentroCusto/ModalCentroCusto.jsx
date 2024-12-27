@@ -29,6 +29,10 @@ function ModalCC({ onClose }) {
     getCC();
   }, []);
 
+  const atualizaGet = () => {
+    getCC();
+  };
+
   const handleUpdate = async (id) => {
     try {
       await api.put(`/CentroCusto/${id}`, {
@@ -141,7 +145,12 @@ function ModalCC({ onClose }) {
         </div>
       </div>
       {modalCadastro && (
-        <ModalCadastroCC onClose={() => setModalCadastro(false)} />
+        <ModalCadastroCC
+          onClose={() => {
+            setModalCadastro(false);
+            getCC();
+          }}
+        />
       )}
     </div>
   );
