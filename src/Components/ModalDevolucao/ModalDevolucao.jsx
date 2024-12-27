@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./ModalDevolucao.css";
 import api from "../../services/api";
 import ModalEmprestadoConfirm from "../ModalEmprestadoConfirm/ModalEmprestadoConfirm";
+import ModalConfirm from "../ModalConfirm/ModalConfirm";
 
 function ModalDevolucao({ ferramenta, onClose }) {
   const [editedFerramenta, setEditedFerramenta] = useState({});
   const [isSaving, setIsSaving] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isModalConfirm, setModalConfirm] = useState(false);
 
   useEffect(() => {
     setEditedFerramenta({
@@ -36,16 +38,13 @@ function ModalDevolucao({ ferramenta, onClose }) {
         StatusEmprestado: false,
       });
 
-      alert("Ferramenta alterada com sucesso!");
-      onClose();
+      setModalConfirm(true);
     } catch (error) {
       console.error("Erro ao atualizar a ferramenta:", error);
       alert("Erro ao atualizar a ferramenta. Tente novamente.");
     } finally {
       setIsSaving(false);
     }
-
-    window.location.reload();
   };
 
   const handleChange = (e) => {
@@ -116,6 +115,18 @@ function ModalDevolucao({ ferramenta, onClose }) {
           </div>
         </div>
       </div>
+
+      {isModalConfirm && (
+        <ModalConfirm
+          message="Patrimônio Devolvido com sucesso!"
+          onClose={() => {
+            setModalConfirm(false);
+            onClose();
+            window.location.reload();
+          }}
+          messagetittle="Devolvido!"
+        />
+      )}
 
       <ModalEmprestadoConfirm
         isOpen={isConfirmOpen}
