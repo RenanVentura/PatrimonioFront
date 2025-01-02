@@ -64,15 +64,16 @@ function Ferramentas() {
     const formattedData = patrimonio.map((item) => ({
       Nome: item.Nome ?? "",
       Patrimonio: item.Patrimonio ?? "",
-      Responsável: item.NomeDeResponsavel ?? "",
+      "Tipo de Cadastro": item.TipoDeCadastro ?? "",
       "Centro de Custo": item.CentroDeCusto ?? "",
       Empresa: item.Empresa ?? "",
+      Status: item.Status ?? "",
+      Responsável: item.NomeDeResponsavel ?? "",
       Valor: item.Valor ?? "",
       "Data Emprestado": formatDate(item.DataEmprestado ?? ""),
       "Data Devolvida": formatDate(item.DataDevolvida ?? ""),
       Observação: item.Observacao ?? "",
       "Obs Emprestado": item.ObsEmprestado ?? "",
-      "Tipo de Cadastro": item.TipoDeCadastro ?? "",
     }));
 
     // Cria um novo workbook e adiciona os dados
