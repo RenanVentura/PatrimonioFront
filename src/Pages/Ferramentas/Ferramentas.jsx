@@ -32,7 +32,6 @@ function Ferramentas() {
       const patrimonioFromApi = await api.get("/ferramentas", {
         params: {
           StatusDelete: false,
-          StatusEmprestado: false,
           TipoDeCadastro: "Ferramentas",
         },
       });
@@ -91,7 +90,6 @@ function Ferramentas() {
         const response = await api.get("/ferramentas", {
           params: {
             StatusDelete: false,
-            StatusEmprestado: false,
             TipoDeCadastro: "Ferramentas",
           },
         });
@@ -229,12 +227,14 @@ function Ferramentas() {
                   <div className="info-header">
                     <h2>{ferramenta.Nome ?? ""}</h2>
                     <div className="action-icons">
-                      <img
-                        src={Emprestado}
-                        alt="Emprestar"
-                        className="iconEmprestado"
-                        onClick={() => handleEmprestaClick(ferramenta)}
-                      />
+                      {ferramenta.Status != "Emprestado" && (
+                        <img
+                          src={Emprestado}
+                          alt="Emprestar"
+                          className="iconEmprestado"
+                          onClick={() => handleEmprestaClick(ferramenta)}
+                        />
+                      )}
                       <img
                         src={Lapis}
                         alt="Editar"
@@ -286,6 +286,9 @@ function Ferramentas() {
                       <li>
                         <span>Data Devolvida:</span>{" "}
                         {formatDate(ferramenta.DataDevolvida ?? "")}
+                      </li>
+                      <li>
+                        <span>Status:</span> {ferramenta.Status ?? ""}
                       </li>
                     </ul>
                   </div>

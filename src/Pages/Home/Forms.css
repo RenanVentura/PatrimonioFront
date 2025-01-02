@@ -198,6 +198,8 @@ form button:hover {
     cursor: pointer;
     font-weight: bold;
     margin-bottom: 2px;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 @media (max-width: 1024px) {
