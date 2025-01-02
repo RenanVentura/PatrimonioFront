@@ -60,7 +60,6 @@ function Ferramentas() {
       return;
     }
 
-    // Mapeia os dados para o formato desejado na planilha
     const formattedData = patrimonio.map((item) => ({
       Nome: item.Nome ?? "",
       Patrimonio: item.Patrimonio ?? "",
