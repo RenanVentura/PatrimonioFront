@@ -117,6 +117,7 @@
 
 .empty-message-emprestada {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -126,6 +127,13 @@
      
   }
 
+  .IconVazioEmp {
+  width: 80px;
+  height: auto; 
+  opacity: 0.6; 
+  margin-bottom: 10px;
+  }
+  
 .container-card {
     margin-bottom: 0px;
 }

@@ -117,12 +117,21 @@
 
 .empty-message-frotas {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
     font-size: 25px;
     color: #807a7a;
     grid-column: 1 / -1; 
+     
+  }
+
+  .IconVazioFrotas {
+  width: 80px;
+  height: auto; 
+  opacity: 0.6; 
+  margin-bottom: 10px;
   }
 
 .container-card {

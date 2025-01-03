@@ -5,9 +5,9 @@ import api from "../../services/api";
 import { useNavigate, useLocation } from "react-router-dom";
 import Lapis from "../../assets/lapis.png";
 import Lixo from "../../assets/lixo.png";
+import Vazio from "../../assets/icon_vazio.png";
 import ModalConfirmDelete from "../../Components/ModalConfirmDelete/ModalConfirmDelete";
 import ModalDevolucao from "../../Components/ModalDevolucao/ModalDevolucao";
-import Devolver from "../../assets/devolução.png";
 import * as XLSX from "xlsx";
 import ModalConfirm from "../../Components/ModalConfirm/ModalConfirm";
 
@@ -208,6 +208,7 @@ function Ferramentas() {
           <div className="container-pag">
             {Ferramentas.length === 0 ? (
               <div className="empty-message-emprestada">
+                <img className="IconVazioEmp" src={Vazio} alt="Vazio" />
                 Nenhum Patrimônio foi emprestado
               </div>
             ) : (

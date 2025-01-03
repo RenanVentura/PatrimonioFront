@@ -6,6 +6,7 @@ import api from "../../services/api";
 import { useNavigate, useLocation } from "react-router-dom";
 import Lapis from "../../assets/lapis.png";
 import Lixo from "../../assets/lixo.png";
+import Vazio from "../../assets/icon_vazio.png";
 import Emprestado from "../../assets/Emprestado.png";
 import ModalEdit from "../../Components/ModalEdit/ModalEdit";
 import ModalConfirmDelete from "../../Components/ModalConfirmDelete/ModalConfirmDelete";
@@ -221,6 +222,7 @@ function Ferramentas() {
           <div className="container-pag">
             {Ferramentas.length === 0 ? (
               <div className="empty-message-frotas">
+                <img className="IconVazioFrotas" src={Vazio} alt="Vazio" />
                 Nenhum Patrimônio Cadastrado
               </div>
             ) : (
