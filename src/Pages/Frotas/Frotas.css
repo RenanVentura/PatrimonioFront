@@ -115,6 +115,16 @@
     position: relative;
 }
 
+.empty-message-frotas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 25px;
+    color: #807a7a;
+    grid-column: 1 / -1; 
+  }
+
 .container-card {
     margin-bottom: 0px;
 }

@@ -221,93 +221,99 @@ function Ferramentas() {
 
         <div className="info-panel">
           <div className="container-pag">
-            {currentItems.map((ferramenta) => (
-              <div className="container-card" key={ferramenta.id}>
-                <div className="info-card">
-                  <div className="info-header">
-                    <h2>{ferramenta.Nome ?? ""}</h2>
-                    <div className="action-icons">
-                      {ferramenta.Status != "Emprestado" && (
+            {Ferramentas.length === 0 ? (
+              <div className="empty-message-ferrametas">
+                Nenhum Patrimônio Cadastrado
+              </div>
+            ) : (
+              currentItems.map((ferramenta) => (
+                <div className="container-card" key={ferramenta.id}>
+                  <div className="info-card">
+                    <div className="info-header">
+                      <h2>{ferramenta.Nome ?? ""}</h2>
+                      <div className="action-icons">
+                        {ferramenta.Status !== "Emprestado" && (
+                          <img
+                            src={Emprestado}
+                            alt="Emprestar"
+                            className="iconEmprestado"
+                            onClick={() => handleEmprestaClick(ferramenta)}
+                          />
+                        )}
                         <img
-                          src={Emprestado}
-                          alt="Emprestar"
-                          className="iconEmprestado"
-                          onClick={() => handleEmprestaClick(ferramenta)}
+                          src={Lapis}
+                          alt="Editar"
+                          className="icon"
+                          onClick={() => handleEditClick(ferramenta)}
                         />
-                      )}
-                      <img
-                        src={Lapis}
-                        alt="Editar"
-                        className="icon"
-                        onClick={() => handleEditClick(ferramenta)}
-                      />
-                      <img
-                        src={Lixo}
-                        alt="Excluir"
-                        className="icon"
-                        onClick={() => handleDeleteClick(ferramenta)}
-                        style={{ cursor: "pointer" }}
-                      />
+                        <img
+                          src={Lixo}
+                          alt="Excluir"
+                          className="icon"
+                          onClick={() => handleDeleteClick(ferramenta)}
+                          style={{ cursor: "pointer" }}
+                        />
+                      </div>
+                    </div>
+                    <p className="LabelPatrimonio">
+                      {ferramenta.Patrimonio ?? ""}
+                    </p>
+                    <div className="info-columns">
+                      <ul>
+                        <li>
+                          <span>Responsável:</span>{" "}
+                          {ferramenta.NomeDeResponsavel ?? ""}
+                        </li>
+                        <li>
+                          <span>Centro de Custo:</span>{" "}
+                          {ferramenta.CentroDeCusto ?? ""}
+                        </li>
+                        <li>
+                          <span>Responsável Emprestado:</span>{" "}
+                          {ferramenta.ResponsavelEmprestado ?? ""}
+                        </li>
+                        <li>
+                          <span>Tipo de Cadastro:</span>{" "}
+                          {ferramenta.TipoDeCadastro ?? ""}
+                        </li>
+                      </ul>
+                      <ul className="listaOrdenada2">
+                        <li>
+                          <span>Empresa:</span> {ferramenta.Empresa ?? ""}
+                        </li>
+                        <li>
+                          <span>Valor:</span> R$ {ferramenta.Valor ?? ""}
+                        </li>
+                        <li>
+                          <span>Data Emprestado:</span>{" "}
+                          {formatDate(ferramenta.DataEmprestado ?? "")}
+                        </li>
+                        <li>
+                          <span>Data Devolvida:</span>{" "}
+                          {formatDate(ferramenta.DataDevolvida ?? "")}
+                        </li>
+                        <li>
+                          <span>Status:</span> {ferramenta.Status ?? ""}
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="container-obs">
+                      <ul>
+                        <li>
+                          <span>Observação:</span> {ferramenta.Observacao ?? ""}
+                        </li>
+                        <div className="labelobs">
+                          <li>
+                            <span>Obs Emprestado:</span>{" "}
+                            {ferramenta.ObsEmprestado ?? ""}
+                          </li>
+                        </div>
+                      </ul>
                     </div>
                   </div>
-                  <p className="LabelPatrimonio">
-                    {ferramenta.Patrimonio ?? ""}
-                  </p>
-                  <div className="info-columns">
-                    <ul>
-                      <li>
-                        <span>Responsável:</span>{" "}
-                        {ferramenta.NomeDeResponsavel ?? ""}
-                      </li>
-                      <li>
-                        <span>Centro de Custo:</span>{" "}
-                        {ferramenta.CentroDeCusto ?? ""}
-                      </li>
-                      <li>
-                        <span>Responsavel Emprestado:</span>{" "}
-                        {ferramenta.ResponsavelEmprestado ?? ""}
-                      </li>
-                      <li>
-                        <span>Tipo de Cadastro:</span>{" "}
-                        {ferramenta.TipoDeCadastro ?? ""}
-                      </li>
-                    </ul>
-                    <ul className="listaOrdenada2">
-                      <li>
-                        <span>Empresa:</span> {ferramenta.Empresa ?? ""}
-                      </li>
-                      <li>
-                        <span>Valor:</span> R$ {ferramenta.Valor ?? ""}
-                      </li>
-                      <li>
-                        <span>Data Emprestado:</span>{" "}
-                        {formatDate(ferramenta.DataEmprestado ?? "")}
-                      </li>
-                      <li>
-                        <span>Data Devolvida:</span>{" "}
-                        {formatDate(ferramenta.DataDevolvida ?? "")}
-                      </li>
-                      <li>
-                        <span>Status:</span> {ferramenta.Status ?? ""}
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="container-obs">
-                    <ul>
-                      <li>
-                        <span>Observação:</span> {ferramenta.Observacao ?? ""}
-                      </li>
-                      <div className="labelobs">
-                        <li>
-                          <span>Obs Emprestado:</span>{" "}
-                          {ferramenta.ObsEmprestado ?? ""}
-                        </li>
-                      </div>
-                    </ul>
-                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
 
           <div className="pagination">
