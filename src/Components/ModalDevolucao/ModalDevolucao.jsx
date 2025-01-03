@@ -30,12 +30,14 @@ function ModalDevolucao({ ferramenta, onClose }) {
         DataDevolvida: editedFerramenta.DataDevolvida || todayISO,
         StatusEmprestado: false,
         DateAlterado: todayISO,
+        Status: "Ativo",
       });
 
       await api.put(`/ferramentas/${ferramenta.id}`, {
         ...editedFerramenta,
         DataDevolvida: editedFerramenta.DataDevolvida || todayISO,
         StatusEmprestado: false,
+        Status: "Ativo",
       });
 
       setModalConfirm(true);

@@ -29,14 +29,14 @@ function ModalEmprestado({ ferramenta, onClose }) {
         ...editedFerramenta,
         DataEmprestado: editedFerramenta.DataEmprestado || todayISO,
         StatusEmprestado: true,
-        Status: "Ativo",
+        Status: "Emprestado",
         DateAlterado: todayISO,
       });
 
       await api.put(`/ferramentas/${ferramenta.id}`, {
         ...editedFerramenta,
         DataEmprestado: editedFerramenta.DataEmprestado || todayISO,
-        Status: "Ativo",
+        Status: "Emprestado",
         StatusEmprestado: true,
       });
 
