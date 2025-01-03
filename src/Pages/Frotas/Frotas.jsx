@@ -240,12 +240,15 @@ function Ferramentas() {
                             onClick={() => handleEmprestaClick(ferramenta)}
                           />
                         )}
-                        <img
-                          src={Lapis}
-                          alt="Editar"
-                          className="icon"
-                          onClick={() => handleEditClick(ferramenta)}
-                        />
+                        {ferramenta.Status !== "Emprestado" && (
+                          <img
+                            src={Lapis}
+                            alt="Editar"
+                            className="icon"
+                            onClick={() => handleEditClick(ferramenta)}
+                          />
+                        )}
+
                         <img
                           src={Lixo}
                           alt="Excluir"
