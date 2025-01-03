@@ -220,7 +220,7 @@ function Ferramentas() {
 
         <div className="info-panel">
           <div className="container-pag">
-            {Ferramentas.length === 0 ? (
+            {patrimonio && patrimonio.length === 0 ? (
               <div className="empty-message-frotas">
                 <img className="IconVazioFrotas" src={Vazio} alt="Vazio" />
                 Nenhum Patrimônio Cadastrado

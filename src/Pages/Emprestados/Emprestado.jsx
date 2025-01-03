@@ -5,6 +5,7 @@ import api from "../../services/api";
 import { useNavigate, useLocation } from "react-router-dom";
 import Lapis from "../../assets/lapis.png";
 import Lixo from "../../assets/lixo.png";
+import Devolucao from "../../assets/devolução.png";
 import Vazio from "../../assets/icon_vazio.png";
 import ModalConfirmDelete from "../../Components/ModalConfirmDelete/ModalConfirmDelete";
 import ModalDevolucao from "../../Components/ModalDevolucao/ModalDevolucao";
@@ -104,7 +105,7 @@ function Ferramentas() {
     setIsModalDeleteOpen(true);
   };
 
-  const handleEmprestaClick = (ferramenta) => {
+  const handleDevolvidaClick = (ferramenta) => {
     setSelectedFerramenta(ferramenta);
     setIsModalEmprestadoOpen(true);
   };
@@ -206,7 +207,7 @@ function Ferramentas() {
 
         <div className="info-panel">
           <div className="container-pag">
-            {Ferramentas.length === 0 ? (
+            {patrimonio && patrimonio.length === 0 ? (
               <div className="empty-message-emprestada">
                 <img className="IconVazioEmp" src={Vazio} alt="Vazio" />
                 Nenhum Patrimônio foi emprestado
@@ -218,19 +219,12 @@ function Ferramentas() {
                     <div className="info-header">
                       <h2>{ferramenta.Nome ?? ""}</h2>
                       <div className="action-icons">
-                        {ferramenta.Status !== "Emprestado" && (
-                          <img
-                            src={Emprestado}
-                            alt="Emprestar"
-                            className="iconEmprestado"
-                            onClick={() => handleEmprestaClick(ferramenta)}
-                          />
-                        )}
                         <img
-                          src={Lapis}
-                          alt="Editar"
+                          src={Devolucao}
+                          alt="Excluir"
                           className="icon"
-                          onClick={() => handleEditClick(ferramenta)}
+                          onClick={() => handleDevolvidaClick(ferramenta)}
+                          style={{ cursor: "pointer" }}
                         />
                         <img
                           src={Lixo}
