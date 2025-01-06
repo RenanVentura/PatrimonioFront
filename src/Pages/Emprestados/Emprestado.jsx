@@ -3,7 +3,6 @@ import "./Emprestado.css";
 import logo from "../../assets/Logo.png";
 import api from "../../services/api";
 import { useNavigate, useLocation } from "react-router-dom";
-import Lapis from "../../assets/lapis.png";
 import Lixo from "../../assets/lixo.png";
 import Devolucao from "../../assets/devolução.png";
 import Vazio from "../../assets/icon_vazio.png";
