@@ -78,7 +78,7 @@ function Ferramentas() {
     XLSX.utils.book_append_sheet(workbook, worksheet, "Ferramentas");
 
     // Exporta o arquivo Excel
-    XLSX.writeFile(workbook, "Ferramentas.xlsx");
+    XLSX.writeFile(workbook, "Patrimonio_Emprestado.xlsx");
   }
 
   useEffect(() => {
