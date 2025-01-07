@@ -13,16 +13,15 @@ function ModalFiltro({ onClose, onApplyFilter }) {
   const [empresasOptions, setEmpresasOptions] = useState([]);
 
   const handleApplyFilter = () => {
-    const filters = {
-      centroCusto,
-      empresa,
-      dataInicialEmprestado,
-      dataFinalEmprestado,
-      dataInicialDevolvida,
-      dataFinalDevolvida,
+    const filterData = {
+      centroCusto: centroCusto,
+      empresa: empresa,
+      dataInicialEmprestado: dataInicialEmprestado,
+      dataFinalEmprestado: dataFinalEmprestado,
+      dataInicialDevolvida: dataInicialDevolvida,
+      dataFinalDevolvida: dataFinalDevolvida,
     };
-    onApplyFilter(filters);
-    onClose();
+    onApplyFilter(filterData);
   };
 
   useEffect(() => {
@@ -73,7 +72,7 @@ function ModalFiltro({ onClose, onApplyFilter }) {
               >
                 <option value="">Selecione o Centro de Custo</option>
                 {centrosCustoOptions.map((centro) => (
-                  <option key={centro.id} value={centro.id}>
+                  <option key={centro.id} value={centro.CentroCusto}>
                     {centro.CentroCusto}
                   </option>
                 ))}
@@ -88,7 +87,7 @@ function ModalFiltro({ onClose, onApplyFilter }) {
               >
                 <option value="">Selecione a Empresa</option>
                 {empresasOptions.map((empresa) => (
-                  <option key={empresa.id} value={empresa.id}>
+                  <option key={empresa.id} value={empresa.Empresa}>
                     {empresa.Empresa}
                   </option>
                 ))}

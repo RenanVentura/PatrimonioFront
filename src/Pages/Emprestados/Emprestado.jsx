@@ -26,20 +26,6 @@ function Ferramentas() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  async function getFerramentas() {
-    try {
-      const patrimonioFromApi = await api.get("/ferramentas", {
-        params: {
-          StatusDelete: "true",
-          StatusEmprestado: "true",
-        },
-      });
-      setPatrimonio(patrimonioFromApi.data);
-    } catch (error) {
-      console.error("Erro ao buscar ferramentas:", error);
-    }
-  }
-
   const formatDate = (date) => {
     if (!date) return "";
 
@@ -83,23 +69,37 @@ function Ferramentas() {
     XLSX.writeFile(workbook, "Patrimonio_Emprestado.xlsx");
   }
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await api.get("/ferramentas", {
-          params: {
-            StatusDelete: false,
-            StatusEmprestado: true,
-          },
-        });
-        console.log("Dados recebidos:", response.data);
-        setPatrimonio(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar ferramentas:", error);
-      }
+  const getFerramentas = async (filters = {}) => {
+    console.log("Filtros enviados na requisição:", filters);
+    try {
+      const response = await api.get("/ferramentas", {
+        params: {
+          StatusDelete: false,
+          StatusEmprestado: true,
+          CentroDeCusto: filters.centroCusto || "",
+          Empresa: filters.empresa || "",
+          DataInicialEmprestado: filters.DataInicialEmprestado || "",
+          DataFinalEmprestado: filters.DataFinalEmprestado || "",
+          DataInicialDevolvida: filters.dataInicialDevolvida || "",
+          DataFinalDevolvida: filters.dataFinalDevolvida || "",
+        },
+      });
+      console.log("Dados recebidos:", response.data);
+      setPatrimonio(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar ferramentas:", error);
     }
-    fetchData();
+  };
+
+  useEffect(() => {
+    getFerramentas();
   }, []);
+
+  const handleApplyFilter = (filterData) => {
+    console.log("Filtros aplicados:", filterData);
+    setModalFiltro(false);
+    getFerramentas(filterData);
+  };
 
   const handleDeleteClick = (ferramenta) => {
     setSelectedFerramenta(ferramenta);
@@ -335,9 +335,7 @@ function Ferramentas() {
       {isModalFiltro && (
         <ModalFiltro
           onClose={() => setModalFiltro(false)}
-          anApplyfilter={() => (
-            setModalFiltro(false), window.location.reload()
-          )}
+          onApplyFilter={handleApplyFilter}
         />
       )}
 
