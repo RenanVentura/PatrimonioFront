@@ -10,12 +10,14 @@ import ModalConfirmDelete from "../../Components/ModalConfirmDelete/ModalConfirm
 import ModalDevolucao from "../../Components/ModalDevolucao/ModalDevolucao";
 import * as XLSX from "xlsx";
 import ModalConfirm from "../../Components/ModalConfirm/ModalConfirm";
+import ModalFiltro from "../../Components/ModalFiltro/ModalFiltro";
 
 function Ferramentas() {
   const [patrimonio, setPatrimonio] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedFerramenta, setSelectedFerramenta] = useState(null);
   const [isModalConfirm, setModalConfirm] = useState(false);
+  const [isModalFiltro, setModalFiltro] = useState(false);
 
   const [isModalEmprestadoOpen, setIsModalEmprestadoOpen] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
@@ -198,7 +200,13 @@ function Ferramentas() {
 
       <div className="info-panel-container">
         <div className="button-container">
-          <button className="filter-button">Filtrar</button>
+          <button
+            className="filter-button"
+            onClick={() => setModalFiltro(true)}
+          >
+            Filtrar
+          </button>
+
           <button className="export-button" onClick={exportToExcel}>
             Exportar
           </button>
@@ -321,6 +329,15 @@ function Ferramentas() {
         <ModalDevolucao
           ferramenta={selectedFerramenta}
           onClose={handleCloseEmprestadoModal}
+        />
+      )}
+
+      {isModalFiltro && (
+        <ModalFiltro
+          onClose={() => setModalFiltro(false)}
+          anApplyfilter={() => (
+            setModalFiltro(false), window.location.reload()
+          )}
         />
       )}
 

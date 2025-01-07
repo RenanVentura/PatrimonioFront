@@ -1,0 +1,121 @@
+.modalOverlayFiltro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.4s ease;
+    z-index: 9999;
+}
+
+.modalContentFiltro {
+    background: white;
+    padding: 25px 20px;
+    border-radius: 12px;
+    text-align: left;
+    position: relative;
+    width: 600px;
+    max-width: 90%;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.5s ease forwards;
+}
+
+.modalHeaderFiltro {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.modalHeaderFiltro h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.closeIconFiltro {
+    cursor: pointer;
+    font-size: 18px;
+    color: #999;
+}
+
+.closeIconFiltro:hover {
+    color: #333;
+}
+
+.modalBodyFiltro {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Ajuste para exibir Centro de Custo e Empresa lado a lado */
+.rowFields {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;  /* Espaço entre os campos */
+}
+
+.fieldGroupFiltro {
+    display: flex;
+    flex-direction: column;
+    width: 48%; /* Ajuste a largura para os campos ficarem lado a lado */
+}
+
+.fieldGroupFiltro label {
+    font-size: 14px;
+    color: black;
+    font-weight: bold;
+}
+
+.fieldGroupFiltro input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+    width: 95%;
+}
+
+/* Adicionando a estrutura para as datas em duas colunas */
+.dateFields {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;  /* Espaçamento entre os campos */
+}
+
+.modalFooterFiltro {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.buttonFiltro {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.buttonFiltro:hover {
+    background-color: #45a049;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
