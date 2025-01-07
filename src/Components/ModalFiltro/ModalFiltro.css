@@ -74,7 +74,8 @@
     font-weight: bold;
 }
 
-.fieldGroupFiltro input {
+.fieldGroupFiltro input,
+.fieldGroupFiltro select {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -83,11 +84,16 @@
     width: 95%;
 }
 
-/* Adicionando a estrutura para as datas em duas colunas */
+.fieldGroupFiltro input:focus,
+.fieldGroupFiltro select:focus{
+    outline: none;
+    border-color: #0d722b;
+}
+
 .dateFields {
     display: flex;
     justify-content: space-between;
-    gap: 15px;  /* Espaçamento entre os campos */
+    gap: 15px;  
 }
 
 .modalFooterFiltro {

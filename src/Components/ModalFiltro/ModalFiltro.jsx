@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ModalFiltro.css";
+import api from "../../services/api";
 
 function ModalFiltro({ onClose, onApplyFilter }) {
   const [centroCusto, setCentroCusto] = useState("");
@@ -8,6 +9,8 @@ function ModalFiltro({ onClose, onApplyFilter }) {
   const [dataFinalEmprestado, setDataFinalEmprestado] = useState("");
   const [dataInicialDevolvida, setDataInicialDevolvida] = useState("");
   const [dataFinalDevolvida, setDataFinalDevolvida] = useState("");
+  const [centrosCustoOptions, setCentrosCustoOptions] = useState([]);
+  const [empresasOptions, setEmpresasOptions] = useState([]);
 
   const handleApplyFilter = () => {
     const filters = {
@@ -22,6 +25,34 @@ function ModalFiltro({ onClose, onApplyFilter }) {
     onClose();
   };
 
+  useEffect(() => {
+    const consultaFiliais = async () => {
+      try {
+        const response = await api.get("/Empresa", {
+          params: { StatusDelete: "false" },
+        });
+        setEmpresasOptions(response.data);
+      } catch (error) {
+        console.error("Erro ao carregar empresas", error);
+      }
+    };
+    consultaFiliais();
+  }, []);
+
+  useEffect(() => {
+    const consultaCentro = async () => {
+      try {
+        const response = await api.get("/CentroCusto", {
+          params: { StatusDelete: "false" },
+        });
+        setCentrosCustoOptions(response.data);
+      } catch (error) {
+        console.error("Erro ao carregar o centro de custo", error);
+      }
+    };
+    consultaCentro();
+  }, []);
+
   return (
     <div className="modalOverlayFiltro">
       <div className="modalContentFiltro">
@@ -35,23 +66,33 @@ function ModalFiltro({ onClose, onApplyFilter }) {
           <div className="rowFields">
             <div className="fieldGroupFiltro">
               <label htmlFor="centroCusto">Centro de Custo</label>
-              <input
+              <select
                 id="centroCusto"
-                type="text"
                 value={centroCusto}
                 onChange={(e) => setCentroCusto(e.target.value)}
-                placeholder="Digite o centro de custo"
-              />
+              >
+                <option value="">Selecione o Centro de Custo</option>
+                {centrosCustoOptions.map((centro) => (
+                  <option key={centro.id} value={centro.id}>
+                    {centro.CentroCusto}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="fieldGroupFiltro">
               <label htmlFor="empresa">Empresa</label>
-              <input
+              <select
                 id="empresa"
-                type="text"
                 value={empresa}
                 onChange={(e) => setEmpresa(e.target.value)}
-                placeholder="Digite a empresa"
-              />
+              >
+                <option value="">Selecione a Empresa</option>
+                {empresasOptions.map((empresa) => (
+                  <option key={empresa.id} value={empresa.id}>
+                    {empresa.Empresa}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
           <div className="dateFields">

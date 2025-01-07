@@ -31,7 +31,9 @@ function Forms() {
   useEffect(() => {
     const consultaFiliais = async () => {
       try {
-        const holding = await api.get("/Empresa");
+        const holding = await api.get("/Empresa", {
+          params: { StatusDelete: "false" },
+        });
         setFiliais(holding.data);
       } catch (error) {
         console.error("Erro ao carregar filiais", error);
@@ -43,7 +45,9 @@ function Forms() {
   useEffect(() => {
     const consultaCentro = async () => {
       try {
-        const classes = await api.get("/CentroCusto");
+        const classes = await api.get("/CentroCusto", {
+          params: { StatusDelete: "false" },
+        });
         setCentroCusto(classes.data);
       } catch (error) {
         console.error("Erro ao carregar o centro de custo", error);
