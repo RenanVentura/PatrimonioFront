@@ -78,7 +78,6 @@ function Ferramentas() {
       const response = await api.get("/ferramentas", {
         params: {
           StatusDelete: false,
-          StatusEmprestado: true,
           CentroDeCusto: filters.centroCusto || "",
           Empresa: filters.empresa || "",
           TipoDeCadastro: "Frotas",
