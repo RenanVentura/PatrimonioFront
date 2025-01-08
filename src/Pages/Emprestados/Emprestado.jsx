@@ -78,10 +78,6 @@ function Ferramentas() {
           StatusEmprestado: true,
           CentroDeCusto: filters.centroCusto || "",
           Empresa: filters.empresa || "",
-          DataInicialEmprestado: filters.DataInicialEmprestado || "",
-          DataFinalEmprestado: filters.DataFinalEmprestado || "",
-          DataInicialDevolvida: filters.dataInicialDevolvida || "",
-          DataFinalDevolvida: filters.dataFinalDevolvida || "",
         },
       });
       console.log("Dados recebidos:", response.data);

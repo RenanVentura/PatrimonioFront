@@ -12,6 +12,7 @@ import ModalEdit from "../../Components/ModalEdit/ModalEdit";
 import ModalConfirmDelete from "../../Components/ModalConfirmDelete/ModalConfirmDelete";
 import ModalEmprestado from "../../Components/ModalEmprestado/ModalEmprestado";
 import ModalConfirm from "../../Components/ModalConfirm/ModalConfirm";
+import ModalFiltro from "../../Components/ModalFiltro/ModalFiltro";
 
 function Ferramentas() {
   const [patrimonio, setPatrimonio] = useState([]);
@@ -20,6 +21,7 @@ function Ferramentas() {
 
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const [isModalConfirm, setModalConfirm] = useState(false);
+  const [isModalFiltro, setModalFiltro] = useState(false);
 
   const [isModalEmprestadoOpen, setIsModalEmprestadoOpen] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
@@ -27,20 +29,6 @@ function Ferramentas() {
   const itemsPerPage = 6;
   const navigate = useNavigate();
   const location = useLocation(); // Hook para obter a rota atual
-
-  async function getFerramentas() {
-    try {
-      const patrimonioFromApi = await api.get("/ferramentas", {
-        params: {
-          StatusDelete: false,
-          TipoDeCadastro: "Ferramentas",
-        },
-      });
-      setPatrimonio(patrimonioFromApi.data);
-    } catch (error) {
-      console.error("Erro ao buscar ferramentas:", error);
-    }
-  }
 
   const formatDate = (date) => {
     if (!date) return "";
@@ -85,23 +73,34 @@ function Ferramentas() {
     XLSX.writeFile(workbook, "Patrimonio_Ferramentas.xlsx");
   }
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await api.get("/ferramentas", {
-          params: {
-            StatusDelete: false,
-            TipoDeCadastro: "Ferramentas",
-          },
-        });
-        console.log("Dados recebidos:", response.data);
-        setPatrimonio(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar ferramentas:", error);
-      }
+  const getFerramentas = async (filters = {}) => {
+    console.log("Filtros enviados na requisição:", filters);
+    try {
+      const response = await api.get("/ferramentas", {
+        params: {
+          StatusDelete: false,
+          StatusEmprestado: true,
+          CentroDeCusto: filters.centroCusto || "",
+          Empresa: filters.empresa || "",
+          TipoDeCadastro: "Ferramentas",
+        },
+      });
+      console.log("Dados recebidos:", response.data);
+      setPatrimonio(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar ferramentas:", error);
     }
-    fetchData();
+  };
+
+  useEffect(() => {
+    getFerramentas();
   }, []);
+
+  const handleApplyFilter = (filterData) => {
+    console.log("Filtros aplicados:", filterData);
+    setModalFiltro(false);
+    getFerramentas(filterData);
+  };
 
   const handleDeleteClick = (ferramenta) => {
     setSelectedFerramenta(ferramenta);
@@ -214,7 +213,12 @@ function Ferramentas() {
 
       <div className="info-panel-container">
         <div className="button-container">
-          <button className="filter-button">Filtrar</button>
+          <button
+            className="filter-button"
+            onClick={() => setModalFiltro(true)}
+          >
+            Filtrar
+          </button>
           <button className="export-button" onClick={exportToExcel}>
             Exportar
           </button>
@@ -362,6 +366,13 @@ function Ferramentas() {
           showModal={isModalDeleteOpen}
           onConfirm={handleConfirmDelete}
           onCancel={handleCloseDeleteModal}
+        />
+      )}
+
+      {isModalFiltro && (
+        <ModalFiltro
+          onClose={() => setModalFiltro(false)}
+          onApplyFilter={handleApplyFilter}
         />
       )}
 

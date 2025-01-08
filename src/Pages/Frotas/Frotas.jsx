@@ -12,11 +12,13 @@ import ModalEdit from "../../Components/ModalEdit/ModalEdit";
 import ModalConfirmDelete from "../../Components/ModalConfirmDelete/ModalConfirmDelete";
 import ModalEmprestado from "../../Components/ModalEmprestado/ModalEmprestado";
 import ModalConfirm from "../../Components/ModalConfirm/ModalConfirm";
+import ModalFiltro from "../../Components/ModalFiltro/ModalFiltro";
 
 function Ferramentas() {
   const [patrimonio, setPatrimonio] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedFerramenta, setSelectedFerramenta] = useState(null);
+  const [isModalFiltro, setModalFiltro] = useState(false);
 
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const [isModalConfirm, setModalConfirm] = useState(false);
@@ -26,20 +28,6 @@ function Ferramentas() {
   const itemsPerPage = 6;
   const navigate = useNavigate();
   const location = useLocation(); // Hook para obter a rota atual
-
-  async function getFerramentas() {
-    try {
-      const patrimonioFromApi = await api.get("/ferramentas", {
-        params: {
-          StatusDelete: false,
-          TipoDeCadastro: "Ferramentas",
-        },
-      });
-      setPatrimonio(patrimonioFromApi.data);
-    } catch (error) {
-      console.error("Erro ao buscar ferramentas:", error);
-    }
-  }
 
   const formatDate = (date) => {
     if (!date) return "";
@@ -84,23 +72,34 @@ function Ferramentas() {
     XLSX.writeFile(workbook, "Patrimonio_Frotas.xlsx");
   }
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await api.get("/ferramentas", {
-          params: {
-            StatusDelete: false,
-            TipoDeCadastro: "Frotas",
-          },
-        });
-        console.log("Dados recebidos:", response.data);
-        setPatrimonio(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar ferramentas:", error);
-      }
+  const getFerramentas = async (filters = {}) => {
+    console.log("Filtros enviados na requisição:", filters);
+    try {
+      const response = await api.get("/ferramentas", {
+        params: {
+          StatusDelete: false,
+          StatusEmprestado: true,
+          CentroDeCusto: filters.centroCusto || "",
+          Empresa: filters.empresa || "",
+          TipoDeCadastro: "Frotas",
+        },
+      });
+      console.log("Dados recebidos:", response.data);
+      setPatrimonio(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar ferramentas:", error);
     }
-    fetchData();
+  };
+
+  useEffect(() => {
+    getFerramentas();
   }, []);
+
+  const handleApplyFilter = (filterData) => {
+    console.log("Filtros aplicados:", filterData);
+    setModalFiltro(false);
+    getFerramentas(filterData);
+  };
 
   const handleDeleteClick = (ferramenta) => {
     setSelectedFerramenta(ferramenta);
@@ -361,6 +360,13 @@ function Ferramentas() {
           showModal={isModalDeleteOpen}
           onConfirm={handleConfirmDelete}
           onCancel={handleCloseDeleteModal}
+        />
+      )}
+
+      {isModalFiltro && (
+        <ModalFiltro
+          onClose={() => setModalFiltro(false)}
+          onApplyFilter={handleApplyFilter}
         />
       )}
 
