@@ -3,9 +3,9 @@ import "./ModalEdit.css";
 import api from "../../services/api";
 import logo from "../../assets/Logo.png";
 import LixoEdit from "../../assets/lixo.png";
-import lapis from "../../assets/lapis.png"; // Ícone de lápis
-import visto from "../../assets/visto.png"; // Ícone de visto
-import remove from "../../assets/remove.png"; // Ícone de "X"
+import lapis from "../../assets/lapis.png";
+import visto from "../../assets/visto.png";
+import remove from "../../assets/remove.png";
 import ModalConfirmDelete from "../ModalConfirmDelete/ModalConfirmDelete";
 import Emprestado from "../../assets/Emprestado.png";
 import ModalEmprestado from "../ModalEmprestado/ModalEmprestado";
