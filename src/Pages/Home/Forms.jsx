@@ -61,7 +61,7 @@ function Forms() {
     try {
       await api.post("/ferramentas", {
         Nome: inputNome.current.value,
-        Valor: preco,
+        Valor: preco || 0,
         Patrimonio: inputPatrimonio.current.value,
         Observacao: inputObservacao.current.value,
         Empresa: selectFiliais,

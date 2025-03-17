@@ -3,6 +3,9 @@ import "./ModalEdit.css";
 import api from "../../services/api";
 import logo from "../../assets/Logo.png";
 import LixoEdit from "../../assets/lixo.png";
+import lapis from "../../assets/lapis.png"; // Ícone de lápis
+import visto from "../../assets/visto.png"; // Ícone de visto
+import remove from "../../assets/remove.png"; // Ícone de "X"
 import ModalConfirmDelete from "../ModalConfirmDelete/ModalConfirmDelete";
 import Emprestado from "../../assets/Emprestado.png";
 import ModalEmprestado from "../ModalEmprestado/ModalEmprestado";
@@ -10,13 +13,20 @@ import ModalConfirmEdit from "../ModalConfirmEdit/ModalConfirmEdit";
 import ModalConfirmEdicao from "../ModalConfirmEdicao/ModalConfirmEdicao";
 
 function ModalEdit({ ferramenta, onClose }) {
-  const [editedFerramenta, setEditedFerramenta] = useState(ferramenta);
+  const [editedFerramenta, setEditedFerramenta] = useState({
+    ...ferramenta,
+    Valor: ferramenta.Valor || 0,
+  });
   const [filiais, setFiliais] = useState([]);
   const [centrocusto, setCentroCusto] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isModalConfirm, setModalConfirm] = useState(false);
   const [showEmprestadoModal, setShowEmprestadoModal] = useState(false);
   const [modalEdicao, SetModalEdicao] = useState(false);
+
+  // Estados para edição do nome
+  const [isEditingNome, setIsEditingNome] = useState(false);
+  const [novoNome, setNovoNome] = useState(ferramenta.Nome || "");
 
   useEffect(() => {
     async function fetchFiliais() {
@@ -46,7 +56,11 @@ function ModalEdit({ ferramenta, onClose }) {
   }, []);
 
   useEffect(() => {
-    setEditedFerramenta(ferramenta);
+    setEditedFerramenta({
+      ...ferramenta,
+      Valor: ferramenta.Valor || 0,
+    });
+    setNovoNome(ferramenta.Nome || ""); // Atualiza o nome ao mudar a ferramenta
   }, [ferramenta]);
 
   const handleDeleteClick = () => setShowDeleteModal(true);
@@ -72,9 +86,30 @@ function ModalEdit({ ferramenta, onClose }) {
 
   const handleCancelDelete = () => setShowDeleteModal(false);
 
+  // Função para editar o nome
+  const handleEditNomeClick = () => {
+    setIsEditingNome(true); // Ativa o modo de edição
+  };
+
+  const handleNomeChange = (e) => {
+    setNovoNome(e.target.value); // Atualiza o valor do nome enquanto edita
+  };
+
+  const handleConfirmNome = () => {
+    setIsEditingNome(false); // Desativa o modo de edição
+    setEditedFerramenta({ ...editedFerramenta, Nome: novoNome }); // Atualiza o estado
+  };
+
+  const handleCancelNome = () => {
+    setIsEditingNome(false); // Desativa o modo de edição
+    setNovoNome(editedFerramenta.Nome); // Volta ao nome original
+  };
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedFerramenta({ ...editedFerramenta, [name]: value });
+    const { name, value, type } = e.target;
+    const newValue =
+      type === "number" && value !== "" ? parseFloat(value) : value;
+    setEditedFerramenta({ ...editedFerramenta, [name]: newValue });
   };
 
   const handleUpdate = async () => {
@@ -110,7 +145,7 @@ function ModalEdit({ ferramenta, onClose }) {
     return `${day}/${month}/${year}`;
   };
 
-  const handleEmprestadoClick = () => setShowEmprestadoModal(true); // Função para abrir o modal de empréstado
+  const handleEmprestadoClick = () => setShowEmprestadoModal(true);
 
   if (!ferramenta) return null;
 
@@ -123,7 +158,42 @@ function ModalEdit({ ferramenta, onClose }) {
           <div className="titleEdit">
             <img className="logoQually" src={logo} alt="Logo" />
             <h2>
-              Editar Ferramenta: <br /> {ferramenta.Nome}
+              Editar Ferramenta: <br />
+              {isEditingNome ? (
+                <div className="edit-nome-container">
+                  <input
+                    type="text"
+                    value={novoNome}
+                    onChange={handleNomeChange}
+                    autoFocus // Foca automaticamente no campo ao entrar no modo de edição
+                  />
+                  <img
+                    src={visto}
+                    alt="Confirmar"
+                    className="edit-icon"
+                    onClick={handleConfirmNome}
+                    style={{ cursor: "pointer", marginLeft: "10px" }}
+                  />
+                  <img
+                    src={remove}
+                    alt="Cancelar"
+                    className="edit-icon"
+                    onClick={handleCancelNome}
+                    style={{ cursor: "pointer", marginLeft: "10px" }}
+                  />
+                </div>
+              ) : (
+                <>
+                  {editedFerramenta.Nome}
+                  <img
+                    src={lapis}
+                    alt="Editar"
+                    className="edit-icon"
+                    onClick={handleEditNomeClick}
+                    style={{ cursor: "pointer", marginLeft: "10px" }}
+                  />
+                </>
+              )}
             </h2>
             <img
               className="Lixo"
@@ -137,7 +207,7 @@ function ModalEdit({ ferramenta, onClose }) {
               src={Emprestado}
               alt="Emprestado"
               style={{ cursor: "pointer" }}
-              onClick={handleEmprestadoClick} // Evento de clique
+              onClick={handleEmprestadoClick}
             />
             <button className="close" onClick={onClose}>
               X
@@ -163,7 +233,6 @@ function ModalEdit({ ferramenta, onClose }) {
               value={editedFerramenta.ResponsavelEmprestado || ""}
               onChange={handleChange}
             />
-
             <SelectField
               label="Status"
               name="Status"
@@ -171,7 +240,6 @@ function ModalEdit({ ferramenta, onClose }) {
               options={["Ativo", "Emprestado", "Inativo"]}
               onChange={handleChange}
             />
-
             <SelectField
               label="Centro de Custo"
               name="CentroDeCusto"
@@ -179,7 +247,6 @@ function ModalEdit({ ferramenta, onClose }) {
               options={centrocusto.map((custos) => custos.CentroCusto)}
               onChange={handleChange}
             />
-
             <SelectField
               label="Empresa"
               name="Empresa"
@@ -187,16 +254,19 @@ function ModalEdit({ ferramenta, onClose }) {
               options={filiais.map((filial) => filial.Empresa)}
               onChange={handleChange}
             />
-
             <InputField
               label="Valor"
               name="Valor"
               type="number"
               min="0"
-              value={editedFerramenta.Valor || ""}
+              value={
+                editedFerramenta.Valor === null ||
+                editedFerramenta.Valor === undefined
+                  ? ""
+                  : editedFerramenta.Valor
+              }
               onChange={handleChange}
             />
-
             <SelectField
               label="Tipo de Cadastro"
               name="TipoDeCadastro"
@@ -204,7 +274,6 @@ function ModalEdit({ ferramenta, onClose }) {
               options={["Frotas", "Ferramentas"]}
               onChange={handleChange}
             />
-
             <InputField
               label="Data Emprestada"
               name="DataEmprestado"
@@ -217,7 +286,6 @@ function ModalEdit({ ferramenta, onClose }) {
                 })
               }
             />
-
             <InputField
               label="Data Devolvida"
               name="DataDevolvida"
@@ -236,14 +304,12 @@ function ModalEdit({ ferramenta, onClose }) {
               value={editedFerramenta.ObsEmprestado || ""}
               onChange={handleChange}
             />
-
             <TextAreaField
               label="Observação"
               name="Observacao"
               value={editedFerramenta.Observacao || ""}
               onChange={handleChange}
             />
-
             <button
               onClick={() => SetModalEdicao(true)}
               className="save-button"
@@ -272,7 +338,7 @@ function ModalEdit({ ferramenta, onClose }) {
 
             {showEmprestadoModal && (
               <ModalEmprestado
-                onClose={() => setShowEmprestadoModal(false)} // Fechar o modal
+                onClose={() => setShowEmprestadoModal(false)}
                 ferramenta={ferramenta}
               />
             )}
@@ -280,7 +346,7 @@ function ModalEdit({ ferramenta, onClose }) {
             {modalEdicao && (
               <ModalConfirmEdicao
                 onConfirm={handleUpdate}
-                onCancel={() => SetModalEdicao(false)} // Passar como função anônima
+                onCancel={() => SetModalEdicao(false)}
                 message="Deseja realmente editar?"
               />
             )}
@@ -291,8 +357,6 @@ function ModalEdit({ ferramenta, onClose }) {
   );
 }
 
-export default ModalEdit;
-
 function InputField({ label, name, value, onChange, type = "text", min }) {
   return (
     <div className="data-container">
@@ -300,7 +364,7 @@ function InputField({ label, name, value, onChange, type = "text", min }) {
       <input
         type={type}
         name={name}
-        value={value}
+        value={value === null || value === undefined ? "" : value}
         onChange={onChange}
         min={min}
       />
@@ -332,3 +396,5 @@ function TextAreaField({ label, name, value, onChange }) {
     </div>
   );
 }
+
+export default ModalEdit;

@@ -50,6 +50,11 @@
     height: auto;
 }
 
+.edit-icon{
+    width: 20px;
+    height: auto;
+}
+
 .titleEdit .Lixo:hover,
 .titleEdit .icon:hover {
     transform: scale(1.2);
