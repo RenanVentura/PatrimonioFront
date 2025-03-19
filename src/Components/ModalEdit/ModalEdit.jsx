@@ -73,6 +73,7 @@ function ModalEdit({ ferramenta, onClose }) {
         ...ferramenta,
         StatusDelete: true,
         DateAlterado: todayISO,
+        Patrimonio: `${ferramenta.Patrimonio} (Excluído)`,
       });
 
       await api.put(`/ferramentas/${ferramenta.id}`, { StatusDelete: true });

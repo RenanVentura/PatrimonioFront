@@ -129,6 +129,7 @@ function Ferramentas() {
 
       await api.put(`/ferramentas/${selectedFerramenta.id}`, {
         StatusDelete: true,
+        Patrimonio: `${selectedFerramenta.Patrimonio} (Excluído)`,
       });
 
       setModalConfirm(true);
