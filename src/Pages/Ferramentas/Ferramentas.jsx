@@ -126,6 +126,7 @@ function Ferramentas() {
         ...selectedFerramenta,
         StatusDelete: false,
         DateAlterado: formattedDateString,
+        Patrimonio: `${selectedFerramenta.Patrimonio} (Excluído)`,
       });
 
       await api.put(`/ferramentas/${selectedFerramenta.id}`, {

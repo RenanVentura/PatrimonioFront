@@ -76,7 +76,11 @@ function ModalEdit({ ferramenta, onClose }) {
         Patrimonio: `${ferramenta.Patrimonio} (Excluído)`,
       });
 
-      await api.put(`/ferramentas/${ferramenta.id}`, { StatusDelete: true });
+      await api.put(`/ferramentas/${ferramenta.id}`, {
+        StatusDelete: true,
+        Patrimonio: `${ferramenta.Patrimonio} (Excluído)`,
+      });
+
       setModalConfirm(true);
       setShowDeleteModal(false);
     } catch (error) {
